@@ -6,6 +6,7 @@ const helper = require('./helper');
 const glob = require('glob');
 const vueLoaderConfig = require('./vue-loader.conf');
 const vueWebTemp = helper.rootNode(config.templateDir);
+const CopyPlugin = require('copy-webpack-plugin');
 const hasPluginInstalled = fs.existsSync(helper.rootNode(config.pluginFilePath));
 const isWin = /^win/.test(process.platform);
 const weexEntry = {
@@ -98,7 +99,12 @@ const plugins = [
     banner: '// { "framework": "Vue"} \n',
     raw: true,
     exclude: 'Vue'
-  })
+  }),
+  
+  new CopyPlugin([{
+    from: path.resolve('src/public/images'),
+    to: path.resolve('platforms/android/app/src/main/assets/images')
+  }])
 ];
 
 // Config for compile jsbundle for web.

@@ -1,7 +1,7 @@
 <resources>
 
-    <string name="app_name">WEEX APP</string>
-    <string name="dummy_content">WEEX\nPLAYGROUND</string>
+    <string name="app_name">淘折</string>
+    <string name="dummy_content">淘折</string>
     <string name="capture_qrcode_prompt">Please put the barcode in the framing frame to scan</string>
     <string name="cpu_not_support_tip">Sorry, your current device is x86 architecture.\n We only
         support arm architecture devices!

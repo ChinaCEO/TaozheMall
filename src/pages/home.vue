@@ -49,8 +49,10 @@
         <!-- <header class="water-footer" v-if="footerFlag" ref="footer">
       <text class="water-footer-text">~没有更多了,我是有底线的~</text>                
     </header> -->
-        <header class="toHeader" v-if="toHeaderBtnFlag" @click="onToHeader">
+        <header v-if="toHeaderBtnFlag">
+          <div class="toHeader" @click="onToHeader">
             <text class="iconfont">&#xe666;</text>
+          </div>           
         </header>
         <!-- <loading :display="loadingFlag ? 'show' : 'hide'" class="loading" @loading="onloading" ref="loading">
             <text class="indicator-text" v-if="!loadingFlag">加载更多...</text>
@@ -450,7 +452,7 @@
   right: 20px;
   width: 80px;
   height: 80px;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, .8);
   border-width: 2px;
   border-color: #ebecee;
   border-radius: 80px;
@@ -460,8 +462,8 @@
 
 .footer {
   width: 750px;
-  padding-top: 20px;
-  padding-bottom: 120px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   align-items: center;  
 }
 </style>

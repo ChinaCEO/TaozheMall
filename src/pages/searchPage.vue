@@ -24,7 +24,7 @@
             </div> 
             
         </header>
-        <!-- <text>{{console}}</text> -->
+        
         <!-- 搜索记录 -->
         <div class="search-record" v-if="!showResult && !showRecommend">
           
@@ -48,7 +48,7 @@
         <!-- 搜索页 -->
         
         <div class="search-result" v-if="showResult && !showRecommend" ref="searchResult" :style="{height: searchResultHeight + 'px'}">
-          
+          <!-- <text>{{console}}</text> -->
           <div class="rank-box">
             <text class="rank-txt" :class="[sortWords.isCommon ?  'select-color' : '']" @click="onCommon">综合</text>
             <text class="rank-txt" :class="[sortWords.isVolume ?  'select-color' : '']" @click="onVolume">销量</text>
@@ -74,7 +74,7 @@
                     @wxcPopupOverlayClicked="onpopupOverlayClicked">
 
             <scroller class="popup-scroller" show-scrollbar="false">
-  
+
               <!-- 价格区间 -->
               <div class="price-choose">
                 <text class="choose-title">价格区间(元)</text>
@@ -229,9 +229,10 @@
             platform: '2',
             page_size: "20",
             page_no: 1,
+            // material_id: 6707,
             sort: 'tk_rate_des', // 排序_des（降序），排序_asc（升序），销量（total_sales），淘客佣金比率（tk_rate）， 累计推广量（tk_total_sales），总支出佣金（tk_total_commi），价格（price）
-            q: '', // 查询词
-            material_id: 6707
+            q: '' // 查询词
+            
           }
         },
         filtrate: {
@@ -319,7 +320,7 @@
       }
      
     },
-    
+
     beforeMount() {
       
       position.getUserLocation(res => {
@@ -391,7 +392,8 @@
         }      
       },
       getSearchResult() {
-        this.searchResultList = []
+        // this.searchResultList = []
+        
         this.fetch(res => {
           if(res.data.tbk_dg_material_optional_response.result_list.map_data.length) {                            
             let _searchResultList = res.data.tbk_dg_material_optional_response.result_list.map_data

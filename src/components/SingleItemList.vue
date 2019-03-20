@@ -4,7 +4,7 @@
     @loadmore="$emit('onloadmore')"
     @scroll="onScroll" 
     loadmoreoffset="50" >
-
+    
     <text ref="header"></text>    
     <div 
       class="item" 
@@ -20,10 +20,10 @@
       <div class="item-main">
         <div class="item-title-box">
           <image 
-            src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2745372186,2792558928&fm=58" 
+            src="file:///android_asset/images/tmall-logo.jpg" 
             class="title-icon" 
             style="width:28px;height:28px"
-            v-if="item._istmall == 'true' ? true : false"></image>
+            v-if="item._istmall == 'true'"></image>
           <text class="item-title">{{item.title}}</text>
         </div>
         <!-- 描述标签 -->
@@ -76,7 +76,7 @@
 </template>
 
 <script>
-  import toHeader from "./ToHeader.vue";
+  // import toHeader from "./ToHeader.vue";
   import { store } from "../store.js";
   import { getJumpBaseUrl } from "../util/getJumpBaseUrl.js";
 
@@ -96,6 +96,9 @@
     computed: {
       
     },
+    mounted() {
+      
+    },
     watch: {
       list() {
         if(!this.list.length) {
@@ -103,8 +106,9 @@
         }
       }
     },
+
     components: {
-      toHeader
+      // toHeader
     },
     methods: {
       couponFinalPrice(zk_final_price,coupon_amount) {
@@ -113,7 +117,7 @@
         return _couponFinalPrice
       },
       onToHead() {
-
+        
         dom.scrollToElement(this.$refs.header, { offset: 0, animated: 'true' });
       },
       onScroll(e) {
@@ -317,7 +321,7 @@
     right: 20px;
     width: 80px;
     height: 80px;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, .8);
     border-width: 2px;
     border-color: #ebecee;
     border-radius: 80px;

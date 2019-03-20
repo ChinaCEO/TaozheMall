@@ -24,10 +24,10 @@ export default {
     data() {
       return {
       	posters: [
-      		'444.jpg',
+      		'111.jpg',
           '444.jpg',
-          '444.jpg',
-      		'444.jpg'
+          '333.jpg',
+      		'222.jpg'
       	],
         scrollFlag: !store.state.scrollFlag
       }

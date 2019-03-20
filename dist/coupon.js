@@ -4238,6 +4238,78 @@ module.exports = __vue_exports__
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.formatURL = undefined;
+
+var _cryptoJs = __webpack_require__(17);
+
+var _cryptoJs2 = _interopRequireDefault(_cryptoJs);
+
+var _mallConfig = __webpack_require__(68);
+
+var _mallConfig2 = _interopRequireDefault(_mallConfig);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var formatURL = exports.formatURL = function formatURL(method, _apiOptions) {
+  var appsecret = _mallConfig2.default.AppSecret;
+
+  var _time = new Date();
+
+  // 时间戳
+  var _timestamp = _time.getFullYear() + '-' + (_time.getMonth() + 1 < 10 ? '0' + (_time.getMonth() + 1) : _time.getMonth() + 1) + '-' + (_time.getDate() < 10 ? '0' + _time.getDate() : _time.getDate()) + ' ' + (_time.getHours() < 10 ? '0' + _time.getHours() : _time.getHours()) + ':' + (_time.getMinutes() < 10 ? '0' + _time.getMinutes() : _time.getMinutes()) + ':' + (_time.getSeconds() < 10 ? '0' + _time.getSeconds() : _time.getSeconds());
+
+  var systemOptions = {
+    method: method,
+    timestamp: _timestamp,
+    format: 'json',
+    app_key: _mallConfig2.default.appKey,
+    v: '2.0',
+    sign_method: 'md5'
+  };
+
+  var apiOptions = _apiOptions;
+
+  //合并排序
+  var _optionsArr = [];
+
+  for (var i in systemOptions) {
+    _optionsArr.push(i + systemOptions[i]);
+  }
+
+  for (var j in apiOptions) {
+    _optionsArr.push(j + apiOptions[j]);
+  }
+  _optionsArr.sort();
+
+  var _optionsStr = _optionsArr.join('');
+
+  var _finalOptions = appsecret + _optionsStr + appsecret;
+
+  var sign = _cryptoJs2.default.MD5(_finalOptions).toString().toUpperCase();
+
+  var url = 'http://gw.api.taobao.com/router/rest?sign=' + sign;
+  for (var _i in systemOptions) {
+    url += '&' + _i + '=' + encodeURIComponent(systemOptions[_i]);
+  }
+
+  for (var _j in apiOptions) {
+    url += '&' + _j + '=' + encodeURIComponent(apiOptions[_j]);
+  }
+  url = url.replace(/\%20/g, '+');
+
+  return url;
+};
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -4287,57 +4359,13 @@ var getJumpBaseUrl = exports.getJumpBaseUrl = function getJumpBaseUrl(toUrl, web
 };
 
 /***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(55)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(56)
-
-/* template */
-var __vue_template__ = __webpack_require__(57)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\components\\SearchBar.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-01779c2a"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-
-
-/***/ }),
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
 	if (true) {
 		// CommonJS
-		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(9), __webpack_require__(72), __webpack_require__(73), __webpack_require__(6), __webpack_require__(7), __webpack_require__(11), __webpack_require__(18), __webpack_require__(74), __webpack_require__(19), __webpack_require__(75), __webpack_require__(76), __webpack_require__(77), __webpack_require__(12), __webpack_require__(78), __webpack_require__(3), __webpack_require__(2), __webpack_require__(79), __webpack_require__(80), __webpack_require__(81), __webpack_require__(82), __webpack_require__(83), __webpack_require__(84), __webpack_require__(85), __webpack_require__(86), __webpack_require__(87), __webpack_require__(88), __webpack_require__(89), __webpack_require__(90), __webpack_require__(91), __webpack_require__(92), __webpack_require__(93), __webpack_require__(94));
+		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(9), __webpack_require__(45), __webpack_require__(46), __webpack_require__(6), __webpack_require__(7), __webpack_require__(11), __webpack_require__(18), __webpack_require__(47), __webpack_require__(19), __webpack_require__(48), __webpack_require__(49), __webpack_require__(50), __webpack_require__(12), __webpack_require__(51), __webpack_require__(3), __webpack_require__(2), __webpack_require__(52), __webpack_require__(53), __webpack_require__(54), __webpack_require__(55), __webpack_require__(56), __webpack_require__(57), __webpack_require__(58), __webpack_require__(59), __webpack_require__(60), __webpack_require__(61), __webpack_require__(62), __webpack_require__(63), __webpack_require__(64), __webpack_require__(65), __webpack_require__(66), __webpack_require__(67));
 	}
 	else if (typeof define === "function" && define.amd) {
 		// AMD
@@ -4893,6 +4921,50 @@ var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
+__vue_styles__.push(__webpack_require__(79)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(80)
+
+/* template */
+var __vue_template__ = __webpack_require__(81)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\components\\SearchBar.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-01779c2a"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
 __vue_styles__.push(__webpack_require__(114)
 )
 
@@ -4930,7 +5002,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4952,7 +5024,7 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4974,7 +5046,7 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4996,7 +5068,7 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5018,7 +5090,7 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5036,7 +5108,7 @@ var BLACK_GIF = exports.BLACK_GIF = 'https://img.alicdn.com/tfs/TB1Ep_9NVXXXXb8X
 var PART = exports.PART = 'https://gtms02.alicdn.com/tfs/TB1y4QbSXXXXXbgapXXXXXXXXXX-50-50.gif';
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5058,7 +5130,7 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
@@ -5102,7 +5174,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5165,7 +5237,7 @@ var _wxcIcon = __webpack_require__(182);
 
 var _wxcIcon2 = _interopRequireDefault(_wxcIcon);
 
-var _wxcIndexlist = __webpack_require__(23);
+var _wxcIndexlist = __webpack_require__(24);
 
 var _wxcIndexlist2 = _interopRequireDefault(_wxcIndexlist);
 
@@ -5181,11 +5253,11 @@ var _wxcLotteryRain = __webpack_require__(202);
 
 var _wxcLotteryRain2 = _interopRequireDefault(_wxcLotteryRain);
 
-var _wxcMask = __webpack_require__(24);
+var _wxcMask = __webpack_require__(25);
 
 var _wxcMask2 = _interopRequireDefault(_wxcMask);
 
-var _wxcMinibar = __webpack_require__(26);
+var _wxcMinibar = __webpack_require__(27);
 
 var _wxcMinibar2 = _interopRequireDefault(_wxcMinibar);
 
@@ -5229,7 +5301,7 @@ var _wxcRefresher = __webpack_require__(263);
 
 var _wxcRefresher2 = _interopRequireDefault(_wxcRefresher);
 
-var _wxcResult = __webpack_require__(22);
+var _wxcResult = __webpack_require__(23);
 
 var _wxcResult2 = _interopRequireDefault(_wxcResult);
 
@@ -5237,7 +5309,7 @@ var _wxcRichText = __webpack_require__(268);
 
 var _wxcRichText2 = _interopRequireDefault(_wxcRichText);
 
-var _wxcSearchbar = __webpack_require__(21);
+var _wxcSearchbar = __webpack_require__(22);
 
 var _wxcSearchbar2 = _interopRequireDefault(_wxcSearchbar);
 
@@ -5322,7 +5394,7 @@ exports.WxcTabPage = _wxcTabPage2.default;
 exports.WxcTag = _wxcTag2.default;
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
@@ -5366,78 +5438,6 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 30 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.formatURL = undefined;
-
-var _cryptoJs = __webpack_require__(17);
-
-var _cryptoJs2 = _interopRequireDefault(_cryptoJs);
-
-var _mallConfig = __webpack_require__(95);
-
-var _mallConfig2 = _interopRequireDefault(_mallConfig);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var formatURL = exports.formatURL = function formatURL(method, _apiOptions) {
-  var appsecret = _mallConfig2.default.AppSecret;
-
-  var _time = new Date();
-
-  // 时间戳
-  var _timestamp = _time.getFullYear() + '-' + (_time.getMonth() + 1 < 10 ? '0' + (_time.getMonth() + 1) : _time.getMonth() + 1) + '-' + (_time.getDate() < 10 ? '0' + _time.getDate() : _time.getDate()) + ' ' + (_time.getHours() < 10 ? '0' + _time.getHours() : _time.getHours()) + ':' + (_time.getMinutes() < 10 ? '0' + _time.getMinutes() : _time.getMinutes()) + ':' + (_time.getSeconds() < 10 ? '0' + _time.getSeconds() : _time.getSeconds());
-
-  var systemOptions = {
-    method: method,
-    timestamp: _timestamp,
-    format: 'json',
-    app_key: _mallConfig2.default.appKey,
-    v: '2.0',
-    sign_method: 'md5'
-  };
-
-  var apiOptions = _apiOptions;
-
-  //合并排序
-  var _optionsArr = [];
-
-  for (var i in systemOptions) {
-    _optionsArr.push(i + systemOptions[i]);
-  }
-
-  for (var j in apiOptions) {
-    _optionsArr.push(j + apiOptions[j]);
-  }
-  _optionsArr.sort();
-
-  var _optionsStr = _optionsArr.join('');
-
-  var _finalOptions = appsecret + _optionsStr + appsecret;
-
-  var sign = _cryptoJs2.default.MD5(_finalOptions).toString().toUpperCase();
-
-  var url = 'http://gw.api.taobao.com/router/rest?sign=' + sign;
-  for (var _i in systemOptions) {
-    url += '&' + _i + '=' + encodeURIComponent(systemOptions[_i]);
-  }
-
-  for (var _j in apiOptions) {
-    url += '&' + _j + '=' + encodeURIComponent(apiOptions[_j]);
-  }
-  url = url.replace(/\%20/g, '+');
-
-  return url;
-};
-
-/***/ }),
 /* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5453,7 +5453,7 @@ var _vueRouter = __webpack_require__(32);
 
 var _vueRouter2 = _interopRequireDefault(_vueRouter);
 
-var _index = __webpack_require__(29);
+var _index = __webpack_require__(30);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -5461,7 +5461,7 @@ var _guessLike = __webpack_require__(42);
 
 var _guessLike2 = _interopRequireDefault(_guessLike);
 
-var _home = __webpack_require__(46);
+var _home = __webpack_require__(70);
 
 var _home2 = _interopRequireDefault(_home);
 
@@ -8160,9 +8160,8 @@ exports.default = {
     };
   },
   created: function created() {
-    // this.console = WXEnvironment
-    var domModule = weex.requireModule('dom');
 
+    var domModule = weex.requireModule('dom');
     domModule.addRule('fontFace', {
       'fontFamily': "iconfont",
       'src': "url('http://at.alicdn.com/t/font_1035245_35bmaltzza2.ttf')"
@@ -8300,6 +8299,7 @@ exports.default = {
     }
   }
 }; //
+//
 //
 //
 //
@@ -17820,7 +17820,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["nav-title"],
     class: [this.isActive('category')]
   }, [_vm._v("分类")])]), _c('div', {
-    staticClass: ["nav-item"],
+    staticClass: ["nav-item", "nav-icon"],
     on: {
       "click": function($event) {
         _vm.navTo('find')
@@ -17879,7 +17879,7 @@ __vue_styles__.push(__webpack_require__(43)
 __vue_exports__ = __webpack_require__(44)
 
 /* template */
-var __vue_template__ = __webpack_require__(45)
+var __vue_template__ = __webpack_require__(69)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -17922,16 +17922,22 @@ module.exports = {
     "marginBottom": "90"
   },
   "header": {
-    "position": "sticky",
+    "position": "sticky"
+  },
+  "header-wrapper": {
     "height": "130",
+    "marginTop": 0,
+    "marginRight": "20",
     "marginBottom": "20",
-    "paddingBottom": "20",
-    "backgroundColor": "#ffffff",
-    "alignItems": "center",
-    "justifyContent": "flex-end",
+    "marginLeft": "20",
+    "paddingBottom": "10",
     "borderBottomStyle": "solid",
     "borderBottomWidth": "2",
-    "borderBottomColor": "#ebecee"
+    "borderBottomColor": "#ebecee",
+    "alignItems": "center",
+    "justifyContent": "flex-end",
+    "flex": 1,
+    "backgroundColor": "#ffffff"
   },
   "title": {
     "color": "#fa513a",
@@ -17994,10 +18000,23 @@ module.exports = {
     "color": "#fa513a",
     "fontSize": "32"
   },
+  "toHeader": {
+    "position": "fixed",
+    "bottom": "130",
+    "right": "20",
+    "width": "80",
+    "height": "80",
+    "backgroundColor": "rgba(255,255,255,0.8)",
+    "borderWidth": "2",
+    "borderColor": "#ebecee",
+    "borderRadius": "80",
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
   "footer": {
     "width": "750",
-    "paddingTop": "20",
-    "paddingBottom": "120",
+    "paddingTop": "10",
+    "paddingBottom": "10",
     "alignItems": "center"
   }
 }
@@ -18012,1038 +18031,10 @@ module.exports = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
+var _formatURL = __webpack_require__(15);
 
-exports.default = {
-  data: function data() {
-    return {
-      requestOptions: {
-        method: "taobao.tbk.dg.optimus.material",
-        apiOptions: {
-          adzone_id: "91627500240",
-          page_size: "20",
-          page_no: 1,
-          material_id: "6708"
-        }
-      },
-      columnWidth: "auto",
-      columnCount: "2",
-      columnGap: "10",
-      leftGap: "20",
-      rightGap: "20",
-      loadingFlag: true,
-      items: [{
-        category_id: 50023746,
-        category_name: "体温计类",
-        click_url: "//s.click.taobao.com/t?e=m%3D2%26s%3DnVL5E4rppdRw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0EsBN%2FD%2BZ8A0M442lhkQz4MRnW7dqf4OkaFjVVKZOR0QBIEZKtbQUcmb7bkNi8Ie0jN4kzjJw6gSZiqtwk9j5QNwvQ4T0RclA7WEhA6IWKk6OemaFM5tHHYxZyjQcbVDhcnjRDTsxzJ6dk9aYP2hz6ve4Cgn5XM4A8YOae24fhW0&scm=1007.15348.111883.6708_6700&pvid=cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3;app_pvid:59590_11.23.110.123_12196_1552989534222&union_lens=lensId:0b176e7b_0c6c_1699563b886_524a",
-        commission_rate: "9.03",
-        coupon_amount: 10,
-        coupon_click_url: "//uland.taobao.com/coupon/edetail?e=5%2FiSevi66TANfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoKchaTSYDTypxbRLkrUzillLspxGy3zBjap%2B7s0sowtFKgMoWNET3ayXbsEIRTK1TnLkU4k%2FaBIVWVfKa%2BhVnNDV8WrWfmDkmK2qCdRE7itkpjB6TX2HR3QdnjdIvcxotMG0Q%2BSvjHJNEVXBxWk567U3Auk%2BKUBcwp%2BOHfs5nLQGA%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_524a",
-        coupon_end_time: "1553183999000",
-        coupon_remain_count: 9900,
-        coupon_share_url: "//uland.taobao.com/coupon/edetail?e=5%2FiSevi66TANfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoKchaTSYDTypxbRLkrUzillLspxGy3zBjap%2B7s0sowtFKgMoWNET3ayXbsEIRTK1TnLkU4k%2FaBIVWVfKa%2BhVnNDV8WrWfmDkmK2qCdRE7itkpjB6TX2HR3QdnjdIvcxotMG0Q%2BSvjHJNEVXBxWk567U3Auk%2BKUBcwp%2BOHfs5nLQGA%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_524a",
-        coupon_start_fee: "18.0",
-        coupon_start_time: "1552924800000",
-        coupon_total_count: 10000,
-        item_description: "全身防水 快速测量",
-        item_id: 563557676571,
-        level_one_category_id: 50023717,
-        level_one_category_name: "OTC药品/医疗器械/计生用品",
-        nick: "国大药房旗舰店",
-        pict_url: "//img.alicdn.com/bao/uploaded/i1/469190021/O1CN01HaeFiW1C1ep6pi1dV-469190021.jpg",
-        seller_id: 469190021,
-        shop_title: "国大药房旗舰店",
-        short_title: "电子家用儿童婴儿精准医用体温计",
-        small_images: {
-          string: ["//img.alicdn.com/i3/469190021/O1CN01U1uN4B1C1eoAIeF5B_!!469190021.jpg", "//img.alicdn.com/i2/469190021/TB2FrAjdkfb_uJjSsD4XXaqiFXa_!!469190021.jpg", "//img.alicdn.com/i3/469190021/O1CN011C1emfDE39fqUUt_!!469190021.jpg", "//img.alicdn.com/i1/469190021/O1CN01oXd6mp1C1eoA2qCkS_!!469190021.jpg"]
-        },
-        title: "电子体温计温度计家用儿童婴儿精准体温表器医用备孕无水银红外线",
-        user_type: 1,
-        volume: 3457,
-        white_image: "https://img.alicdn.com/bao/uploaded/TB1.Ix.kOLaK1RjSZFxXXamPFXa.png",
-        zk_final_price: "19.9"
-      }, {
-        category_id: 122382001,
-        category_name: "胎心仪/胎语仪",
-        click_url: "//s.click.taobao.com/t?e=m%3D2%26s%3D18r0VIj5av1w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0EsBN%2FD%2BZ8A0M442lhkQz4MRnW7dqf4OkaFjVVKZOR0QBIEZKtbQUcmb7bkNi8Ie0jN4kzjJw6gSZiqtwk9j5QNKB%2BYy4c6YhGJzEDJY1E3qPsU5I8XltDukOrGae4DS5oO2CiNcVz0KJntg9WHGcVb6DLle6y5JTCGFCzYOOqAQ&scm=1007.15348.111883.6708_6700&pvid=cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3;app_pvid:59590_11.23.110.123_12196_1552989534222&union_lens=lensId:0b176e7b_0c6c_1699563b886_524b",
-        commission_rate: "1.5",
-        coupon_amount: 20,
-        coupon_click_url: "//uland.taobao.com/coupon/edetail?e=VkkRWGJm%2BQINfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoKJTaoRRfVk664u5DC5BHJvLspxGy3zBjap%2B7s0sowtFLaG73G2sK9ShMrpUbm0Esk9x3wfD33383sK1eK%2BmoM1LEsdupsHZWaPCk%2FEqpU8q2BwrqJgfTTnmC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_524b",
-        coupon_end_time: "1554047999000",
-        coupon_remain_count: 29815,
-        coupon_share_url: "//uland.taobao.com/coupon/edetail?e=VkkRWGJm%2BQINfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoKJTaoRRfVk664u5DC5BHJvLspxGy3zBjap%2B7s0sowtFLaG73G2sK9ShMrpUbm0Esk9x3wfD33383sK1eK%2BmoM1LEsdupsHZWaPCk%2FEqpU8q2BwrqJgfTTnmC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_524b",
-        coupon_start_fee: "89.0",
-        coupon_start_time: "1552838400000",
-        coupon_total_count: 30000,
-        item_description: "欧盟CE认证 计数准 无辐射",
-        item_id: 561216572664,
-        level_one_category_id: 50023717,
-        level_one_category_name: "OTC药品/医疗器械/计生用品",
-        nick: "深圳瑞康医疗器械专营店",
-        pict_url: "//img.alicdn.com/bao/uploaded/i2/3433790201/O1CN01yu6gOJ1DM67EIIV3p_!!0-item_pic.jpg",
-        seller_id: 3433790201,
-        shop_title: "深圳瑞康医疗器械专营店",
-        short_title: "孕妇家用宝宝听诊器监护",
-        small_images: {
-          string: ["//img.alicdn.com/i1/3433790201/O1CN01c54vzj1DM65ng1T78_!!3433790201.png", "//img.alicdn.com/i2/3433790201/TB2pSofctfJ8KJjy0FeXXXKEXXa_!!3433790201.jpg", "//img.alicdn.com/i4/3433790201/O1CN01cUjgzZ1DM65qqDrKn_!!3433790201.jpg", "//img.alicdn.com/i4/3433790201/TB2lEubmdcnBKNjSZR0XXcFqFXa_!!3433790201.jpg"]
-        },
-        title: "多普勒胎心监测仪孕妇家用宝宝无辐射测胎儿胎动听胎心听诊器监护",
-        user_type: 1,
-        volume: 9136,
-        white_image: "https://img.alicdn.com/bao/uploaded/TB1CRR1iXzqK1RjSZFowu2fcXXa.png",
-        zk_final_price: "89"
-      }, {
-        category_id: 122388001,
-        category_name: "创口贴",
-        click_url: "//s.click.taobao.com/t?e=m%3D2%26s%3DOsWszZyHERFw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0EsBN%2FD%2BZ8A0M442lhkQz4MRnW7dqf4OkaFjVVKZOR0QBIEZKtbQUcmb7bkNi8Ie0jN4kzjJw6gSZiqtwk9j5QNerBM5mSXVLbFe4idiML%2BAkG2QazC6gqykOrGae4DS5oO2CiNcVz0KNhEcUW%2FgxSTFvQhhbV6BVCGFCzYOOqAQ&scm=1007.15348.111883.6708_6700&pvid=cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3;app_pvid:59590_11.23.110.123_12196_1552989534222&union_lens=lensId:0b176e7b_0c6c_1699563b886_524c",
-        commission_rate: "3.0",
-        coupon_amount: 10,
-        coupon_click_url: "//uland.taobao.com/coupon/edetail?e=KL%2BnjT5lUvENfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoKon%2FRlqAFangB48bcnCwg%2BLspxGy3zBjap%2B7s0sowtFIl9rpS87ZVa4%2FG2twLkYdY9x3wfD33383sK1eK%2BmoM1jXSsLtym2PVcwL%2BOmH81Kxys3sPrR9YQmC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_524c",
-        coupon_end_time: "1553183999000",
-        coupon_remain_count: 98865,
-        coupon_share_url: "//uland.taobao.com/coupon/edetail?e=KL%2BnjT5lUvENfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoKon%2FRlqAFangB48bcnCwg%2BLspxGy3zBjap%2B7s0sowtFIl9rpS87ZVa4%2FG2twLkYdY9x3wfD33383sK1eK%2BmoM1jXSsLtym2PVcwL%2BOmH81Kxys3sPrR9YQmC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_524c",
-        coupon_start_fee: "19.0",
-        coupon_start_time: "1552579200000",
-        coupon_total_count: 100000,
-        item_description: "",
-        item_id: 582560911173,
-        level_one_category_id: 50023717,
-        level_one_category_name: "OTC药品/医疗器械/计生用品",
-        nick: "修正堂大药房旗舰店",
-        pict_url: "//img.alicdn.com/bao/uploaded/i3/1810287826/O1CN01OJ61va27gM7DBF2cb_!!0-item_pic.jpg",
-        seller_id: 1810287826,
-        shop_title: "修正堂大药房旗舰店",
-        short_title: "修正包邮伤口愈合防水透气创口贴",
-        small_images: {
-          string: ["//img.alicdn.com/i4/1810287826/O1CN01DbnSXK27gM5XTO35N_!!1810287826.jpg", "//img.alicdn.com/i1/1810287826/O1CN01i43IPx27gM5WlnXhO_!!1810287826.jpg", "//img.alicdn.com/i4/1810287826/O1CN01aFNEFa27gM5WpteRY_!!1810287826.jpg", "//img.alicdn.com/i1/1810287826/O1CN01BcaqoE27gM5VDaEMe_!!1810287826.jpg"]
-        },
-        title: "修正创口贴包邮伤口愈合创可贴防水透气医用正品防感染输液止血贴",
-        user_type: 1,
-        volume: 16701,
-        white_image: "https://img.alicdn.com/bao/uploaded/O1CN01H1diO127gM5Ye6seJ_!!1810287826.png",
-        zk_final_price: "19.9"
-      }, {
-        category_id: 162404,
-        category_name: "休闲运动套装",
-        click_url: "//s.click.taobao.com/t?e=m%3D2%26s%3DddAqZdo2gnBw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0EsBN%2FD%2BZ8A0M442lhkQz4MRnW7dqf4OkaFjVVKZOR0QBIEZKtbQUcmb7bkNi8Ie0jN4kzjJw6gSZiqtwk9j5QPwdDmZ4my9rMyMZq18kHsY1EwcTchYENqkOrGae4DS5oO2CiNcVz0Ko69PZjHmDHH2Gvi7x7EbqyGFCzYOOqAQ&scm=1007.15348.111883.6708_6700&pvid=cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3;app_pvid:59590_11.23.110.123_12196_1552989534222&union_lens=lensId:0b176e7b_0c6c_1699563b886_524d",
-        commission_rate: "6.0",
-        coupon_amount: 3,
-        coupon_click_url: "//uland.taobao.com/coupon/edetail?e=5r7UT0H8imUNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoKersnHt%2FUAkrHldgUPK29dLspxGy3zBjap%2B7s0sowtFPp7iDdKeRtngC78t7ePqWc9x3wfD33383sK1eK%2BmoM1edvTARQA376sNH2c3oAcshoVe6VYghxMmC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_524d",
-        coupon_end_time: "1553356799000",
-        coupon_remain_count: 8800,
-        coupon_share_url: "//uland.taobao.com/coupon/edetail?e=5r7UT0H8imUNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoKersnHt%2FUAkrHldgUPK29dLspxGy3zBjap%2B7s0sowtFPp7iDdKeRtngC78t7ePqWc9x3wfD33383sK1eK%2BmoM1edvTARQA376sNH2c3oAcshoVe6VYghxMmC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_524d",
-        coupon_start_fee: "22.0",
-        coupon_start_time: "1552752000000",
-        coupon_total_count: 10000,
-        item_description: "瑜伽套装 上衣+ 裤子",
-        item_id: 536521852651,
-        level_one_category_id: 16,
-        level_one_category_name: "女装/女士精品",
-        nick: "showcai雨涵专卖店",
-        pict_url: "//img.alicdn.com/bao/uploaded/i2/2208337972/O1CN01iYtUDm28lDvRQXn2B_!!0-item_pic.jpg",
-        seller_id: 2208337972,
-        shop_title: "showcai雨涵专卖店",
-        short_title: "2019新款春秋运动套装两件套瑜伽服",
-        small_images: {
-          string: ["//img.alicdn.com/i1/2208337972/O1CN01i9oKZp28lDvOZpgYn_!!2208337972.jpg", "//img.alicdn.com/i2/2208337972/O1CN012KPIwX28lDw96Gmut_!!2208337972.jpg", "//img.alicdn.com/i1/2208337972/O1CN01RAWpzm28lDwBX4l5i_!!2208337972.jpg", "//img.alicdn.com/i2/TB10d1gSpXXXXbiaXXXXXXXXXXX_!!0-item_pic.jpg"]
-        },
-        title: "2019新款春秋运动套装速干瑜伽服女跑步两件套健身房短裤短袖夏季",
-        user_type: 1,
-        volume: 1525,
-        white_image: "https://img.alicdn.com/bao/uploaded/O1CN01Mmx0Gk28lDw70tYRQ_!!2-item_pic.png",
-        zk_final_price: "23.9"
-      }, {
-        category_id: 50023753,
-        category_name: "彩色隐形眼镜",
-        click_url: "//s.click.taobao.com/t?e=m%3D2%26s%3DvbWtX0fcXwZw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0EsBN%2FD%2BZ8A0M442lhkQz4MRnW7dqf4OkaFjVVKZOR0QBIEZKtbQUcmb7bkNi8Ie0jN4kzjJw6gSZiqtwk9j5QNerBM5mSXVLWuAOybEx1tjPsU5I8XltDukOrGae4DS5oO2CiNcVz0KOKFUPTXQgeOXedPjYvN8tCGFCzYOOqAQ&scm=1007.15348.111883.6708_6700&pvid=cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3;app_pvid:59590_11.23.110.123_12196_1552989534222&union_lens=lensId:0b176e7b_0c6c_1699563b886_524e",
-        commission_rate: "6.0",
-        coupon_amount: 10,
-        coupon_click_url: "//uland.taobao.com/coupon/edetail?e=1Hvvn6p38WoNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoL9dJLtLNVhBGxcP6bsP9TmLspxGy3zBjap%2B7s0sowtFDVeTp%2FGVtCg%2FslMa2S8EIY9x3wfD33383sK1eK%2BmoM1qCbYt0oeAEu6RjmkDq%2BDpxoVe6VYghxMmC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_524e",
-        coupon_end_time: "1553183999000",
-        coupon_remain_count: 89887,
-        coupon_share_url: "//uland.taobao.com/coupon/edetail?e=1Hvvn6p38WoNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoL9dJLtLNVhBGxcP6bsP9TmLspxGy3zBjap%2B7s0sowtFDVeTp%2FGVtCg%2FslMa2S8EIY9x3wfD33383sK1eK%2BmoM1qCbYt0oeAEu6RjmkDq%2BDpxoVe6VYghxMmC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_524e",
-        coupon_start_fee: "182.0",
-        coupon_start_time: "1552579200000",
-        coupon_total_count: 90000,
-        item_description: "韩国进口 2盒共2片",
-        item_id: 572841800521,
-        level_one_category_id: 50023722,
-        level_one_category_name: "隐形眼镜/护理液",
-        nick: "东仁堂大药房旗舰店",
-        pict_url: "//img.alicdn.com/bao/uploaded/i3/1851171301/O1CN01CNOW7h1LTtmlwmf2B_!!0-item_pic.jpg",
-        seller_id: 1851171301,
-        shop_title: "东仁堂大药房旗舰店",
-        short_title: "merrydolly 2片韩国星空qm隐形眼镜",
-        small_images: {
-          string: ["//img.alicdn.com/i4/1851171301/O1CN01EqyZSW1LTtlHaEnaj_!!1851171301.jpg", "//img.alicdn.com/i1/1851171301/TB2.xhnt5CYBuNkHFCcXXcHtVXa_!!1851171301.jpg", "//img.alicdn.com/i3/1851171301/TB2BWviCgaTBuNjSszfXXXgfpXa_!!1851171301.jpg", "//img.alicdn.com/i4/1851171301/O1CN01oRzyXA1LTtmNDueqB_!!1851171301.jpg"]
-        },
-        title: "Merrydolly 2片韩国进口星空美瞳年抛隐形眼镜小直径13.8mm自然QM",
-        user_type: 1,
-        volume: 107,
-        white_image: "https://img.alicdn.com/bao/uploaded/TB1BkM3Kb2pK1RjSZFsXXaNlXXa.png",
-        zk_final_price: "182"
-      }, {
-        category_id: 50023745,
-        category_name: "血压计（电子血压计）",
-        click_url: "//s.click.taobao.com/t?e=m%3D2%26s%3DU61zsNyNlD1w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0EsBN%2FD%2BZ8A0M442lhkQz4MRnW7dqf4OkaFjVVKZOR0QBIEZKtbQUcmb7bkNi8Ie0jN4kzjJw6gSZiqtwk9j5QPwdDmZ4my9rGU63WkNFh9rxKQVLSayBBflTBm6mOhvTy%2FeXe5PtN%2B1%2Bv5GjHJRsEwRsxvl7VZgNGcB0XPHaGbtomfkDJRs%2BhU%3D&scm=1007.15348.111883.6708_6700&pvid=cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3;app_pvid:59590_11.23.110.123_12196_1552989534222&union_lens=lensId:0b176e7b_0c6c_1699563b886_524f",
-        commission_rate: "0.45",
-        coupon_amount: 10,
-        coupon_click_url: "//uland.taobao.com/coupon/edetail?e=OQiVI9R96%2FwNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoIq2Egu94TeFh6QhEB4EhzALspxGy3zBjaiuj3CzrHp9chouCqZLg4hb50W3SuyD9uxPw3R7jw3LawbAntFj%2BXYEHpTAWQ%2BSRFKtlcJRLR%2FXutw0DEub6x%2FyuIIEoBLnpD9mMU5O377Jpmh%2FBBVAcIuJMJWL7MXalY%2B5%2FaZqrlC%2FMBoPVeAVQEMonv6QcvcARY%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_524f",
-        coupon_end_time: "1553011199000",
-        coupon_remain_count: 960,
-        coupon_share_url: "//uland.taobao.com/coupon/edetail?e=OQiVI9R96%2FwNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoIq2Egu94TeFh6QhEB4EhzALspxGy3zBjaiuj3CzrHp9chouCqZLg4hb50W3SuyD9uxPw3R7jw3LawbAntFj%2BXYEHpTAWQ%2BSRFKtlcJRLR%2FXutw0DEub6x%2FyuIIEoBLnpD9mMU5O377Jpmh%2FBBVAcIuJMJWL7MXalY%2B5%2FaZqrlC%2FMBoPVeAVQEMonv6QcvcARY%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_524f",
-        coupon_start_fee: "119.0",
-        coupon_start_time: "1552924800000",
-        coupon_total_count: 1000,
-        item_description: "语音播报 体位检测",
-        item_id: 532209517496,
-        level_one_category_id: 50023717,
-        level_one_category_name: "OTC药品/医疗器械/计生用品",
-        nick: "鱼跃官方旗舰店",
-        pict_url: "//img.alicdn.com/bao/uploaded/i2/2107759029/O1CN01fS2mnU2GZKaKSnA1S_!!0-item_pic.jpg",
-        seller_id: 2107759029,
-        shop_title: "鱼跃官方旗舰店",
-        short_title: "鱼跃腕式电子ye8900a老人血压计",
-        small_images: {
-          string: ["//img.alicdn.com/i2/2107759029/TB20__cg9FjpuFjSspbXXXagVXa_!!2107759029.jpg", "//img.alicdn.com/i4/2107759029/TB24j50mutTMeFjSZFOXXaTiVXa_!!2107759029.jpg", "//img.alicdn.com/i2/2107759029/TB2IWH5Am8mpuFjSZFMXXaxpVXa_!!2107759029.jpg", "//img.alicdn.com/i2/2107759029/TB2k.T_iCXlpuFjy0FeXXcJbFXa_!!2107759029.jpg"]
-        },
-        title: "鱼跃腕式电子血压计YE8900A老人家用智能全自动语音血压测量仪器",
-        user_type: 1,
-        volume: 4148,
-        white_image: "https://img.alicdn.com/bao/uploaded/TB11frwxfiSBuNkSnhJwu2DcpXa.png",
-        zk_final_price: "119"
-      }, {
-        category_id: 122382001,
-        category_name: "胎心仪/胎语仪",
-        click_url: "//s.click.taobao.com/t?e=m%3D2%26s%3Df16EFGAF5YJw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0EsBN%2FD%2BZ8A0M442lhkQz4MRnW7dqf4OkaFjVVKZOR0QBIEZKtbQUcmb7bkNi8Ie0jN4kzjJw6gSZiqtwk9j5QNKB%2BYy4c6YhGTi7Vs7hnX0PsU5I8XltDukOrGae4DS5oO2CiNcVz0KYqhh%2BhWpoEq4cJiffr99tiGFCzYOOqAQ&scm=1007.15348.111883.6708_6700&pvid=cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3;app_pvid:59590_11.23.110.123_12196_1552989534222&union_lens=lensId:0b176e7b_0c6c_1699563b886_5250",
-        commission_rate: "0.66",
-        coupon_amount: 20,
-        coupon_click_url: "//uland.taobao.com/coupon/edetail?e=l8UkLxXnCHgNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoLkMJBVs8w3YcRR%2BCTk6UBULspxGy3zBjap%2B7s0sowtFF24XZZL0%2B67hgVYFVmZz3c9x3wfD33383sK1eK%2BmoM1YBX%2BekFYnYn5x%2FmVVLjm2tWC1L4prmAlmC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_5250",
-        coupon_end_time: "1561910399000",
-        coupon_remain_count: 29990,
-        coupon_share_url: "//uland.taobao.com/coupon/edetail?e=l8UkLxXnCHgNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoLkMJBVs8w3YcRR%2BCTk6UBULspxGy3zBjap%2B7s0sowtFF24XZZL0%2B67hgVYFVmZz3c9x3wfD33383sK1eK%2BmoM1YBX%2BekFYnYn5x%2FmVVLjm2tWC1L4prmAlmC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_5250",
-        coupon_start_fee: "100.0",
-        coupon_start_time: "1552147200000",
-        coupon_total_count: 50000,
-        item_description: "20年专业品牌 医院专用 声音清晰 辐射0",
-        item_id: 564865933717,
-        level_one_category_id: 50023717,
-        level_one_category_name: "OTC药品/医疗器械/计生用品",
-        nick: "孕康医疗器械专营店",
-        pict_url: "//img.alicdn.com/bao/uploaded/i2/3172291471/O1CN01d8avM81Mjl7MTnX3P_!!0-item_pic.jpg",
-        seller_id: 3172291471,
-        shop_title: "孕康医疗器械专营店",
-        short_title: "孕妇家用宝宝听胎心监护胎心监测仪",
-        small_images: {
-          string: ["//img.alicdn.com/i2/3172291471/O1CN01XDmUJZ1Mjl5YLseAk_!!3172291471.jpg", "//img.alicdn.com/i1/3172291471/TB27BP6XamWBuNkHFJHXXaatVXa_!!3172291471.jpg", "//img.alicdn.com/i4/3172291471/O1CN011Mjl4tX6akgrZmK_!!3172291471.jpg", "//img.alicdn.com/i1/3172291471/O1CN011Mjl4yON7XCiYC7_!!3172291471.jpg"]
-        },
-        title: "胎心监测仪孕妇家用多普勒无辐射测胎儿胎动宝宝听胎心听诊器监护",
-        user_type: 1,
-        volume: 39294,
-        white_image: "https://img.alicdn.com/bao/uploaded/TB1dnlfg6TpK1RjSZKPwu13UpXa.png",
-        zk_final_price: "109"
-      }, {
-        category_id: 122366003,
-        category_name: "拔罐器（器械）",
-        click_url: "//s.click.taobao.com/t?e=m%3D2%26s%3DdyHV%2FC66XxFw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0EsBN%2FD%2BZ8A0M442lhkQz4MRnW7dqf4OkaFjVVKZOR0QBIEZKtbQUcmb7bkNi8Ie0jN4kzjJw6gSZiqtwk9j5QPwdDmZ4my9rFYzwTxbGl280a3u46RXbtekOrGae4DS5oO2CiNcVz0Kv%2Bg%2FLSNxLzZSfgAeR60YWSGFCzYOOqAQ&scm=1007.15348.111883.6708_6700&pvid=cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3;app_pvid:59590_11.23.110.123_12196_1552989534222&union_lens=lensId:0b176e7b_0c6c_1699563b886_5251",
-        commission_rate: "15.0",
-        coupon_amount: 10,
-        coupon_click_url: "//uland.taobao.com/coupon/edetail?e=LeoPVpL4i2sNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoJdxoIph4mjvXt9ataF1C3bLspxGy3zBjap%2B7s0sowtFJcTwc2Ek4YYdDawvhk2HC09x3wfD33383sK1eK%2BmoM16Kw5abhHqG1rWtBXNGEEVJbFv%2FggkfIHmC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_5251",
-        coupon_end_time: "1553097599000",
-        coupon_remain_count: 49000,
-        coupon_share_url: "//uland.taobao.com/coupon/edetail?e=LeoPVpL4i2sNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoJdxoIph4mjvXt9ataF1C3bLspxGy3zBjap%2B7s0sowtFJcTwc2Ek4YYdDawvhk2HC09x3wfD33383sK1eK%2BmoM16Kw5abhHqG1rWtBXNGEEVJbFv%2FggkfIHmC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_5251",
-        coupon_start_fee: "15.0",
-        coupon_start_time: "1552924800000",
-        coupon_total_count: 50000,
-        item_description: "送运费险 破损包赔 气罐火罐 多款可选",
-        item_id: 531037112848,
-        level_one_category_id: 50023717,
-        level_one_category_name: "OTC药品/医疗器械/计生用品",
-        nick: "锦康旗舰店",
-        pict_url: "//img.alicdn.com/bao/uploaded/i1/2774011618/O1CN01s4GTzs1Np5LFpX2bE_!!0-item_pic.jpg",
-        seller_id: 2774011618,
-        shop_title: "锦康旗舰店",
-        short_title: "拨真空家用抽气式拔火罐玻璃医用罐",
-        small_images: {
-          string: ["//img.alicdn.com/i4/2774011618/TB2OQMmmvImBKNjSZFlXXc43FXa_!!2774011618.jpg", "//img.alicdn.com/i1/2774011618/TB2B3JKAMKTBuNkSne1XXaJoXXa_!!2774011618.jpg", "//img.alicdn.com/i1/2774011618/TB2JNjybPrguuRjy0FeXXXcbFXa_!!2774011618.jpg", "//img.alicdn.com/i1/2774011618/TB2tL21AxuTBuNkHFNRXXc9qpXa_!!2774011618.jpg"]
-        },
-        title: "拨气罐真空拔罐器家用抽气式拔火罐玻璃医用专用罐祛湿正品24套装",
-        user_type: 1,
-        volume: 17705,
-        white_image: "https://img.alicdn.com/bao/uploaded/TB1ZvL4kYZnBKNjSZFhwu3.oXXa.png",
-        zk_final_price: "15.8"
-      }, {
-        category_id: 50023744,
-        category_name: "血糖用品",
-        click_url: "//s.click.taobao.com/t?e=m%3D2%26s%3Dt%2Fu3Aw2gbVJw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0EsBN%2FD%2BZ8A0M442lhkQz4MRnW7dqf4OkaFjVVKZOR0QBIEZKtbQUcmb7bkNi8Ie0jN4kzjJw6gSZiqtwk9j5QPwdDmZ4my9rENRzrc7wgUNkG2QazC6gqykOrGae4DS5oO2CiNcVz0KN3EzfmM%2Fj8drq6py09BIiSGFCzYOOqAQ&scm=1007.15348.111883.6708_6700&pvid=cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3;app_pvid:59590_11.23.110.123_12196_1552989534222&union_lens=lensId:0b176e7b_0c6c_1699563b886_5252",
-        commission_rate: "0.6",
-        coupon_amount: 5,
-        coupon_click_url: "//uland.taobao.com/coupon/edetail?e=vadO79LYMNYNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoJZ5iVZO5cexHQv1lLM9KunLspxGy3zBjap%2B7s0sowtFF0xEJcYse0uvkOAPAS39zU9x3wfD33383sK1eK%2BmoM1drZQ1oHaKdbLYBGb%2B%2F9zOxoVe6VYghxMmC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_5252",
-        coupon_end_time: "1554047999000",
-        coupon_remain_count: 8310,
-        coupon_share_url: "//uland.taobao.com/coupon/edetail?e=vadO79LYMNYNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoJZ5iVZO5cexHQv1lLM9KunLspxGy3zBjap%2B7s0sowtFF0xEJcYse0uvkOAPAS39zU9x3wfD33383sK1eK%2BmoM1drZQ1oHaKdbLYBGb%2B%2F9zOxoVe6VYghxMmC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_5252",
-        coupon_start_fee: "90.0",
-        coupon_start_time: "1551974400000",
-        coupon_total_count: 9999,
-        item_description: "语音免调码 独立包装试纸",
-        item_id: 553045894951,
-        level_one_category_id: 50023717,
-        level_one_category_name: "OTC药品/医疗器械/计生用品",
-        nick: "海璐医疗器械专营店",
-        pict_url: "//img.alicdn.com/bao/uploaded/i2/2881452126/TB1gFRgSVXXXXaQXpXXXXXXXXXX_!!0-item_pic.jpg",
-        seller_id: 2881452126,
-        shop_title: "海璐医疗器械专营店",
-        short_title: "ga-6型血糖试条三诺语音血糖仪试纸",
-        small_images: {
-          string: ["//img.alicdn.com/i3/2881452126/TB2EDUSwrJmpuFjSZFwXXaE4VXa_!!2881452126.jpg", "//img.alicdn.com/i2/2881452126/TB2f1cUArBmpuFjSZFAXXaQ0pXa_!!2881452126.jpg", "//img.alicdn.com/i2/2881452126/TB2zzIQaKZkyKJjSszbXXblwFXa_!!2881452126.jpg", "//img.alicdn.com/i2/2881452126/TB2J.dzwUdnpuFjSZPhXXbChpXa_!!2881452126.jpg"]
-        },
-        title: "GA-6型血糖试条 三诺语音血糖仪试纸50片送针头 家用独立装测试片",
-        user_type: 1,
-        volume: 47,
-        white_image: "https://img.alicdn.com/bao/uploaded/TB1N6RIncIrBKNjSZK9wu1goVXa.png",
-        zk_final_price: "109"
-      }, {
-        category_id: 122352002,
-        category_name: "助听器",
-        click_url: "//s.click.taobao.com/t?e=m%3D2%26s%3D8GizsbWzToVw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0EsBN%2FD%2BZ8A0M442lhkQz4MRnW7dqf4OkaFjVVKZOR0QBIEZKtbQUcmb7bkNi8Ie0jN4kzjJw6gSZiqtwk9j5QPwdDmZ4my9rI4GplNfkAgzMTCWoEhssUykOrGae4DS5oO2CiNcVz0KN7rdc0cm%2FNiakFi27fjG8iGFCzYOOqAQ&scm=1007.15348.111883.6708_6700&pvid=cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3;app_pvid:59590_11.23.110.123_12196_1552989534222&union_lens=lensId:0b176e7b_0c6c_1699563b886_5253",
-        commission_rate: "0.45",
-        coupon_amount: 10,
-        coupon_click_url: "//uland.taobao.com/coupon/edetail?e=OqNmS77Am2INfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoL%2FNG6aMcA08xoUFKdXXL5kLspxGy3zBjap%2B7s0sowtFMfroEH%2FEbNMXsou0An%2BtNI9x3wfD33383sK1eK%2BmoM1Dy7zW0g2HKhS9lbAy4JHwjAH9YwF2XnjmC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_5253",
-        coupon_end_time: "1553443199000",
-        coupon_remain_count: 15000,
-        coupon_share_url: "//uland.taobao.com/coupon/edetail?e=OqNmS77Am2INfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoL%2FNG6aMcA08xoUFKdXXL5kLspxGy3zBjap%2B7s0sowtFMfroEH%2FEbNMXsou0An%2BtNI9x3wfD33383sK1eK%2BmoM1Dy7zW0g2HKhS9lbAy4JHwjAH9YwF2XnjmC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_5253",
-        coupon_start_fee: "99.0",
-        coupon_start_time: "1552752000000",
-        coupon_total_count: 20000,
-        item_description: "USB充电式 一键操作 1小时快充 可用48小时",
-        item_id: 575065896889,
-        level_one_category_id: 50023717,
-        level_one_category_name: "OTC药品/医疗器械/计生用品",
-        nick: "可孚医疗器械旗舰店",
-        pict_url: "//img.alicdn.com/bao/uploaded/i4/2697170250/O1CN01BSzvN91DiXWV6xeGT_!!0-item_pic.jpg",
-        seller_id: 2697170250,
-        shop_title: "可孚医疗器械旗舰店",
-        short_title: "可孚助听器无线耳背式老年人耳机",
-        small_images: {
-          string: ["//img.alicdn.com/i1/2697170250/O1CN01ikVlmK1DiXVzMw8dL_!!2697170250.jpg", "//img.alicdn.com/i4/2697170250/O1CN010OQzzN1DiXVxzy13R_!!2697170250.jpg", "//img.alicdn.com/i3/2697170250/O1CN01wzRAOi1DiXW1dsFH1_!!2697170250.jpg", "//img.alicdn.com/i4/2697170250/O1CN01M9AUik1DiXVyxp5L8_!!2697170250.jpg"]
-        },
-        title: "可孚助听器老人专用无线耳聋耳背式老年人正品耳机可充电款年轻人",
-        user_type: 1,
-        volume: 530,
-        white_image: "https://img.alicdn.com/bao/uploaded/TB13KQ.kXYqK1RjSZLeXXbXppXa.png",
-        zk_final_price: "109"
-      }, {
-        category_id: 50023753,
-        category_name: "彩色隐形眼镜",
-        click_url: "//s.click.taobao.com/t?e=m%3D2%26s%3DGUJvQSuvjSdw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0EsBN%2FD%2BZ8A0M442lhkQz4MRnW7dqf4OkaFjVVKZOR0QBIEZKtbQUcmb7bkNi8Ie0jN4kzjJw6gSZiqtwk9j5QNerBM5mSXVLQIZd%2BYl6hjoPsU5I8XltDukOrGae4DS5oO2CiNcVz0KZZ%2FriYh38VcgMjDZS6V6YSGFCzYOOqAQ&scm=1007.15348.111883.6708_6700&pvid=cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3;app_pvid:59590_11.23.110.123_12196_1552989534222&union_lens=lensId:0b176e7b_0c6c_1699563b886_5254",
-        commission_rate: "6.09",
-        coupon_amount: 5,
-        coupon_click_url: "//uland.taobao.com/coupon/edetail?e=o0vVKWQrqPQNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoLlZAwpo7NC4ZySbrI23h9aLspxGy3zBjap%2B7s0sowtFPvGrMuBsvaNyX80CJmbyeQ9x3wfD33383sK1eK%2BmoM1tbhaTgX9Ox5pOx5vpNFxukwYlDaMGQm8mC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_5254",
-        coupon_end_time: "1554047999000",
-        coupon_remain_count: 4649,
-        coupon_share_url: "//uland.taobao.com/coupon/edetail?e=o0vVKWQrqPQNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoLlZAwpo7NC4ZySbrI23h9aLspxGy3zBjap%2B7s0sowtFPvGrMuBsvaNyX80CJmbyeQ9x3wfD33383sK1eK%2BmoM1tbhaTgX9Ox5pOx5vpNFxukwYlDaMGQm8mC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_5254",
-        coupon_start_fee: "106.0",
-        coupon_start_time: "1550505600000",
-        coupon_total_count: 5000,
-        item_description: "收藏加购买一副送USOFT大理石伴侣盒+护理液",
-        item_id: 580338384086,
-        level_one_category_id: 50023722,
-        level_one_category_name: "隐形眼镜/护理液",
-        nick: "金天慈济大药房旗舰店",
-        pict_url: "//img.alicdn.com/bao/uploaded/i2/1865970101/O1CN01gzU7ln1CcIVVZLOmM_!!0-item_pic.jpg",
-        seller_id: 1865970101,
-        shop_title: "金天慈济大药房旗舰店",
-        short_title: "usoft女男士大小直径混血cos美瞳",
-        small_images: {
-          string: ["//img.alicdn.com/i3/1865970101/O1CN01LopXC81CcIVOIpxFC_!!1865970101.jpg", "//img.alicdn.com/i4/1865970101/O1CN01EAtQzl1CcIVDkpgI4_!!1865970101.jpg", "//img.alicdn.com/i1/1865970101/O1CN01amOnPh1CcIVIJbQ8g_!!1865970101.jpg", "//img.alicdn.com/i4/1865970101/O1CN01zXHbzH1CcIVW45Geu_!!1865970101.jpg"]
-        },
-        title: "USOFT美瞳年抛女男士大小直径混血cos学生欧美正品自然网红同款us",
-        user_type: 1,
-        volume: 4541,
-        white_image: "https://img.alicdn.com/bao/uploaded/O1CN01uPhBmG1CcIUjscLXj_!!2-item_pic.png",
-        zk_final_price: "108"
-      }, {
-        category_id: 50023745,
-        category_name: "血压计（电子血压计）",
-        click_url: "//s.click.taobao.com/t?e=m%3D2%26s%3DX3Kp38Y58Oxw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0EsBN%2FD%2BZ8A0M442lhkQz4MRnW7dqf4OkaFjVVKZOR0QBIEZKtbQUcmb7bkNi8Ie0jN4kzjJw6gSZiqtwk9j5QNKB%2BYy4c6YhDo5VENde7OV9OSfRI2eAoOkOrGae4DS5oO2CiNcVz0K6zHt5WLTRG1363mk66udCSGFCzYOOqAQ&scm=1007.15348.111883.6708_6700&pvid=cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3;app_pvid:59590_11.23.110.123_12196_1552989534222&union_lens=lensId:0b176e7b_0c6c_1699563b886_5255",
-        commission_rate: "3.0",
-        coupon_amount: 5,
-        coupon_click_url: "//uland.taobao.com/coupon/edetail?e=Qtr9u9aUs9gNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoIMqMHUfjGOavLirupQV0%2FELspxGy3zBjap%2B7s0sowtFEGYepWUh06AOZes12Ajhlw9x3wfD33383sK1eK%2BmoM1YBX%2BekFYnYlWJMTZELiU%2FUwYlDaMGQm8mC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_5255",
-        coupon_end_time: "1554047999000",
-        coupon_remain_count: 918,
-        coupon_share_url: "//uland.taobao.com/coupon/edetail?e=Qtr9u9aUs9gNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoIMqMHUfjGOavLirupQV0%2FELspxGy3zBjap%2B7s0sowtFEGYepWUh06AOZes12Ajhlw9x3wfD33383sK1eK%2BmoM1YBX%2BekFYnYlWJMTZELiU%2FUwYlDaMGQm8mC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_5255",
-        coupon_start_fee: "69.0",
-        coupon_start_time: "1552233600000",
-        coupon_total_count: 1000,
-        item_description: "台式水银血压计搭配听诊器 便携",
-        item_id: 564921484306,
-        level_one_category_id: 50023717,
-        level_one_category_name: "OTC药品/医疗器械/计生用品",
-        nick: "天赐医疗器械专营店",
-        pict_url: "//img.alicdn.com/bao/uploaded/i1/3693683844/O1CN011Bm3y11eGayteT1eX_!!0-item_pic.jpg",
-        seller_id: 3693683844,
-        shop_title: "天赐医疗器械专营店",
-        short_title: "鱼跃水银家用台式量血压老人血压计",
-        small_images: {
-          string: ["//img.alicdn.com/i3/3693683844/TB2jgMka1GSBuNjSspbXXciipXa_!!3693683844.jpg", "//img.alicdn.com/i1/3693683844/TB2njb8a3mTBuNjy1XbXXaMrVXa_!!3693683844.jpg", "//img.alicdn.com/i3/3693683844/TB2D5o4dkKWBuNjy1zjXXcOypXa_!!3693683844.jpg", "//img.alicdn.com/i3/3693683844/TB2DhpZm8jTBKNjSZFDXXbVgVXa_!!3693683844.jpg"]
-        },
-        title: "鱼跃水银血压计家用台式量血压老人上臂式手动医用高精准测量仪器",
-        user_type: 1,
-        volume: 116,
-        white_image: "https://img.alicdn.com/bao/uploaded/TB1BIMrxiOYBuNjSsD4wu2SkFXa.png",
-        zk_final_price: "108"
-      }, {
-        category_id: 122366003,
-        category_name: "拔罐器（器械）",
-        click_url: "//s.click.taobao.com/t?e=m%3D2%26s%3DNXu0xiwuFmNw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0EsBN%2FD%2BZ8A0M442lhkQz4MRnW7dqf4OkaFjVVKZOR0QBIEZKtbQUcmb7bkNi8Ie0jN4kzjJw6gSZiqtwk9j5QPwdDmZ4my9rFrtls5Kk5p0MTCWoEhssUykOrGae4DS5oO2CiNcVz0Kue8FBzwWg3Tg3y5yuJ72MiGFCzYOOqAQ&scm=1007.15348.111883.6708_6700&pvid=cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3;app_pvid:59590_11.23.110.123_12196_1552989534222&union_lens=lensId:0b176e7b_0c6c_1699563b886_5256",
-        commission_rate: "6.0",
-        coupon_amount: 5,
-        coupon_click_url: "//uland.taobao.com/coupon/edetail?e=LMjrVpQQpZwNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoKC1Z1F73ST4jCauhZ9qEhDLspxGy3zBjap%2B7s0sowtFAKw8Wh4g9lozqp0Fh97BcE9x3wfD33383sK1eK%2BmoM1edvTARQA377tL%2Fs%2Bw1DzQBLAZ153OQpMmC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_5256",
-        coupon_end_time: "1553443199000",
-        coupon_remain_count: 4650,
-        coupon_share_url: "//uland.taobao.com/coupon/edetail?e=LMjrVpQQpZwNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoKC1Z1F73ST4jCauhZ9qEhDLspxGy3zBjap%2B7s0sowtFAKw8Wh4g9lozqp0Fh97BcE9x3wfD33383sK1eK%2BmoM1edvTARQA377tL%2Fs%2Bw1DzQBLAZ153OQpMmC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_5256",
-        coupon_start_fee: "25.0",
-        coupon_start_time: "1552838400000",
-        coupon_total_count: 5000,
-        item_description: "十六罐装 买一送九 加厚防爆 证件齐全",
-        item_id: 536382753030,
-        level_one_category_id: 50023717,
-        level_one_category_name: "OTC药品/医疗器械/计生用品",
-        nick: "保益真聚盈专卖店",
-        pict_url: "//img.alicdn.com/bao/uploaded/i3/2949948750/O1CN01LzZOV42EVY51fkqJb_!!0-item_pic.jpg",
-        seller_id: 2949948750,
-        shop_title: "保益真聚盈专卖店",
-        short_title: "真空抽气式拔火罐子玻璃医用家用罐",
-        small_images: {
-          string: ["//img.alicdn.com/i2/2949948750/O1CN01CU0aYc2EVY54w4OXi_!!2949948750.jpg", "//img.alicdn.com/i3/TB1f14OSXXXXXbZaXXXXXXXXXXX_!!0-item_pic.jpg", "//img.alicdn.com/i4/2949948750/TB2s.GKtFXXXXc_XpXXXXXXXXXX_!!2949948750.jpg", "//img.alicdn.com/i1/2949948750/TB2Qm2DtFXXXXXbXXXXXXXXXXXX_!!2949948750.jpg"]
-        },
-        title: "真空拔罐器抽气式拔火罐子玻璃医用专用罐家用吸湿祛湿罐套装气罐",
-        user_type: 1,
-        volume: 17775,
-        white_image: "https://img.alicdn.com/bao/uploaded/TB24rjauHJkpuFjy1zcXXa5FFXa_!!2949948750.jpg",
-        zk_final_price: "25.9"
-      }, {
-        category_id: 50023744,
-        category_name: "血糖用品",
-        click_url: "//s.click.taobao.com/t?e=m%3D2%26s%3DFW8oKVMMhHRw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0EsBN%2FD%2BZ8A0M442lhkQz4MRnW7dqf4OkaFjVVKZOR0QBIEZKtbQUcmb7bkNi8Ie0jN4kzjJw6gSZiqtwk9j5QPwdDmZ4my9rGU63WkNFh9rxKQVLSayBBekOrGae4DS5oO2CiNcVz0KmsiN3Mh4q3QyIyojOErJuSGFCzYOOqAQ&scm=1007.15348.111883.6708_6700&pvid=cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3;app_pvid:59590_11.23.110.123_12196_1552989534222&union_lens=lensId:0b176e7b_0c6c_1699563b886_5257",
-        commission_rate: "1.5",
-        coupon_amount: 20,
-        coupon_click_url: "//uland.taobao.com/coupon/edetail?e=2Nx449A0%2BZsNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoITmnJdLvMnkl3zi%2FJwHcZZLspxGy3zBjap%2B7s0sowtFCKst10VXfD3X0tThSlxJ%2F49x3wfD33383sK1eK%2BmoM1UWLEOhxIkMaCtv9CUlhl48z%2BqQ6G6CH%2BmC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_5257",
-        coupon_end_time: "1553011199000",
-        coupon_remain_count: 1660,
-        coupon_share_url: "//uland.taobao.com/coupon/edetail?e=2Nx449A0%2BZsNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoITmnJdLvMnkl3zi%2FJwHcZZLspxGy3zBjap%2B7s0sowtFCKst10VXfD3X0tThSlxJ%2F49x3wfD33383sK1eK%2BmoM1UWLEOhxIkMaCtv9CUlhl48z%2BqQ6G6CH%2BmC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_5257",
-        coupon_start_fee: "129.0",
-        coupon_start_time: "1552924800000",
-        coupon_total_count: 2000,
-        item_description: "语音背光 多仓发货",
-        item_id: 525263567975,
-        level_one_category_id: 50023717,
-        level_one_category_name: "OTC药品/医疗器械/计生用品",
-        nick: "鱼跃官方旗舰店",
-        pict_url: "//img.alicdn.com/bao/uploaded/i3/2107759029/O1CN01lvMys42GZKaJwTn0t_!!0-item_pic.jpg",
-        seller_id: 2107759029,
-        shop_title: "鱼跃官方旗舰店",
-        short_title: "鱼跃血糖测试仪家用准确测血糖试纸",
-        small_images: {
-          string: ["//img.alicdn.com/i2/2107759029/TB2moQoXjTpK1RjSZKPXXa3UpXa_!!2107759029.jpg", "//img.alicdn.com/i1/2107759029/TB2jAZoXUcKL1JjSZFzXXcfJXXa_!!2107759029.jpg", "//img.alicdn.com/i4/2107759029/TB2AB1ta3MPMeJjy1XcXXXpppXa_!!2107759029.jpg", "//img.alicdn.com/i3/2107759029/TB2Y96UbVzqK1RjSZFvXXcB7VXa_!!2107759029.jpg"]
-        },
-        title: "鱼跃血糖测试仪家用准确测血糖的仪器100片装试纸医用语音血糖仪",
-        user_type: 1,
-        volume: 18648,
-        white_image: "https://img.alicdn.com/bao/uploaded/TB1VUDyJVXXXXbgXFXXSutbFXXX.jpg",
-        zk_final_price: "129"
-      }, {
-        category_id: 122352002,
-        category_name: "助听器",
-        click_url: "//s.click.taobao.com/t?e=m%3D2%26s%3DTR7Z868z6A5w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0EsBN%2FD%2BZ8A0M442lhkQz4MRnW7dqf4OkaFjVVKZOR0QBIEZKtbQUcmb7bkNi8Ie0jN4kzjJw6gSZiqtwk9j5QNKB%2BYy4c6YhPB3CFw1RQBlkG2QazC6gqyREjEiL0p2TupL9cJfNfu1kb5%2FcYLpZa44hbzRhXNo7cYl7w3%2FA2kb&scm=1007.15348.111883.6708_6700&pvid=cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3;app_pvid:59590_11.23.110.123_12196_1552989534222&union_lens=lensId:0b176e7b_0c6c_1699563b886_5258",
-        commission_rate: "1.35",
-        coupon_amount: 10,
-        coupon_click_url: "//uland.taobao.com/coupon/edetail?e=m1FHRx2BFGMNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoI2buxEwzjmShikxpVg2lDBLspxGy3zBjabsHb27MbosUmOjeq4FTO9v%2Bcz8CTN%2BCw7YnVxqpRr68HNjehmIwzAj%2F4sdtHZ%2BsIPSQ0Q2VOOPZga1OuSZZ3KnK6Lr1gmC3aoA3mqFm%2FhG7dea2vOIj1fWE%2Fa2iS1tte1Z01ujxanbiUzVkkdwsIm&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_5258",
-        coupon_end_time: "1568131199000",
-        coupon_remain_count: 98645,
-        coupon_share_url: "//uland.taobao.com/coupon/edetail?e=m1FHRx2BFGMNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoI2buxEwzjmShikxpVg2lDBLspxGy3zBjabsHb27MbosUmOjeq4FTO9v%2Bcz8CTN%2BCw7YnVxqpRr68HNjehmIwzAj%2F4sdtHZ%2BsIPSQ0Q2VOOPZga1OuSZZ3KnK6Lr1gmC3aoA3mqFm%2FhG7dea2vOIj1fWE%2Fa2iS1tte1Z01ujxanbiUzVkkdwsIm&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_5258",
-        coupon_start_fee: "129.0",
-        coupon_start_time: "1552147200000",
-        coupon_total_count: 100000,
-        item_description: "USB充电 配双层耳帽 高低频 配3C认证充电器",
-        item_id: 580331628154,
-        level_one_category_id: 50023717,
-        level_one_category_name: "OTC药品/医疗器械/计生用品",
-        nick: "俏康医疗器械旗舰店",
-        pict_url: "//img.alicdn.com/bao/uploaded/i4/3028776476/O1CN01lN7e5j1xi3QEky3j3_!!0-item_pic.jpg",
-        seller_id: 3028776476,
-        shop_title: "俏康医疗器械旗舰店",
-        short_title: "助听器老人耳聋无线隐形中老年耳机",
-        small_images: {
-          string: ["//img.alicdn.com/i3/3028776476/O1CN014newwT1xi3OqNa7xH_!!3028776476.jpg", "//img.alicdn.com/i2/3028776476/O1CN01k5hmx91xi3OrPnkrU_!!3028776476.jpg", "//img.alicdn.com/i3/3028776476/O1CN011xi3ObVsBlJgodK_!!0-item_pic.jpg", "//img.alicdn.com/i1/3028776476/O1CN01HEH0jh1xi3OageeyZ_!!0-item_pic.jpg"]
-        },
-        title: "助听器老人专用耳聋耳背无线隐形可充电式中老年听力下降耳机正品",
-        user_type: 1,
-        volume: 3620,
-        white_image: "https://img.alicdn.com/bao/uploaded/O1CN01y0raRL1xi3Oq0Z1Kb_!!3028776476.png",
-        zk_final_price: "139"
-      }, {
-        category_id: 50023733,
-        category_name: "肠胃用药",
-        click_url: "//s.click.taobao.com/t?e=m%3D2%26s%3D210qBYLLeDhw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0EsBN%2FD%2BZ8A0M442lhkQz4MRnW7dqf4OkaFjVVKZOR0QBIEZKtbQUcmb7bkNi8Ie0jN4kzjJw6gSZiqtwk9j5QNKB%2BYy4c6YhKWeCDdYTEljPsU5I8XltDvlTBm6mOhvTy%2FeXe5PtN%2B1%2Bv5GjHJRsEyVwxYWouejPn1hui2tn8znomfkDJRs%2BhU%3D&scm=1007.15348.111883.6708_6700&pvid=cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3;app_pvid:59590_11.23.110.123_12196_1552989534222&union_lens=lensId:0b176e7b_0c6c_1699563b886_5259",
-        commission_rate: "0.45",
-        coupon_amount: 10,
-        coupon_click_url: "//uland.taobao.com/coupon/edetail?e=50GuwtA7tFUNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoI6TgA28DHngerAqz0n5ZoTLspxGy3zBjaiuj3CzrHp9chouCqZLg4hbFSlJuuSgFROoUdhnhAwvqwbAntFj%2BXYEHpTAWQ%2BSRFKtlcJRLR%2FXpPA5hpWM98O02ThoTomskf9mMU5O377Jpmh%2FBBVAcIuJMJWL7MXalY%2B5%2FaZqrlC%2FMBoPVeAVQEMonv6QcvcARY%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_5259",
-        coupon_end_time: "1553097599000",
-        coupon_remain_count: 28458,
-        coupon_share_url: "//uland.taobao.com/coupon/edetail?e=50GuwtA7tFUNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoI6TgA28DHngerAqz0n5ZoTLspxGy3zBjaiuj3CzrHp9chouCqZLg4hbFSlJuuSgFROoUdhnhAwvqwbAntFj%2BXYEHpTAWQ%2BSRFKtlcJRLR%2FXpPA5hpWM98O02ThoTomskf9mMU5O377Jpmh%2FBBVAcIuJMJWL7MXalY%2B5%2FaZqrlC%2FMBoPVeAVQEMonv6QcvcARY%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_5259",
-        coupon_start_fee: "42.0",
-        coupon_start_time: "1552579200000",
-        coupon_total_count: 30000,
-        item_description: "",
-        item_id: 564228956994,
-        level_one_category_id: 50023717,
-        level_one_category_name: "OTC药品/医疗器械/计生用品",
-        nick: "云南白药医药旗舰店",
-        pict_url: "//img.alicdn.com/bao/uploaded/i2/3684508281/O1CN01hamgW62B2kKAluf2u_!!0-item_pic.jpg",
-        seller_id: 3684508281,
-        shop_title: "云南白药医药旗舰店",
-        short_title: "云南白药健胃消食片36片肠胃不适",
-        small_images: {
-          string: ["//img.alicdn.com/i4/2928278102/TB2yc.TbwxlpuFjSszbXXcSVpXa_!!2928278102.jpg", "//img.alicdn.com/i3/2928278102/TB2m4kMbBNkpuFjy0FaXXbRCVXa_!!2928278102.jpg", "//img.alicdn.com/i2/2928278102/TB2RcL5b4xmpuFjSZFNXXXrRXXa_!!2928278102.jpg", "//img.alicdn.com/i3/2928278102/TB2sCIWbB0kpuFjy1XaXXaFkVXa_!!2928278102.jpg"]
-        },
-        title: "云南白药健胃消食片36片肠胃不适消化不良 腹胀厌食没食欲",
-        user_type: 1,
-        volume: 164,
-        white_image: "https://img.alicdn.com/bao/uploaded/TB1lrsOl9zqK1RjSZPcXXbTepXa.png",
-        zk_final_price: "51"
-      }, {
-        category_id: 50023753,
-        category_name: "彩色隐形眼镜",
-        click_url: "//s.click.taobao.com/t?e=m%3D2%26s%3DXLXKIcwaKW5w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0EsBN%2FD%2BZ8A0M442lhkQz4MRnW7dqf4OkaFjVVKZOR0QBIEZKtbQUcmb7bkNi8Ie0jN4kzjJw6gSZiqtwk9j5QNseQsrwh2IlICJG9ShUpNjOemaFM5tHHYxZyjQcbVDhcnjRDTsxzJ6CIVLRF%2BlM63Cs0dSDUwZ5sYOae24fhW0&scm=1007.15348.111883.6708_6700&pvid=cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3;app_pvid:59590_11.23.110.123_12196_1552989534222&union_lens=lensId:0b176e7b_0c6c_1699563b886_525a",
-        commission_rate: "7.5",
-        coupon_amount: 20,
-        coupon_click_url: "//uland.taobao.com/coupon/edetail?e=SApQn3F8fjsNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoIH0GGfxSjDKPOrqTCEoJS1LspxGy3zBjap%2B7s0sowtFBjgyUlHUOwnCTToRPSSo6fLkU4k%2FaBIVWVfKa%2BhVnNDVG6Ar4Ylkxj3z9FbSWrT%2BJjB6TX2HR3QdnjdIvcxotMG0Q%2BSvjHJNEVXBxWk567U3Auk%2BKUBcwp%2BOHfs5nLQGA%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_525a",
-        coupon_end_time: "1553529599000",
-        coupon_remain_count: 20000,
-        coupon_share_url: "//uland.taobao.com/coupon/edetail?e=SApQn3F8fjsNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoIH0GGfxSjDKPOrqTCEoJS1LspxGy3zBjap%2B7s0sowtFBjgyUlHUOwnCTToRPSSo6fLkU4k%2FaBIVWVfKa%2BhVnNDVG6Ar4Ylkxj3z9FbSWrT%2BJjB6TX2HR3QdnjdIvcxotMG0Q%2BSvjHJNEVXBxWk567U3Auk%2BKUBcwp%2BOHfs5nLQGA%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_525a",
-        coupon_start_fee: "59.0",
-        coupon_start_time: "1552924800000",
-        coupon_total_count: 20000,
-        item_description: "买一送二（送护理液+伴侣盒）收藏加购优先",
-        item_id: 524858530046,
-        level_one_category_id: 50023722,
-        level_one_category_name: "隐形眼镜/护理液",
-        nick: "健客大药房旗舰店",
-        pict_url: "//img.alicdn.com/bao/uploaded/i2/720248198/O1CN01WytEvg2AQjRW9GoEX_!!0-item_pic.jpg",
-        seller_id: 720248198,
-        shop_title: "健客大药房旗舰店",
-        short_title: "可啦啦女年抛cos正品13.8 mm美瞳",
-        small_images: {
-          string: ["//img.alicdn.com/i2/720248198/O1CN01E8ixDq2AQjQx4uq24_!!0-item_pic.jpg", "//img.alicdn.com/i1/720248198/TB2Rk5AcHXlpuFjSszfXXcSGXXa_!!720248198.jpg", "//img.alicdn.com/i1/720248198/TB2cC5Fh4BmpuFjSZFDXXXD8pXa_!!720248198.jpg", "//img.alicdn.com/i1/720248198/TB2a0Zwh_nI8KJjy0FfXXcdoVXa_!!720248198.jpg"]
-        },
-        title: "可啦啦美瞳女年抛cos正品大小直径混血欧美网红学生13.8mm自然KLL",
-        user_type: 1,
-        volume: 2083,
-        white_image: "https://img.alicdn.com/bao/uploaded/TB1D0DmqHZnBKNjSZFGwu2t3FXa.png",
-        zk_final_price: "59.9"
-      }, {
-        category_id: 50023745,
-        category_name: "血压计（电子血压计）",
-        click_url: "//s.click.taobao.com/t?e=m%3D2%26s%3DvxtED8x6KMhw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0EsBN%2FD%2BZ8A0M442lhkQz4MRnW7dqf4OkaFjVVKZOR0QBIEZKtbQUcmb7bkNi8Ie0jN4kzjJw6gSZiqtwk9j5QPwdDmZ4my9rHpLXFOXiny4%2FUe0eKE%2FTC%2BREjEiL0p2TupL9cJfNfu1F7aka%2BimCavX50XYpdyy8sYl7w3%2FA2kb&scm=1007.15348.111883.6708_6700&pvid=cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3;app_pvid:59590_11.23.110.123_12196_1552989534222&union_lens=lensId:0b176e7b_0c6c_1699563b886_525b",
-        commission_rate: "1.35",
-        coupon_amount: 20,
-        coupon_click_url: "//uland.taobao.com/coupon/edetail?e=GOMNR0%2BRmZYNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoLPeTvkZtxnXzy%2FeAQkocQhLspxGy3zBjabsHb27MbosdBgdDAyagZiAQTtD2aUoFU7YnVxqpRr68HNjehmIwzAj%2F4sdtHZ%2BsJHoW0Q41ZT9y3r63zxoM58nK6Lr1gmC3aoA3mqFm%2FhG7dea2vOIj1fWE%2Fa2iS1tte1Z01ujxanbiUzVkkdwsIm&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_525b",
-        coupon_end_time: "1553183999000",
-        coupon_remain_count: 27300,
-        coupon_share_url: "//uland.taobao.com/coupon/edetail?e=GOMNR0%2BRmZYNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoLPeTvkZtxnXzy%2FeAQkocQhLspxGy3zBjabsHb27MbosdBgdDAyagZiAQTtD2aUoFU7YnVxqpRr68HNjehmIwzAj%2F4sdtHZ%2BsJHoW0Q41ZT9y3r63zxoM58nK6Lr1gmC3aoA3mqFm%2FhG7dea2vOIj1fWE%2Fa2iS1tte1Z01ujxanbiUzVkkdwsIm&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_525b",
-        coupon_start_fee: "45.0",
-        coupon_start_time: "1552492800000",
-        coupon_total_count: 30000,
-        item_description: "语音播报 大屏显示 血压偏高提醒",
-        item_id: 530097487831,
-        level_one_category_id: 50023717,
-        level_one_category_name: "OTC药品/医疗器械/计生用品",
-        nick: "康榜医疗器械专营店",
-        pict_url: "//img.alicdn.com/bao/uploaded/i3/2765020133/O1CN01i4dthj1CqxBP18aYR_!!0-item_pic.jpg",
-        seller_id: 2765020133,
-        shop_title: "康榜医疗器械专营店",
-        short_title: "鱼跃医用测电子家用压全自动血压计",
-        small_images: {
-          string: ["//img.alicdn.com/i2/2765020133/TB2kKjpXVOWBuNjy0FiXXXFxVXa_!!2765020133.jpg", "//img.alicdn.com/i2/2765020133/TB2TtXwXL5TBuNjSspmXXaDRVXa_!!2765020133.jpg", "//img.alicdn.com/i2/2765020133/TB2Fz4wXKuSBuNjSsziXXbq8pXa_!!2765020133.jpg", "//img.alicdn.com/i4/2765020133/TB2oC8qXFmWBuNjSspdXXbugXXa_!!2765020133.jpg"]
-        },
-        title: "鱼跃医用测电子家用压全自动高精准老人上臂式量血压计测量表仪器",
-        user_type: 1,
-        volume: 17614,
-        white_image: "https://img.alicdn.com/bao/uploaded/TB17nhrkVzqK1RjSZSgXXcpAVXa.png",
-        zk_final_price: "158"
-      }, {
-        category_id: 50023744,
-        category_name: "血糖用品",
-        click_url: "//s.click.taobao.com/t?e=m%3D2%26s%3D93jWVAhqxmZw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0EsBN%2FD%2BZ8A0M442lhkQz4MRnW7dqf4OkaFjVVKZOR0QBIEZKtbQUcmb7bkNi8Ie0jN4kzjJw6gSZiqtwk9j5QPwdDmZ4my9rEX6NpiMAhxH%2FUe0eKE%2FTC%2BkOrGae4DS5oO2CiNcVz0Kbo6oS5xz866LHo1W%2BVGxjSGFCzYOOqAQ&scm=1007.15348.111883.6708_6700&pvid=cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3;app_pvid:59590_11.23.110.123_12196_1552989534222&union_lens=lensId:0b176e7b_0c6c_1699563b886_525c",
-        commission_rate: "9.0",
-        coupon_amount: 15,
-        coupon_click_url: "//uland.taobao.com/coupon/edetail?e=jczaJx9e5KsNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoL0sq9aH5EdW%2FLgeiGZr8q%2FLspxGy3zBjap%2B7s0sowtFJVVA%2Fs9O0CnrpjFGx%2F7wG89x3wfD33383sK1eK%2BmoM1yDSgYkxVB0phLvtDXBfZylczc8NzSMFMmC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_525c",
-        coupon_end_time: "1553529599000",
-        coupon_remain_count: 9998,
-        coupon_share_url: "//uland.taobao.com/coupon/edetail?e=jczaJx9e5KsNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoL0sq9aH5EdW%2FLgeiGZr8q%2FLspxGy3zBjap%2B7s0sowtFJVVA%2Fs9O0CnrpjFGx%2F7wG89x3wfD33383sK1eK%2BmoM1yDSgYkxVB0phLvtDXBfZylczc8NzSMFMmC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_525c",
-        coupon_start_fee: "40.0",
-        coupon_start_time: "1552924800000",
-        coupon_total_count: 9999,
-        item_description: "终身售后维护 语音免调码 试纸全新效期",
-        item_id: 541187255882,
-        level_one_category_id: 50023717,
-        level_one_category_name: "OTC药品/医疗器械/计生用品",
-        nick: "怡成旗舰店",
-        pict_url: "//img.alicdn.com/bao/uploaded/i1/2827988893/O1CN01qj5M2S2FZ2icXDp86_!!0-item_pic.jpg",
-        seller_id: 2827988893,
-        shop_title: "怡成旗舰店",
-        short_title: "怡成血糖测试仪家用测血糖血糖试纸",
-        small_images: {
-          string: ["//img.alicdn.com/i1/2827988893/O1CN01PhTuub2FZ2gk44nlY_!!2827988893.jpg", "//img.alicdn.com/i1/2827988893/O1CN01VGHNvs2FZ2htQ01ZV_!!2827988893.jpg", "//img.alicdn.com/i3/2827988893/O1CN01WIqiMY2FZ2ge3AopQ_!!2827988893.png", "//img.alicdn.com/i2/2827988893/TB2.uoAXfHlJuJjSZFtXXad7FXa_!!2827988893.jpg"]
-        },
-        title: "怡成血糖测试仪家用测血糖的仪器5DM2A血糖试纸全自动检测100片装",
-        user_type: 1,
-        volume: 3159,
-        white_image: "https://img.alicdn.com/bao/uploaded/TB1ZArRAqmWBuNjy1Xawu0CbXXa.png",
-        zk_final_price: "69"
-      }, {
-        category_id: 122388001,
-        category_name: "创口贴",
-        click_url: "//s.click.taobao.com/t?e=m%3D2%26s%3DWhNl6fd3%2FOFw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0EsBN%2FD%2BZ8A0M442lhkQz4MRnW7dqf4OkaFjVVKZOR0QBIEZKtbQUcmb7bkNi8Ie0jN4kzjJw6gSZiqtwk9j5QNKB%2BYy4c6YhFDbSJQGi9sB9OSfRI2eAoOkOrGae4DS5oO2CiNcVz0KB1W4tytQ0wYLntwp9NBkyCGFCzYOOqAQ&scm=1007.15348.111883.6708_6700&pvid=cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3;app_pvid:59590_11.23.110.123_12196_1552989534222&union_lens=lensId:0b176e7b_0c6c_1699563b886_525d",
-        commission_rate: "6.0",
-        coupon_amount: 3,
-        coupon_click_url: "//uland.taobao.com/coupon/edetail?e=mFzGlyifg8YNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoIpHVCAvnWAITSW%2BOFGdsWgLspxGy3zBjap%2B7s0sowtFApRPj3DgnOdBdZjnFpU7aQ9x3wfD33383sK1eK%2BmoM1Q8m430sY8xKdCB%2BJh8uwxsz%2BqQ6G6CH%2BmC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_525d",
-        coupon_end_time: "1553183999000",
-        coupon_remain_count: 98991,
-        coupon_share_url: "//uland.taobao.com/coupon/edetail?e=mFzGlyifg8YNfLV8niU3R5TgU2jJNKOfNNtsjZw%2F%2FoIpHVCAvnWAITSW%2BOFGdsWgLspxGy3zBjap%2B7s0sowtFApRPj3DgnOdBdZjnFpU7aQ9x3wfD33383sK1eK%2BmoM1Q8m430sY8xKdCB%2BJh8uwxsz%2BqQ6G6CH%2BmC3IsIXp9czttC3L0yN889SpwvW46gosU%2FYXjjeFK4wCGruttYDvNg%3D%3D&&app_pvid=59590_11.23.110.123_12196_1552989534222&ptl=floorId:6700;app_pvid:59590_11.23.110.123_12196_1552989534222;tpp_pvid:cbc7de19-80a1-40ca-a9cd-085ca3d1e6a3&union_lens=lensId:0b176e7b_0c6c_1699563b886_525d",
-        coupon_start_fee: "12.0",
-        coupon_start_time: "1552492800000",
-        coupon_total_count: 100000,
-        item_description: "100片大包装 2018年11月后出厂，有效到2021",
-        item_id: 576583163885,
-        level_one_category_id: 50023717,
-        level_one_category_name: "OTC药品/医疗器械/计生用品",
-        nick: "上御医疗器械专营店",
-        pict_url: "//img.alicdn.com/bao/uploaded/i3/3402737564/TB2umdGwpkoBKNjSZFkXXb4tFXa_!!3402737564-0-item_pic.jpg",
-        seller_id: 3402737564,
-        shop_title: "上御医疗器械专营店",
-        short_title: "云南白药泰邦透气止血弹性创可贴",
-        small_images: {
-          string: ["//img.alicdn.com/i1/3402737564/TB2tJV.uiQnBKNjSZFmXXcApVXa_!!3402737564.jpg", "//img.alicdn.com/i3/3402737564/TB2wbqqtYwrBKNjSZPcXXXpapXa_!!3402737564.jpg", "//img.alicdn.com/i4/3402737564/TB2oMpnuljTBKNjSZFNXXasFXXa_!!3402737564.jpg", "//img.alicdn.com/i3/3402737564/TB25FdGuiMnBKNjSZFzXXc_qVXa_!!3402737564.jpg"]
-        },
-        title: "云南白药创可贴泰邦弹性创可贴透气止血防磨脚弹性创口贴100片包",
-        user_type: 1,
-        volume: 11588,
-        white_image: "https://img.alicdn.com/bao/uploaded/TB2lPtkubZnBKNjSZFKXXcGOVXa_!!3402737564.png",
-        zk_final_price: "12.9"
-      }]
-    };
-  },
-
-  components: {},
-  methods: {
-    couponFinalPrice: function couponFinalPrice(zk_final_price, coupon_amount) {
-
-      var _couponFinalPrice = Math.round(zk_final_price * 100 - coupon_amount * 100) / 100;
-      return _couponFinalPrice;
-    }
-  }
-};
-
-/***/ }),
-/* 45 */
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('waterfall', {
-    ref: "guessLike",
-    staticClass: ["guess-like"],
-    attrs: {
-      "showScrollbar": "false",
-      "columnWidth": _vm.columnWidth,
-      "columnCount": _vm.columnCount,
-      "columnGap": _vm.columnGap,
-      "leftGap": _vm.leftGap,
-      "rightGap": _vm.rightGap
-    }
-  }, [_c('header', {
-    staticClass: ["header"],
-    appendAsTree: true,
-    attrs: {
-      "append": "tree"
-    }
-  }, [_c('text', {
-    staticClass: ["title"]
-  }, [_vm._v("猜你喜欢")])]), _vm._l((_vm.items), function(item) {
-    return _c('cell', {
-      key: item.num_iid,
-      ref: 'item' + item.num_iid,
-      refInFor: true,
-      staticClass: ["cell"],
-      appendAsTree: true,
-      attrs: {
-        "append": "tree"
-      }
-    }, [_c('div', {
-      staticClass: ["item"],
-      attrs: {
-        "couponUrl": item.coupon_click_url
-      },
-      on: {
-        "click": _vm.itemOnClick
-      }
-    }, [_c('image', {
-      staticClass: ["item-photo"],
-      attrs: {
-        "src": item.white_image ? item.white_image : item.pict_url,
-        "resize": "cover"
-      }
-    }), _c('text', {
-      staticClass: ["item-title"]
-    }, [_vm._v(_vm._s(item.title))]), _c('div', {
-      staticClass: ["item-price-box"]
-    }, [_c('div', {
-      staticClass: ["coupon"]
-    }, [_c('text', {
-      staticClass: ["iconfont", "coupon-icon"]
-    }, [_vm._v("")]), _c('text', {
-      staticClass: ["coupon-text"]
-    }, [_vm._v(_vm._s(item.coupon_amount) + "元")])]), _c('div', {
-      staticClass: ["price"]
-    }, [_c('text', {
-      staticClass: ["zk-price-txt"]
-    }, [_vm._v("折后价")]), _c('text', {
-      staticClass: ["zk-price-num"]
-    }, [_vm._v("￥" + _vm._s(_vm.couponFinalPrice(item.zk_final_price, item.coupon_amount)))])])])])])
-  }), _c('header', {
-    ref: "footer",
-    staticClass: ["footer"],
-    appendAsTree: true,
-    attrs: {
-      "append": "tree"
-    },
-    on: {
-      "appear": _vm.onloadmore
-    }
-  }, [(_vm.loadingFlag) ? _c('image', {
-    staticStyle: {
-      width: "70px",
-      height: "70px"
-    },
-    attrs: {
-      "src": "file:///android_asset/images/loading.gif"
-    }
-  }) : _c('text', {
-    staticClass: ["indicator-text"]
-  }, [_vm._v("没有更多了...")])])], 2)
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-
-/***/ }),
-/* 46 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(47)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(48)
-
-/* template */
-var __vue_template__ = __webpack_require__(96)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\pages\\home.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-324fb87d"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-
-
-/***/ }),
-/* 47 */
-/***/ (function(module, exports) {
-
-module.exports = {
-  "iconfont": {
-    "color": "#ff6000",
-    "fontSize": "40",
-    "fontFamily": "iconfont"
-  },
-  "water-fall": {
-    "marginBottom": "90"
-  },
-  "sticky-header": {
-    "position": "sticky"
-  },
-  "sticky-header-box": {
-    "flexDirection": "row",
-    "alignItems": "flex-end",
-    "justifyContent": "center",
-    "height": "130",
-    "paddingBottom": "20",
-    "backgroundColor": "rgba(250,81,58,0.9)"
-  },
-  "sticky-header-scroll": {
-    "position": "absolute",
-    "top": 0
-  },
-  "logo": {
-    "fontSize": "24",
-    "backgroundColor": "rgba(51,51,51,0.5)",
-    "width": "70",
-    "height": "70",
-    "alignItems": "center",
-    "justifyContent": "center",
-    "borderRadius": "70"
-  },
-  "logo-letter": {
-    "fontSize": "20",
-    "color": "#ffffff"
-  },
-  "main-title-box": {
-    "paddingTop": "15",
-    "paddingRight": "15",
-    "paddingBottom": "15",
-    "paddingLeft": "15",
-    "marginTop": 0,
-    "marginRight": "20",
-    "marginBottom": "20",
-    "marginLeft": "20",
-    "borderBottomWidth": "3",
-    "borderBottomStyle": "solid",
-    "borderBottomColor": "#ebecee",
-    "alignItems": "center"
-  },
-  "main-title": {
-    "color": "#333333",
-    "fontSize": "36"
-  },
-  "cell": {
-    "paddingTop": "6",
-    "paddingBottom": "6"
-  },
-  "item": {
-    "backgroundColor": "#ffffff",
-    "borderWidth": "2",
-    "borderColor": "#ebecee"
-  },
-  "item-photo": {
-    "height": "360",
-    "marginTop": "1",
-    "marginRight": "1",
-    "marginBottom": 0,
-    "marginLeft": "1"
-  },
-  "item-title": {
-    "marginTop": "10",
-    "marginRight": "10",
-    "marginBottom": "10",
-    "marginLeft": "10",
-    "fontSize": 26,
-    "fontWeight": "500",
-    "lines": 2,
-    "textOverflow": "ellipsis"
-  },
-  "item-price-box": {
-    "flexDirection": "row",
-    "paddingBottom": "10",
-    "marginRight": "10",
-    "marginLeft": "10",
-    "alignItems": "center",
-    "justifyContent": "space-between"
-  },
-  "coupon": {
-    "flexDirection": "row",
-    "alignItems": "center"
-  },
-  "coupon-icon": {
-    "marginRight": "2"
-  },
-  "coupon-text": {
-    "color": "#fe9f92",
-    "fontSize": "24"
-  },
-  "price": {
-    "flexDirection": "row",
-    "alignItems": "center"
-  },
-  "zk-price-txt": {
-    "color": "#666666",
-    "fontSize": "24"
-  },
-  "zk-price-num": {
-    "color": "#fa513a",
-    "fontSize": "32"
-  },
-  "water-footer": {
-    "alignItems": "center",
-    "paddingTop": "20",
-    "paddingRight": "20",
-    "paddingBottom": "20",
-    "paddingLeft": "20"
-  },
-  "water-footer-text": {
-    "fontSize": "30"
-  },
-  "loading": {
-    "width": "750",
-    "height": "200",
-    "MsFlexAlign": "center",
-    "WebkitAlignItems": "center",
-    "WebkitBoxAlign": "center",
-    "alignItems": "center"
-  },
-  "indicator-text": {
-    "color": "#bbbbbb",
-    "fontSize": "20",
-    "textAlign": "center"
-  },
-  "loading-indicator": {
-    "width": "40",
-    "height": "40",
-    "color": "#bbbbbb"
-  },
-  "toHeader": {
-    "position": "fixed",
-    "bottom": "130",
-    "right": "20",
-    "width": "80",
-    "height": "80",
-    "backgroundColor": "#ffffff",
-    "borderWidth": "2",
-    "borderColor": "#ebecee",
-    "borderRadius": "80",
-    "alignItems": "center",
-    "justifyContent": "center"
-  },
-  "footer": {
-    "width": "750",
-    "paddingTop": "20",
-    "paddingBottom": "120",
-    "alignItems": "center"
-  }
-}
-
-/***/ }),
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _Banner = __webpack_require__(49);
-
-var _Banner2 = _interopRequireDefault(_Banner);
-
-var _Chunks = __webpack_require__(60);
-
-var _Chunks2 = _interopRequireDefault(_Chunks);
-
-var _Onsale = __webpack_require__(64);
-
-var _Onsale2 = _interopRequireDefault(_Onsale);
-
-var _ScollerRow = __webpack_require__(68);
-
-var _ScollerRow2 = _interopRequireDefault(_ScollerRow);
-
-var _SearchBar = __webpack_require__(16);
-
-var _SearchBar2 = _interopRequireDefault(_SearchBar);
-
-var _store = __webpack_require__(8);
-
-var _formatURL = __webpack_require__(30);
-
-var _getJumpBaseUrl = __webpack_require__(15);
-
-var _cryptoJs = __webpack_require__(17);
-
-var _cryptoJs2 = _interopRequireDefault(_cryptoJs);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var dom = weex.requireModule("dom"); //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+var getImei = weex.requireModule('getImei'); //
 //
 //
 //
@@ -19092,157 +18083,74 @@ var dom = weex.requireModule("dom"); //
 //
 
 var stream = weex.requireModule("stream");
-var animation = weex.requireModule("animation");
-var navigator = weex.requireModule("navigator-pri");
 var modal = weex.requireModule('modal');
+var dom = weex.requireModule("dom");
+
 exports.default = {
   data: function data() {
     return {
       requestOptions: {
-        method: "taobao.tbk.dg.item.coupon.get",
+        method: "taobao.tbk.dg.optimus.material",
         apiOptions: {
           adzone_id: "91627500240",
-          platform: "2",
-          page_size: "40",
-          page_no: 1
+          page_size: "20",
+          page_no: 1,
+          material_id: "6708",
+          device_value: '',
+          device_encrypt: '	MD5',
+          device_type: 'IMEI'
         }
       },
-      items: [],
       columnWidth: "auto",
       columnCount: "2",
       columnGap: "10",
       leftGap: "20",
       rightGap: "20",
-      console: "",
-      scrollFlag: false,
-      // headerShow: true,
-      headOpacity: 0,
-      loadingFlag: true, // 控制底部加载状态
+      loadingFlag: true,
+      items: [],
       toHeaderBtnFlag: false,
-      footerFlag: false,
-      upNumId: "",
-      upFlag: false
+      console: ''
     };
   },
 
-  components: {
-    Banner: _Banner2.default,
-    Chunks: _Chunks2.default,
-    Onsale: _Onsale2.default,
-    ScollerRow: _ScollerRow2.default,
-    SearchBar: _SearchBar2.default
-  },
-  created: function created() {
+  components: {},
+  beforeMount: function beforeMount() {
+    var _this = this;
 
-    var self = this;
-    var url = (0, _formatURL.formatURL)(this.requestOptions.method, this.requestOptions.apiOptions);
-    this.footerFlag = false;
-    stream.fetch({
-      method: "GET",
-      url: url,
-      type: "json"
-    }, function (res) {
-      try {
-        if (res.data) {
-          var items = res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon;
-          self.items = self.couponInfoDeal(items);
-        } else {
-          self.footerFlag = true;
-        }
-      } catch (err) {
-        console.log(err);
+    getImei.getIMEI(function (res) {
+      if (res && res != '000000000000000') {
+        _this.requestOptions.apiOptions.device_value = res;
+      } else {
+        _this.requestOptions.apiOptions.device_value = '';
+        _this.requestOptions.apiOptions.device_encrypt = '';
+        _this.requestOptions.apiOptions.device_type = '';
       }
     });
-  },
-  mounted: function mounted() {},
-  updated: function updated(e) {
-    if (this.upFlag) {
-      var el = this.$refs[this.upNumId][0];
-      dom.scrollToElement(el, { offset: -950, animated: false });
-      this.upFlag = false;
-    }
+
+    this.fetch(function (res) {
+
+      if (res.data.tbk_dg_optimus_material_response) {
+        var data = res.data.tbk_dg_optimus_material_response.result_list.map_data;
+        _this.items = data;
+      } else {
+        _this.loadingFlag = false;
+        modal.toast({
+          message: '网络异常',
+          duration: 0.3
+        });
+      }
+    }, function (err) {
+      _this.loadingFlag = false;
+      modal.toast({
+        message: '网络异常',
+        duration: 0.3
+      });
+    });
   },
 
   methods: {
-    couponInfoDeal: function couponInfoDeal(items) {
-      items.forEach(function (item, i) {
-        var _coupon_info = "";
-        // 记录"减的位置"
-        var jianPos = item.coupon_info.search("减");
-        _coupon_info = item.coupon_info.slice(jianPos + 1);
-        items[i].coupon_info = _coupon_info;
-      });
-      return items;
-    },
-    onScroll: function onScroll(e) {
-      // console.log(e)
-      // this.console = this.$refs.waterfall
-      e.contentOffset.y < -1000 ? this.toHeaderBtnFlag = true : this.toHeaderBtnFlag = false;
-      if (e.contentOffset.y < -110) {
-        this.scrollFlag = true;
-        _store.store.commit("changeScrollFlag", true);
-        if (this.headOpacity <= 1) {
-          this.headOpacity = (Math.abs(e.contentOffset.y) - 110) / 250;
-        } else {
-          this.headOpacity = 1;
-        }
-      } else {
-        this.scrollFlag = false;
-        _store.store.commit("changeScrollFlag", false);
-        // dom.scrollToElement(this.$refs.header,{offset:0,animated:false})
-      }
-    },
-
-    // onloading(e) {
-    //   this.loadingFlag = true;
-    //   this.footerFlag = false;
-    //   this.requestOptions.apiOptions.page_no++;
-    //   let self = this;
-    //   let url = formatURL(
-    //     this.requestOptions.method,
-    //     this.requestOptions.apiOptions
-    //   );
-
-    //   try {
-    //     stream.fetch(
-    //       {
-    //         method: "GET",
-    //         url: url,
-    //         type: "json"
-    //       },
-    //       res => {
-    //         if (res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon) {
-    //           let items =
-    //             res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon;
-    //           items = self.couponInfoDeal(items);
-    //           items.forEach(item => {
-    //             self.items.push(item);
-    //           });
-    //           self.loadingFlag = false;
-    //           self.upNumId = "item" + items[0].num_iid;
-    //           self.upFlag = true;
-
-    //           // let p = getComponentRect('viewport')
-    //           // dom.scrollToElement(el,{offset:0,animated:true})
-    //         } else {
-    //           self.footerFlag = true;
-    //         }
-    //       }
-    //     );
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-
-    //   setTimeout(() => {
-    //     this.loadingFlag = false;
-    //     // this.footerFlag = true
-    //   }, 5000);
-    // },
-    onloadmore: function onloadmore() {
-      var _this = this;
-
-      this.footerFlag = true;
-      this.requestOptions.apiOptions.page_no++;
+    // 公共方法
+    fetch: function fetch(seccCallback, errCallback) {
 
       var url = (0, _formatURL.formatURL)(this.requestOptions.method, this.requestOptions.apiOptions);
 
@@ -19252,1509 +18160,50 @@ exports.default = {
           url: url,
           type: "json"
         }, function (res) {
-          if (res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon) {
-            var items = res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon;
-            items = _this.couponInfoDeal(items);
-            items.forEach(function (item) {
-              _this.items.push(item);
-            });
-          } else {
-            _this.footerFlag = false;
+          if (typeof seccCallback === "function") {
+            seccCallback(res);
           }
         });
       } catch (err) {
-        this.footerFlag = false;
+        if (typeof errCallback === "function") {
+          errCallback(err);
+        }
       }
+    },
+    couponFinalPrice: function couponFinalPrice(zk_final_price, coupon_amount) {
+
+      var _couponFinalPrice = Math.round(zk_final_price * 100 - coupon_amount * 100) / 100;
+      return _couponFinalPrice;
+    },
+    onScroll: function onScroll(e) {
+
+      e.contentOffset.y < -1000 ? this.toHeaderBtnFlag = true : this.toHeaderBtnFlag = false;
     },
     onToHeader: function onToHeader(e) {
       dom.scrollToElement(this.$refs.header, { offset: 0, animated: 'true' });
     },
-    itemOnClick: function itemOnClick(e) {
-      var couponUrl = e.currentTarget.attr.couponUrl;
-      _store.store.commit("setCouponUrl", couponUrl);
+    onloadmore: function onloadmore() {
+      var _this2 = this;
 
-      navigator.push({
-        url: (0, _getJumpBaseUrl.getJumpBaseUrl)("coupon", couponUrl),
-        animated: "true"
+      this.requestOptions.apiOptions.page_no++;
+      this.fetch(function (res) {
+        if (res.data.tbk_dg_optimus_material_response) {
+          var data = res.data.tbk_dg_optimus_material_response.result_list.map_data;
+          data.forEach(function (el) {
+            _this2.items.push(el);
+          });
+        } else {
+          _this2.loadingFlag = false;
+        }
+      }, function (err) {
+        _this2.loadingFlag = false;
       });
     }
   }
 };
 
 /***/ }),
-/* 49 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(50)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(51)
-
-/* template */
-var __vue_template__ = __webpack_require__(59)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\components\\Banner.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-ff942d88"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-
-
-/***/ }),
-/* 50 */
-/***/ (function(module, exports) {
-
-module.exports = {
-  "banner": {
-    "alignItems": "center",
-    "position": "relative"
-  },
-  "size": {
-    "width": "750",
-    "height": "500",
-    "borderRadius": "-100"
-  },
-  "slider": {
-    "position": "relative"
-  },
-  "indicator": {
-    "position": "absolute",
-    "left": 0,
-    "right": 0,
-    "bottom": "40",
-    "height": "40",
-    "itemColor": "#f8f8f8",
-    "itemSelectedColor": "#fa513a",
-    "itemSize": "8"
-  },
-  "footer-mask": {
-    "alignItems": "center",
-    "position": "absolute",
-    "bottom": "-2"
-  },
-  "footer-mask-img": {
-    "width": "800",
-    "height": "20"
-  }
-}
-
-/***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _StickyHeader = __webpack_require__(52);
-
-var _StickyHeader2 = _interopRequireDefault(_StickyHeader);
-
-var _store = __webpack_require__(8);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-exports.default = {
-  data: function data() {
-    return {
-      posters: ['444.jpg', '444.jpg', '444.jpg', '444.jpg'],
-      scrollFlag: !_store.store.state.scrollFlag
-    };
-  },
-
-  methods: {},
-  components: {
-    StickyHeader: _StickyHeader2.default
-  }
-};
-
-/***/ }),
-/* 52 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(53)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(54)
-
-/* template */
-var __vue_template__ = __webpack_require__(58)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\components\\StickyHeader.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-4ae938e6"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-
-
-/***/ }),
-/* 53 */
-/***/ (function(module, exports) {
-
-module.exports = {
-  "iconfont": {
-    "color": "#ffffff",
-    "fontSize": "50",
-    "fontFamily": "iconfont"
-  },
-  "stickyHeader": {
-    "position": "absolute",
-    "top": "25",
-    "flexDirection": "row",
-    "width": "750",
-    "height": "110",
-    "alignItems": "center",
-    "justifyContent": "center",
-    "backgroundColor": "rgba(0,0,0,0)"
-  },
-  "logo": {
-    "backgroundColor": "rgba(51,51,51,0.5)",
-    "width": "70",
-    "height": "70",
-    "alignItems": "center",
-    "justifyContent": "center",
-    "borderRadius": "70",
-    "position": "absolute",
-    "left": "10",
-    "top": "20"
-  },
-  "logo-letter": {
-    "fontSize": "20",
-    "color": "#ffffff"
-  }
-}
-
-/***/ }),
-/* 54 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _SearchBar = __webpack_require__(16);
-
-var _SearchBar2 = _interopRequireDefault(_SearchBar);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-  components: {
-    SearchBar: _SearchBar2.default
-  }
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-
-/***/ }),
-/* 55 */
-/***/ (function(module, exports) {
-
-module.exports = {
-  "iconfont": {
-    "color": "#bbbbbb",
-    "fontSize": "32",
-    "fontFamily": "iconfont"
-  },
-  "search-bar": {
-    "position": "relative",
-    "justifyContent": "center",
-    "textAlign": "center"
-  },
-  "search": {
-    "width": "590",
-    "height": "60",
-    "marginLeft": "25",
-    "paddingLeft": "60",
-    "borderRadius": "40",
-    "backgroundColor": "#ffffff",
-    "fontSize": "28",
-    "color": "#333333",
-    "placeholderColor": "#bbb"
-  },
-  "search-btn": {
-    "position": "absolute",
-    "left": "30",
-    "top": "14",
-    "paddingLeft": "10"
-  },
-  "search-fake-box": {
-    "justifyContent": "center"
-  },
-  "search-fake-text": {
-    "color": "#bbbbbb",
-    "fontSize": "28"
-  }
-}
-
-/***/ }),
-/* 56 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _getJumpBaseUrl = __webpack_require__(15);
-
-var navigator = weex.requireModule("navigator-pri"); //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-exports.default = {
-  props: {
-    // searchAble: Boolean,
-    autoFocus: Boolean
-  },
-  methods: {
-    onSearch: function onSearch(e) {
-      e.stopPropagation();
-      navigator.push({
-        url: (0, _getJumpBaseUrl.getJumpBaseUrl)("searchPage"),
-        animated: "false"
-      });
-    }
-  }
-};
-
-/***/ }),
-/* 57 */
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["search-bar"]
-  }, [_c('div', {
-    staticClass: ["search", "search-fake-box"],
-    on: {
-      "click": _vm.onSearch
-    }
-  }, [_c('text', {
-    staticClass: ["search-fake-text"]
-  }, [_vm._v("搜索商品、店铺等")])]), _vm._m(0)])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["search-btn"]
-  }, [_c('text', {
-    staticClass: ["iconfont"]
-  }, [_vm._v("")])])
-}]}
-module.exports.render._withStripped = true
-
-/***/ }),
-/* 58 */
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["stickyHeader"]
-  }, [_vm._m(0), _c('searchBar', {
-    attrs: {
-      "searchDisable": "false"
-    }
-  })], 1)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["logo"]
-  }, [_c('text', {
-    staticClass: ["logo-letter"]
-  }, [_vm._v("淘折")])])
-}]}
-module.exports.render._withStripped = true
-
-/***/ }),
-/* 59 */
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["banner"]
-  }, [_c('slider', {
-    staticClass: ["slider", "size"],
-    attrs: {
-      "autoPlay": "true"
-    }
-  }, [_vm._l((_vm.posters), function(src, i) {
-    return _c('div', {
-      key: i
-    }, [_c('image', {
-      staticClass: ["size"],
-      attrs: {
-        "resize": "stretch",
-        "src": 'file:///android_asset/images/' + src
-      }
-    })])
-  }), _c('indicator', {
-    staticClass: ["indicator"]
-  })], 2), _vm._m(0), _c('sticky-header')], 1)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["footer-mask"]
-  }, [_c('image', {
-    staticClass: ["footer-mask-img"],
-    attrs: {
-      "src": "file:///android_asset/images/slider-mask.png",
-      "resize": "cover"
-    }
-  })])
-}]}
-module.exports.render._withStripped = true
-
-/***/ }),
-/* 60 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(61)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(62)
-
-/* template */
-var __vue_template__ = __webpack_require__(63)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\components\\Chunks.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-63d1c8b6"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-
-
-/***/ }),
-/* 61 */
-/***/ (function(module, exports) {
-
-module.exports = {
-  "chunks": {
-    "height": "160",
-    "backgroundColor": "#ffffff",
-    "marginTop": "20",
-    "marginRight": "20",
-    "marginBottom": "20",
-    "marginLeft": "20",
-    "borderRadius": "30"
-  },
-  "cell": {
-    "flexDirection": "row",
-    "justifyContent": "center",
-    "alignItems": "center"
-  },
-  "B-box": {
-    "width": "140",
-    "justifyContent": "center",
-    "alignItems": "center",
-    "paddingTop": "10"
-  },
-  "B-title": {
-    "width": "140",
-    "fontSize": "20",
-    "textAlign": "center",
-    "paddingTop": "15",
-    "color": "#999999"
-  },
-  "B-icon": {
-    "width": "100",
-    "height": "100"
-  }
-}
-
-/***/ }),
-/* 62 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-exports.default = {
-  data: function data() {
-    return {
-      row1: [{
-        title: '腔调掌柜',
-        icon: 'http://img.alicdn.com/tfs/TB1sWLoRVXXXXbdXXXXXXXXXXXX-140-140.png'
-      }, {
-        title: '腔调掌柜',
-        icon: 'http://gw.alicdn.com/tfs/TB10.R_SpXXXXbtXXXXXXXXXXXX-140-140.png'
-      }, {
-        title: '腔调掌柜',
-        icon: 'http://img.alicdn.com/tfs/TB1fRVASpXXXXXdXXXXXXXXXXXX-140-140.png'
-      }, {
-        title: '腔调掌柜',
-        icon: 'http://img.alicdn.com/tfs/TB1_TkdPVXXXXcJXXXXXXXXXXXX-140-140.png'
-      }, {
-        title: '腔调掌柜',
-        icon: 'http://img.alicdn.com/tfs/TB1vRGhSpXXXXaLXpXXXXXXXXXX-140-140.png'
-      }]
-    };
-  }
-};
-
-/***/ }),
-/* 63 */
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["chunks"]
-  }, [_c('list', {
-    staticClass: ["list"]
-  }, [_c('cell', {
-    staticClass: ["cell"],
-    appendAsTree: true,
-    attrs: {
-      "append": "tree"
-    }
-  }, _vm._l((_vm.row1), function(item, i) {
-    return _c('div', {
-      key: i,
-      staticClass: ["B-box"]
-    }, [_c('image', {
-      staticClass: ["B-icon"],
-      attrs: {
-        "src": item.icon
-      }
-    }), _c('text', {
-      staticClass: ["B-title"]
-    }, [_vm._v(_vm._s(item.title))])])
-  }))])])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-
-/***/ }),
-/* 64 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(65)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(66)
-
-/* template */
-var __vue_template__ = __webpack_require__(67)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\components\\Onsale.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-5b4c3894"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-
-
-/***/ }),
-/* 65 */
-/***/ (function(module, exports) {
-
-module.exports = {
-  "onsale": {
-    "marginTop": "20",
-    "marginRight": "20",
-    "marginBottom": "20",
-    "marginLeft": "20",
-    "backgroundColor": "#ffffff",
-    "borderRadius": "30",
-    "flexDirection": "row",
-    "position": "relative",
-    "paddingBottom": "20"
-  },
-  "title": {
-    "position": "absolute",
-    "left": 0,
-    "top": "18",
-    "backgroundImage": "linear-gradient(to top,#EB6A12,#FFA42A)",
-    "width": "180",
-    "height": "60",
-    "borderTopRightRadius": "60",
-    "borderBottomRightRadius": "60",
-    "justifyContent": "center",
-    "alignItems": "center",
-    "borderWidth": "2",
-    "borderColor": "#F5B488",
-    "borderStyle": "solid"
-  },
-  "title-txt": {
-    "color": "#ffffff",
-    "fontSize": "32"
-  },
-  "left-box": {
-    "borderRightWidth": "2",
-    "borderRightColor": "#ebecee",
-    "marginTop": "20",
-    "marginRight": "20",
-    "marginBottom": "20",
-    "marginLeft": "20",
-    "width": "340"
-  },
-  "box-title": {
-    "marginTop": "65"
-  },
-  "box-title-top": {
-    "fontSize": "36",
-    "color": "#fa513a"
-  },
-  "box-title-bottom": {
-    "fontSize": "24",
-    "marginBottom": "15",
-    "color": "#666666"
-  },
-  "buy-btn": {
-    "width": "140",
-    "height": "50",
-    "backgroundColor": "#fb3519",
-    "borderRadius": "10",
-    "justifyContent": "center",
-    "alignItems": "center",
-    "marginBottom": "15"
-  },
-  "buy-btn-txt": {
-    "color": "#ffffff",
-    "fontSize": "28"
-  },
-  "left-img": {
-    "width": "320",
-    "height": "200"
-  },
-  "right-box": {
-    "width": "320"
-  },
-  "right-top": {
-    "borderBottomWidth": "2",
-    "borderBottomColor": "#ebecee",
-    "borderBottomStyle": "solid",
-    "paddingBottom": "35",
-    "position": "relative"
-  },
-  "right-top-title": {
-    "marginTop": "40"
-  },
-  "right-bottom": {
-    "position": "relative"
-  },
-  "right-img-box": {
-    "position": "absolute",
-    "right": "5",
-    "top": "5"
-  },
-  "right-img": {
-    "width": "165",
-    "height": "200"
-  }
-}
-
-/***/ }),
-/* 66 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-exports.default = {};
-
-/***/ }),
-/* 67 */
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["onsale"]
-  }, [_c('div', {
-    staticClass: ["title"]
-  }, [_c('text', {
-    staticClass: ["title-txt"]
-  }, [_vm._v("活动专区")])]), _c('div', {
-    staticClass: ["left-box"]
-  }, [_c('div', {
-    staticClass: ["box-title"]
-  }, [_c('text', {
-    staticClass: ["box-title-top"]
-  }, [_vm._v("限时抢购")]), _c('text', {
-    staticClass: ["box-title-bottom"]
-  }, [_vm._v("实惠好物等你来抢")])]), _c('div', {
-    staticClass: ["buy-btn"]
-  }, [_c('text', {
-    staticClass: ["buy-btn-txt"]
-  }, [_vm._v("立即抢购")])]), _c('div', [_c('image', {
-    staticClass: ["left-img"],
-    attrs: {
-      "src": "file:///android_asset/images/sale1.png",
-      "resize": "cover"
-    }
-  })])]), _c('div', {
-    staticClass: ["right-box"]
-  }, [_c('div', {
-    staticClass: ["right-top"]
-  }, [_c('div', {
-    staticClass: ["right-img-box"]
-  }, [_c('image', {
-    staticClass: ["right-img"],
-    attrs: {
-      "src": "https://gd3.alicdn.com/imgextra/i3/47058671/TB28X.4buGSBuNjSspbXXciipXa_!!47058671.jpg_400x400.jpg_.webp",
-      "resize": "cover"
-    }
-  })]), _c('div', {
-    staticClass: ["box-title", "right-top-title"]
-  }, [_c('text', {
-    staticClass: ["box-title-top"]
-  }, [_vm._v("实惠团购")]), _c('text', {
-    staticClass: ["box-title-bottom"]
-  }, [_vm._v("拼着买更便宜")])]), _c('div', {
-    staticClass: ["buy-btn"]
-  }, [_c('text', {
-    staticClass: ["buy-btn-txt"]
-  }, [_vm._v("立即抢购")])])]), _c('div', {
-    staticClass: ["right-bottom"]
-  }, [_c('div', {
-    staticClass: ["right-img-box"]
-  }, [_c('image', {
-    staticClass: ["right-img"],
-    attrs: {
-      "src": "http://img.alicdn.com/imgextra/i1/725677994/O1CN01n5as6O28vIdtVlESK_!!0-item_pic.jpg_430x430q90.jpg",
-      "resize": "cover"
-    }
-  })]), _c('div', {
-    staticClass: ["box-title", "right-top-title"]
-  }, [_c('text', {
-    staticClass: ["box-title-top"]
-  }, [_vm._v("超大额券")]), _c('text', {
-    staticClass: ["box-title-bottom"]
-  }, [_vm._v("让实惠更实惠")])]), _c('div', {
-    staticClass: ["buy-btn"]
-  }, [_c('text', {
-    staticClass: ["buy-btn-txt"]
-  }, [_vm._v("立即抢购")])])])])])
-}]}
-module.exports.render._withStripped = true
-
-/***/ }),
-/* 68 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(69)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(70)
-
-/* template */
-var __vue_template__ = __webpack_require__(71)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\components\\ScollerRow.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-33deec7e"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-
-
-/***/ }),
-/* 69 */
-/***/ (function(module, exports) {
-
-module.exports = {
-  "scroller": {
-    "height": "450",
-    "flexDirection": "row",
-    "marginRight": "20",
-    "marginBottom": "20"
-  },
-  "panel": {
-    "width": "300",
-    "backgroundColor": "#ffffff",
-    "borderWidth": "2",
-    "borderStyle": "solid",
-    "borderColor": "#ebecee",
-    "marginLeft": "20"
-  },
-  "item-photo": {
-    "width": "300",
-    "height": "300"
-  },
-  "item-title": {
-    "marginTop": "10",
-    "marginRight": "10",
-    "marginBottom": "10",
-    "marginLeft": "10",
-    "fontSize": 26,
-    "fontWeight": "500",
-    "lines": 2,
-    "textOverflow": "ellipsis"
-  },
-  "price": {
-    "flexDirection": "row",
-    "alignItems": "center"
-  },
-  "zk-price": {
-    "color": "#fa513a",
-    "fontSize": "32",
-    "marginTop": "5",
-    "marginRight": "5",
-    "marginBottom": "5",
-    "marginLeft": "5"
-  },
-  "reserve-price": {
-    "color": "#bbbbbb",
-    "fontSize": "24",
-    "marginTop": "5",
-    "marginRight": "5",
-    "marginBottom": "5",
-    "marginLeft": "5",
-    "textDecoration": "line-through"
-  }
-}
-
-/***/ }),
-/* 70 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-exports.default = {
-  data: function data() {
-    return {
-      list: [{
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=529348904068",
-        nick: "洋森之家",
-        num_iid: 529348904068,
-        pict_url: "https://img.alicdn.com/tfscom/i1/2736782442/TB2AWfralHH8KJjy0FbXXcqlpXa_!!2736782442.jpg",
-        provcity: "河北 石家庄",
-        reserve_price: "39.80",
-        seller_id: 2736782442,
-        shop_title: "柳润母婴生活馆",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i2/2736782442/TB2YtRTkk.HL1JjSZFuXXX8dXXa_!!2736782442.jpg", "https://img.alicdn.com/tfscom/i1/2736782442/TB2kUNdaesAV1JjSZFsXXadZXXa_!!2736782442.jpg", "https://img.alicdn.com/tfscom/i2/2736782442/TB2jlfhX.RIWKJjSZFgXXboxXXa_!!2736782442.jpg", "https://img.alicdn.com/tfscom/i1/2736782442/TB2tfmpmGmWQ1JjSZPhXXXCJFXa_!!2736782442.jpg"]
-        },
-        status: 1,
-        title: "超大老人防水纯棉防漏透气隔尿垫成人老年人护理垫床垫可洗尿不湿",
-        tk_rate: "1.50",
-        type: 1,
-        user_type: 0,
-        volume: 71,
-        zk_final_price: "19.90",
-        zk_final_price_wap: "19.90"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=582963602222",
-        nick: "松阳振晖",
-        num_iid: 582963602222,
-        pict_url: "https://img.alicdn.com/tfscom/i1/17197599/O1CN018etsq1260OBTKCA6w_!!0-item_pic.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "1680.00",
-        seller_id: 17197599,
-        shop_title: "唯你原创女装",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i1/17197599/O1CN01fgKCyT260OBT9N0pJ_!!17197599.jpg", "https://img.alicdn.com/tfscom/i3/17197599/O1CN01ugVuDd260OBRTOsgw_!!17197599.jpg", "https://img.alicdn.com/tfscom/i2/17197599/O1CN01qdpNox260OBROTLf0_!!17197599.jpg", "https://img.alicdn.com/tfscom/i1/17197599/O1CN0115dFAt260OBaQBCRt_!!17197599.jpg"]
-        },
-        status: 1,
-        title: "2018冬季新款女装中长款欧货时尚宽松显瘦加厚面包亮面羽绒服外套",
-        tk_rate: "4.50",
-        type: 1,
-        user_type: 0,
-        volume: 4268,
-        zk_final_price: "398.00",
-        zk_final_price_wap: "398.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=584205077923",
-        nick: "雯雯的便便hz",
-        num_iid: 584205077923,
-        pict_url: "https://img.alicdn.com/tfscom/i2/78403414/O1CN01uRfSOM1b5eejyHgle_!!78403414.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "312.00",
-        seller_id: 78403414,
-        shop_title: "小蚊子 女装",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i4/78403414/O1CN01AzNw881b5eege3Afh_!!78403414.jpg", "https://img.alicdn.com/tfscom/i1/78403414/O1CN013U4igi1b5eege0UD9_!!78403414.jpg", "https://img.alicdn.com/tfscom/i4/78403414/O1CN01EpsCLO1b5eehH2E8R_!!78403414.jpg", "https://img.alicdn.com/tfscom/i3/78403414/O1CN0165l4NN1b5eeZSgFlg_!!78403414.jpg"]
-        },
-        status: 1,
-        title: "亮面棉衣女装冬季2018新款假两件棉袄中长款加厚连帽羽绒棉服外套",
-        tk_rate: "1.80",
-        type: 1,
-        user_type: 0,
-        volume: 1628,
-        zk_final_price: "249.90",
-        zk_final_price_wap: "249.90"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=583259454597",
-        nick: "晓得111",
-        num_iid: 583259454597,
-        pict_url: "https://img.alicdn.com/tfscom/i1/1016012691/O1CN01CpD3uj1VkWIRPFfOI_!!1016012691.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "899.00",
-        seller_id: 1016012691,
-        shop_title: "MC韩国时尚女装",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i1/1016012691/O1CN01Meatpm1VkWIRVkbps_!!1016012691.jpg", "https://img.alicdn.com/tfscom/i2/1016012691/O1CN01cBEGNn1VkWINvycjb_!!1016012691.jpg", "https://img.alicdn.com/tfscom/i2/1016012691/O1CN01uwtdEi1VkWIQZqf0q_!!1016012691.jpg", "https://img.alicdn.com/tfscom/i2/1016012691/O1CN01I6F53s1VkWIJmROe4_!!1016012691.jpg"]
-        },
-        status: 1,
-        title: "2018新款女装冬中长款仿羊羔毛羊剪绒外套女格子拼接撞色毛毛大衣",
-        tk_rate: "9.00",
-        type: 1,
-        user_type: 0,
-        volume: 9358,
-        zk_final_price: "388.00",
-        zk_final_price_wap: "388.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=582277199763",
-        nick: "周末与白天",
-        num_iid: 582277199763,
-        pict_url: "https://img.alicdn.com/tfscom/i2/772616220/TB2r9b.ggnH8KJjSspcXXb3QFXa_!!772616220.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "1288.00",
-        seller_id: 772616220,
-        shop_title: "赵DD STUDIO",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i3/772616220/TB2p8x0ktbJ8KJjy1zjXXaqapXa_!!772616220.jpg", "https://img.alicdn.com/tfscom/i3/772616220/O1CN01oNgmNW1voo0xqiQ2r_!!772616220.png", "https://img.alicdn.com/tfscom/i4/772616220/TB2VylqjY_I8KJjy1XaXXbsxpXa_!!772616220.png", "https://img.alicdn.com/tfscom/i1/772616220/O1CN01P5PJy11voo0qo5FQX_!!772616220.jpg"]
-        },
-        status: 1,
-        title: "白鸭绒长款过膝白色羽绒服女2018冬季新款韩版大毛领气质加厚女装",
-        tk_rate: "2.40",
-        type: 4,
-        user_type: 0,
-        volume: 1383,
-        zk_final_price: "653.50",
-        zk_final_price_wap: "653.50"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=581105112160",
-        nick: "yxphy123001",
-        num_iid: 581105112160,
-        pict_url: "https://img.alicdn.com/tfscom/i1/131950134/O1CN011CrPXuUaGe14ZWW_!!131950134.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "998.00",
-        seller_id: 131950134,
-        shop_title: "ds313领袖丽人",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i4/131950134/O1CN011CrPXrRhdldT3Ut_!!131950134.jpg", "https://img.alicdn.com/tfscom/i3/131950134/O1CN01oMaiiR1CrPYJ2W2q4_!!131950134.jpg", "https://img.alicdn.com/tfscom/i4/131950134/O1CN01bIwbtU1CrPYoN1SYL_!!131950134.jpg", "https://img.alicdn.com/tfscom/i3/131950134/O1CN01R5iCol1CrPXnCCovH_!!131950134.jpg"]
-        },
-        status: 1,
-        title: "毛呢外套女中长款2018秋冬季新款流行女装韩版茧型显瘦呢子大衣潮",
-        tk_rate: "3.00",
-        type: 1,
-        user_type: 0,
-        volume: 3679,
-        zk_final_price: "198.00",
-        zk_final_price_wap: "198.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=575570459742",
-        nick: "云思木想旗舰店",
-        num_iid: 575570459742,
-        pict_url: "https://img.alicdn.com/tfscom/i2/1765328414/O1CN01mFeWvM2C1eycaNGgp_!!0-item_pic.jpg",
-        provcity: "广东 广州",
-        reserve_price: "494.00",
-        seller_id: 1765328414,
-        shop_title: "云思木想旗舰店",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i2/1765328414/TB2BdYGoVooBKNjSZPhXXc2CXXa_!!1765328414.jpg", "https://img.alicdn.com/tfscom/i3/1765328414/TB2JwKzpnqWBKNjSZFxXXcpLpXa_!!1765328414.jpg", "https://img.alicdn.com/tfscom/i2/1765328414/TB2p0N_pXkoBKNjSZFkXXb4tFXa_!!1765328414.jpg", "https://img.alicdn.com/tfscom/i3/1765328414/TB2_t.lo0cnBKNjSZR0XXcFqFXa_!!1765328414.jpg"]
-        },
-        status: 1,
-        title: "云思木想2018秋装新款女装凤凰印花荷叶袖套头立领卫衣女75815",
-        tk_rate: "4.50",
-        type: 1,
-        user_type: 1,
-        volume: 742,
-        zk_final_price: "241.00",
-        zk_final_price_wap: "241.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=583573811796",
-        nick: "点名时间到了",
-        num_iid: 583573811796,
-        pict_url: "https://img.alicdn.com/tfscom/i3/2107328912/O1CN01lWFdSx2FhkDjzQnVk_!!2107328912.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "888.00",
-        seller_id: 2107328912,
-        shop_title: "DmTime DM家潮流女装",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i4/2107328912/O1CN01z4nVl72FhkEYruQYL_!!2107328912.jpg", "https://img.alicdn.com/tfscom/i4/2107328912/O1CN01nQxmfG2FhkEa46l7T_!!2107328912.jpg", "https://img.alicdn.com/tfscom/i3/2107328912/O1CN016s0AiK2FhkDlGPRfy_!!2107328912.jpg", "https://img.alicdn.com/tfscom/i2/2107328912/O1CN01VVHKDx2FhkDkG19lA_!!2107328912.jpg"]
-        },
-        status: 1,
-        title: "2018秋冬新款女装韩版毛衣连衣裙针织毛衫长裙包臀裙内搭裙子冬季",
-        tk_rate: "9.00",
-        type: 1,
-        user_type: 0,
-        volume: 4407,
-        zk_final_price: "178.00",
-        zk_final_price_wap: "178.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=582956610447",
-        nick: "小六子女装",
-        num_iid: 582956610447,
-        pict_url: "https://img.alicdn.com/tfscom/i2/2274485118/O1CN01LyEGll1ng5XmfQOqW_!!2274485118.jpg",
-        provcity: "广东 广州",
-        reserve_price: "198.00",
-        seller_id: 2274485118,
-        shop_title: "小太阳大码衣舍",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i4/2274485118/O1CN01NjyEfm1ng5XpygqOX_!!2274485118.jpg", "https://img.alicdn.com/tfscom/i1/2274485118/O1CN01AbP22B1ng5Xnefvtp_!!2274485118.jpg", "https://img.alicdn.com/tfscom/i1/2274485118/O1CN01YlFucX1ng5XoDyFe9_!!2274485118.jpg", "https://img.alicdn.com/tfscom/i4/2274485118/O1CN01Sy8fy21ng5Xn467qK_!!2274485118.jpg"]
-        },
-        status: 1,
-        title: "胖女人秋冬装洋气胖mm200斤大码女装 2018新款微胖妹妹针织连衣裙",
-        tk_rate: "4.50",
-        type: 1,
-        user_type: 0,
-        volume: 1560,
-        zk_final_price: "198.00",
-        zk_final_price_wap: "198.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=582145521987",
-        nick: "美眉炫酷女装",
-        num_iid: 582145521987,
-        pict_url: "https://img.alicdn.com/tfscom/i4/1692945001/O1CN01xb9qmG1moVCSe0aaE_!!1692945001.jpg",
-        provcity: "北京",
-        reserve_price: "288.00",
-        seller_id: 1692945001,
-        shop_title: "这家大码店",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i4/1692945001/O1CN01K9cwTB1moVCXWdeJS_!!1692945001.jpg", "https://img.alicdn.com/tfscom/i1/1692945001/O1CN010026Ek1moVCbLokUZ_!!1692945001.jpg", "https://img.alicdn.com/tfscom/i4/1692945001/O1CN01ifcEjg1moVCZHop20_!!1692945001.jpg", "https://img.alicdn.com/tfscom/i3/1692945001/O1CN010ZBEp81moVCYrV3YG_!!1692945001.jpg"]
-        },
-        status: 1,
-        title: "特大码女装棉服中长款2018新款冬装加厚棉衣胖妹妹过膝230斤棉袄",
-        tk_rate: "2.49",
-        type: 4,
-        user_type: 0,
-        volume: 1712,
-        zk_final_price: "199.00",
-        zk_final_price_wap: "199.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=579657145491",
-        nick: "小衣橱管家",
-        num_iid: 579657145491,
-        pict_url: "https://img.alicdn.com/tfscom/i1/854951489/O1CN011Ms0CyrieXQFJaQ_!!854951489.jpg",
-        provcity: "广东 广州",
-        reserve_price: "188.00",
-        seller_id: 854951489,
-        shop_title: "小衣橱管家",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i1/854951489/O1CN011Ms0D0BlFpi1W81_!!854951489.jpg", "https://img.alicdn.com/tfscom/i4/854951489/O1CN011Ms0CzMarazTRpy_!!854951489.jpg", "https://img.alicdn.com/tfscom/i1/854951489/O1CN011Ms0Czxg5hYo3Jf_!!854951489.jpg", "https://img.alicdn.com/tfscom/i3/854951489/O1CN011Ms0CzednSnuxye_!!854951489.jpg"]
-        },
-        status: 1,
-        title: "waitmore高冷气质冷系女装大衣外套港味格子西装毛呢外套赫本风女",
-        tk_rate: "3.00",
-        type: 1,
-        user_type: 0,
-        volume: 3165,
-        zk_final_price: "188.00",
-        zk_final_price_wap: "188.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=583007088959",
-        nick: "自然依人19889",
-        num_iid: 583007088959,
-        pict_url: "https://img.alicdn.com/tfscom/i4/815547271/O1CN01YwHZel23aAHDmaMPm_!!815547271.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "580.00",
-        seller_id: 815547271,
-        shop_title: "索菲欧原创女装",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i1/815547271/O1CN01n2AUUv23aAHC2zN0I_!!815547271.jpg", "https://img.alicdn.com/tfscom/i4/815547271/O1CN01JteMXR23aAHAp03hu_!!815547271.jpg", "https://img.alicdn.com/tfscom/i4/815547271/O1CN01pWhHCj23aAH9Wos7x_!!815547271.jpg", "https://img.alicdn.com/tfscom/i3/815547271/O1CN01wJgQed23aAHL5CA3r_!!815547271.jpg"]
-        },
-        status: 1,
-        title: "棉衣女中长款2018冬装新款女装chic黑色大毛领小个子羽绒棉服外套",
-        tk_rate: "4.50",
-        type: 1,
-        user_type: 0,
-        volume: 1545,
-        zk_final_price: "258.00",
-        zk_final_price_wap: "258.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=582161127636",
-        nick: "chaoming528",
-        num_iid: 582161127636,
-        pict_url: "https://img.alicdn.com/tfscom/i4/2507973110/O1CN01GAJU4C1YqQExHFbSi_!!2507973110.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "1088.00",
-        seller_id: 2507973110,
-        shop_title: "西西原创女装",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i1/2507973110/O1CN01aw2fjX1YqQFFMwvtR_!!2507973110.jpg", "https://img.alicdn.com/tfscom/i2/2507973110/O1CN01kasgYx1YqQExRkaM5_!!2507973110.jpg", "https://img.alicdn.com/tfscom/i4/2507973110/O1CN01B5KLTq1YqQEwdQ3HU_!!2507973110.jpg", "https://img.alicdn.com/tfscom/i3/2507973110/O1CN01cZBIam1YqQFNhSQJo_!!2507973110.jpg"]
-        },
-        status: 1,
-        title: "2018新款女装冬中长款仿羊羔毛羊剪绒外套女宽松大码毛领毛毛大衣",
-        tk_rate: "3.00",
-        type: 4,
-        user_type: 0,
-        volume: 1482,
-        zk_final_price: "328.00",
-        zk_final_price_wap: "328.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=578935268077",
-        nick: "皮改艳4699",
-        num_iid: 578935268077,
-        pict_url: "https://img.alicdn.com/tfscom/i1/585373984/O1CN011fIiOKtOeSE2PmQ_!!585373984.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "599.00",
-        seller_id: 585373984,
-        shop_title: "CC美丽公主",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i4/585373984/O1CN011fIiOKhCFGdlxT7_!!585373984.jpg", "https://img.alicdn.com/tfscom/i3/585373984/O1CN01dHNgKJ1fIiOo5gW67_!!585373984.jpg", "https://img.alicdn.com/tfscom/i2/585373984/O1CN01oDC4pz1fIiOqrwpBw_!!585373984.jpg", "https://img.alicdn.com/tfscom/i4/585373984/O1CN011fIiOD3cZ1lUVyv_!!585373984.jpg"]
-        },
-        status: 1,
-        title: "毛呢外套女2018秋冬新款复古休闲系带加厚呢子小西装短款外套女装",
-        tk_rate: "4.50",
-        type: 1,
-        user_type: 0,
-        volume: 3650,
-        zk_final_price: "168.00",
-        zk_final_price_wap: "168.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=584788965989",
-        nick: "vipwangting",
-        num_iid: 584788965989,
-        pict_url: "https://img.alicdn.com/tfscom/i3/112638574/O1CN01zCPEKF2DCwMAL0VE0_!!112638574.jpg",
-        provcity: "浙江 嘉兴",
-        reserve_price: "198.00",
-        seller_id: 112638574,
-        shop_title: "羊毛家",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i3/112638574/O1CN01MmHL722DCwMEBliIP_!!112638574.jpg", "https://img.alicdn.com/tfscom/i3/112638574/O1CN01VgMk8Q2DCwMCyzrqF_!!112638574.jpg", "https://img.alicdn.com/tfscom/i2/112638574/O1CN01pMILuU2DCwMELVAmb_!!112638574.jpg", "https://img.alicdn.com/tfscom/i3/112638574/O1CN01BuCRNv2DCwMAjxRmC_!!112638574.jpg"]
-        },
-        status: 1,
-        title: "2019新款女装很仙的法国小众雪纺连衣裙女中长款仙女裙蕾丝裙春装",
-        tk_rate: "1.50",
-        type: 4,
-        user_type: 0,
-        volume: 3294,
-        zk_final_price: "99.00",
-        zk_final_price_wap: "99.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=582749105088",
-        nick: "果果一女人",
-        num_iid: 582749105088,
-        pict_url: "https://img.alicdn.com/tfscom/i2/595412874/O1CN01OMrO3v1X6KlzXrnfc_!!595412874.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "249.90",
-        seller_id: 595412874,
-        shop_title: "果果家 GGWOMEN定制 韩范精品女装",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i4/595412874/O1CN01f07Klw1X6KlzZukCh_!!595412874.jpg", "https://img.alicdn.com/tfscom/i3/595412874/O1CN01ZHKfkM1X6Klx2s4pA_!!595412874.jpg", "https://img.alicdn.com/tfscom/i2/595412874/O1CN01m03R1U1X6KlzZwgnv_!!595412874.jpg", "https://img.alicdn.com/tfscom/i1/595412874/O1CN01btyNGq1X6Km09RNYP_!!595412874.jpg"]
-        },
-        status: 1,
-        title: "女装冬装2018新款韩版小个子闺蜜装格子毛呢外套短款大衣女冬加厚",
-        tk_rate: "1.56",
-        type: 4,
-        user_type: 0,
-        volume: 6586,
-        zk_final_price: "249.90",
-        zk_final_price_wap: "249.90"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=558489402187",
-        nick: "百里挑衣_198",
-        num_iid: 558489402187,
-        pict_url: "https://img.alicdn.com/tfscom/i2/2111084029/TB2HcQqa0qUQKJjSZFIXXcOkFXa_!!2111084029.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "389.00",
-        seller_id: 2111084029,
-        shop_title: "红都衣舍时装",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i2/2111084029/O1CN011fdKDLnPMj1bYtM_!!2111084029.jpg", "https://img.alicdn.com/tfscom/i4/2111084029/O1CN011fdKDLnNxSj9Ya5_!!2111084029.jpg", "https://img.alicdn.com/tfscom/i4/2111084029/O1CN011fdKDMyx0n23yuD_!!2111084029.jpg", "https://img.alicdn.com/tfscom/i1/2111084029/TB2YPX5e.F7MKJjSZFLXXcMBVXa_!!2111084029.jpg"]
-        },
-        status: 1,
-        title: "2019春秋新款女装遮肚子冬季连衣裙女加厚小香风针织秋冬款打底裙",
-        tk_rate: "1.50",
-        type: 1,
-        user_type: 0,
-        volume: 2701,
-        zk_final_price: "89.00",
-        zk_final_price_wap: "89.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=581297838159",
-        nick: "我是阿武",
-        num_iid: 581297838159,
-        pict_url: "https://img.alicdn.com/tfscom/i3/37082293/O1CN01A7Nivd1SoEedKMnvy_!!37082293.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "772.40",
-        seller_id: 37082293,
-        shop_title: "我是阿式设计定制女装",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i2/37082293/O1CN01BFrkVS1SoEePZva8M_!!37082293.jpg", "https://img.alicdn.com/tfscom/i1/37082293/O1CN017wfPEn1SoEeRMgUcB_!!37082293.jpg", "https://img.alicdn.com/tfscom/i4/37082293/O1CN01GTgFDM1SoEeSgBbX6_!!37082293.jpg", "https://img.alicdn.com/tfscom/i2/37082293/O1CN01P1uguU1SoEeQXGl1L_!!37082293.jpg"]
-        },
-        status: 1,
-        title: "原创设计 2018冬季新款女装加厚仿貂绒中长款A字毛呢大衣呢子外套",
-        tk_rate: "1.50",
-        type: 1,
-        user_type: 0,
-        volume: 2214,
-        zk_final_price: "386.20",
-        zk_final_price_wap: "386.20"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=582826822377",
-        nick: "银猴小小崽崽",
-        num_iid: 582826822377,
-        pict_url: "https://img.alicdn.com/tfscom/i1/1593146983/O1CN01AVWniB21SGD03MY3D_!!1593146983.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "1299.00",
-        seller_id: 1593146983,
-        shop_title: "云端锦绣",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i3/1593146983/O1CN01SYuqPe21SGDRtk1PW_!!1593146983.jpg", "https://img.alicdn.com/tfscom/i4/1593146983/O1CN01sNe6aZ21SGDBxbCgK_!!1593146983.jpg", "https://img.alicdn.com/tfscom/i3/1593146983/O1CN01zYPsiX21SGCyTC6jq_!!1593146983.jpg", "https://img.alicdn.com/tfscom/i4/1593146983/O1CN016cGe3m21SGD5MqQRf_!!1593146983.jpg"]
-        },
-        status: 1,
-        title: "短款羽绒服女2018新款冬季女装韩版宽松加厚大毛领时尚收腰外套女",
-        tk_rate: "3.00",
-        type: 4,
-        user_type: 0,
-        volume: 2939,
-        zk_final_price: "388.00",
-        zk_final_price_wap: "388.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=582208280598",
-        nick: "果果一女人",
-        num_iid: 582208280598,
-        pict_url: "https://img.alicdn.com/tfscom/i2/595412874/O1CN01GuZGQb1X6KlroYsiD_!!595412874.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "129.90",
-        seller_id: 595412874,
-        shop_title: "果果家 GGWOMEN定制 韩范精品女装",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i1/595412874/O1CN011VoJRl1X6KlsBkqKV_!!595412874.jpg", "https://img.alicdn.com/tfscom/i1/595412874/O1CN01ihqZxU1X6Klu2fh7g_!!595412874.jpg", "https://img.alicdn.com/tfscom/i2/595412874/O1CN01JPmqCe1X6KlpyMBOr_!!595412874.jpg", "https://img.alicdn.com/tfscom/i1/595412874/O1CN01GYkY9C1X6Kltwldhs_!!595412874.jpg"]
-        },
-        status: 1,
-        title: "2018秋冬新款网红女装裙子黑色网纱仙女裙小个子收腰吊带裙连衣裙",
-        tk_rate: "1.56",
-        type: 4,
-        user_type: 0,
-        volume: 3384,
-        zk_final_price: "123.41",
-        zk_final_price_wap: "123.41"
-      }]
-    };
-  }
-};
-
-/***/ }),
-/* 71 */
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["scoller-row"]
-  }, [_c('scroller', {
-    staticClass: ["scroller"],
-    attrs: {
-      "scrollDirection": "horizontal"
-    }
-  }, _vm._l((_vm.list), function(item) {
-    return _c('div', {
-      key: item.num_iid,
-      staticClass: ["panel"]
-    }, [_c('image', {
-      staticClass: ["item-photo"],
-      attrs: {
-        "src": item.pict_url,
-        "resize": "cover"
-      }
-    }), _c('text', {
-      staticClass: ["item-title"]
-    }, [_vm._v(_vm._s(item.title))]), _c('div', {
-      staticClass: ["price"]
-    }, [_c('text', {
-      staticClass: ["zk-price"]
-    }, [_vm._v("￥" + _vm._s(item.zk_final_price))]), _c('text', {
-      staticClass: ["reserve-price"]
-    }, [_vm._v("￥" + _vm._s(item.reserve_price))])])])
-  }))])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-
-/***/ }),
-/* 72 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory) {
@@ -20835,7 +18284,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 73 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory) {
@@ -20989,7 +18438,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 74 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -21074,7 +18523,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 75 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -21162,7 +18611,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 76 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -21490,7 +18939,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 77 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory) {
@@ -21762,7 +19211,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 78 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -21912,7 +19361,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 79 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -21995,7 +19444,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 80 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -22058,7 +19507,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 81 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -22179,7 +19628,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 82 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -22238,7 +19687,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 83 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -22283,7 +19732,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 84 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -22337,7 +19786,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 85 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -22386,7 +19835,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 86 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -22431,7 +19880,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 87 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -22481,7 +19930,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 88 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -22516,7 +19965,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 89 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -22587,7 +20036,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 90 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -22824,7 +20273,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 91 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -23599,7 +21048,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 92 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -23743,7 +21192,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 93 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -23940,7 +21389,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 94 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -24135,7 +21584,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 95 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24152,6 +21601,2102 @@ var config = {
 };
 
 exports.default = config;
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('waterfall', {
+    ref: "guessLike",
+    staticClass: ["guess-like"],
+    attrs: {
+      "showScrollbar": "false",
+      "columnWidth": _vm.columnWidth,
+      "columnCount": _vm.columnCount,
+      "columnGap": _vm.columnGap,
+      "leftGap": _vm.leftGap,
+      "rightGap": _vm.rightGap
+    },
+    on: {
+      "scroll": _vm.onScroll
+    }
+  }, [_c('header', {
+    ref: "header",
+    staticClass: ["header"],
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_c('div', {
+    staticClass: ["header-wrapper"]
+  }, [_c('text', {
+    staticClass: ["title"]
+  }, [_vm._v("猜你喜欢")])])]), _c('header', {
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_c('text', [_vm._v(_vm._s(_vm.console))])]), _vm._l((_vm.items), function(item) {
+    return _c('cell', {
+      key: item.num_iid,
+      ref: 'item' + item.num_iid,
+      refInFor: true,
+      staticClass: ["cell"],
+      appendAsTree: true,
+      attrs: {
+        "append": "tree"
+      }
+    }, [_c('div', {
+      staticClass: ["item"],
+      attrs: {
+        "couponUrl": item.coupon_click_url
+      },
+      on: {
+        "click": _vm.itemOnClick
+      }
+    }, [_c('image', {
+      staticClass: ["item-photo"],
+      attrs: {
+        "src": item.white_image ? item.white_image : item.pict_url,
+        "resize": "cover"
+      }
+    }), _c('text', {
+      staticClass: ["item-title"]
+    }, [_vm._v(_vm._s(item.title))]), _c('div', {
+      staticClass: ["item-price-box"]
+    }, [_c('div', {
+      staticClass: ["coupon"]
+    }, [_c('text', {
+      staticClass: ["iconfont", "coupon-icon"]
+    }, [_vm._v("")]), _c('text', {
+      staticClass: ["coupon-text"]
+    }, [_vm._v(_vm._s(item.coupon_amount) + "元")])]), _c('div', {
+      staticClass: ["price"]
+    }, [_c('text', {
+      staticClass: ["zk-price-txt"]
+    }, [_vm._v("折后价")]), _c('text', {
+      staticClass: ["zk-price-num"]
+    }, [_vm._v("￥" + _vm._s(_vm.couponFinalPrice(item.zk_final_price, item.coupon_amount)))])])])])])
+  }), (_vm.toHeaderBtnFlag) ? _c('header', {
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_c('div', {
+    staticClass: ["toHeader"],
+    on: {
+      "click": _vm.onToHeader
+    }
+  }, [_c('text', {
+    staticClass: ["iconfont"]
+  }, [_vm._v("")])])]) : _vm._e(), _c('header', {
+    ref: "footer",
+    staticClass: ["footer"],
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    },
+    on: {
+      "appear": _vm.onloadmore
+    }
+  }, [(_vm.loadingFlag) ? _c('image', {
+    staticStyle: {
+      width: "70px",
+      height: "70px"
+    },
+    attrs: {
+      "src": "file:///android_asset/images/loading.gif"
+    }
+  }) : _c('text', {
+    staticClass: ["indicator-text"]
+  }, [_vm._v("没有更多了...")])])], 2)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(71)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(72)
+
+/* template */
+var __vue_template__ = __webpack_require__(96)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\pages\\home.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-324fb87d"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 71 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "iconfont": {
+    "color": "#ff6000",
+    "fontSize": "40",
+    "fontFamily": "iconfont"
+  },
+  "water-fall": {
+    "marginBottom": "90"
+  },
+  "sticky-header": {
+    "position": "sticky"
+  },
+  "sticky-header-box": {
+    "flexDirection": "row",
+    "alignItems": "flex-end",
+    "justifyContent": "center",
+    "height": "130",
+    "paddingBottom": "20",
+    "backgroundColor": "rgba(250,81,58,0.9)"
+  },
+  "sticky-header-scroll": {
+    "position": "absolute",
+    "top": 0
+  },
+  "logo": {
+    "fontSize": "24",
+    "backgroundColor": "rgba(51,51,51,0.5)",
+    "width": "70",
+    "height": "70",
+    "alignItems": "center",
+    "justifyContent": "center",
+    "borderRadius": "70"
+  },
+  "logo-letter": {
+    "fontSize": "20",
+    "color": "#ffffff"
+  },
+  "main-title-box": {
+    "paddingTop": "15",
+    "paddingRight": "15",
+    "paddingBottom": "15",
+    "paddingLeft": "15",
+    "marginTop": 0,
+    "marginRight": "20",
+    "marginBottom": "20",
+    "marginLeft": "20",
+    "borderBottomWidth": "3",
+    "borderBottomStyle": "solid",
+    "borderBottomColor": "#ebecee",
+    "alignItems": "center"
+  },
+  "main-title": {
+    "color": "#333333",
+    "fontSize": "36"
+  },
+  "cell": {
+    "paddingTop": "6",
+    "paddingBottom": "6"
+  },
+  "item": {
+    "backgroundColor": "#ffffff",
+    "borderWidth": "2",
+    "borderColor": "#ebecee"
+  },
+  "item-photo": {
+    "height": "360",
+    "marginTop": "1",
+    "marginRight": "1",
+    "marginBottom": 0,
+    "marginLeft": "1"
+  },
+  "item-title": {
+    "marginTop": "10",
+    "marginRight": "10",
+    "marginBottom": "10",
+    "marginLeft": "10",
+    "fontSize": 26,
+    "fontWeight": "500",
+    "lines": 2,
+    "textOverflow": "ellipsis"
+  },
+  "item-price-box": {
+    "flexDirection": "row",
+    "paddingBottom": "10",
+    "marginRight": "10",
+    "marginLeft": "10",
+    "alignItems": "center",
+    "justifyContent": "space-between"
+  },
+  "coupon": {
+    "flexDirection": "row",
+    "alignItems": "center"
+  },
+  "coupon-icon": {
+    "marginRight": "2"
+  },
+  "coupon-text": {
+    "color": "#fe9f92",
+    "fontSize": "24"
+  },
+  "price": {
+    "flexDirection": "row",
+    "alignItems": "center"
+  },
+  "zk-price-txt": {
+    "color": "#666666",
+    "fontSize": "24"
+  },
+  "zk-price-num": {
+    "color": "#fa513a",
+    "fontSize": "32"
+  },
+  "water-footer": {
+    "alignItems": "center",
+    "paddingTop": "20",
+    "paddingRight": "20",
+    "paddingBottom": "20",
+    "paddingLeft": "20"
+  },
+  "water-footer-text": {
+    "fontSize": "30"
+  },
+  "loading": {
+    "width": "750",
+    "height": "200",
+    "MsFlexAlign": "center",
+    "WebkitAlignItems": "center",
+    "WebkitBoxAlign": "center",
+    "alignItems": "center"
+  },
+  "indicator-text": {
+    "color": "#bbbbbb",
+    "fontSize": "20",
+    "textAlign": "center"
+  },
+  "loading-indicator": {
+    "width": "40",
+    "height": "40",
+    "color": "#bbbbbb"
+  },
+  "toHeader": {
+    "position": "fixed",
+    "bottom": "130",
+    "right": "20",
+    "width": "80",
+    "height": "80",
+    "backgroundColor": "rgba(255,255,255,0.8)",
+    "borderWidth": "2",
+    "borderColor": "#ebecee",
+    "borderRadius": "80",
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  "footer": {
+    "width": "750",
+    "paddingTop": "10",
+    "paddingBottom": "10",
+    "alignItems": "center"
+  }
+}
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _Banner = __webpack_require__(73);
+
+var _Banner2 = _interopRequireDefault(_Banner);
+
+var _Chunks = __webpack_require__(84);
+
+var _Chunks2 = _interopRequireDefault(_Chunks);
+
+var _Onsale = __webpack_require__(88);
+
+var _Onsale2 = _interopRequireDefault(_Onsale);
+
+var _ScollerRow = __webpack_require__(92);
+
+var _ScollerRow2 = _interopRequireDefault(_ScollerRow);
+
+var _SearchBar = __webpack_require__(20);
+
+var _SearchBar2 = _interopRequireDefault(_SearchBar);
+
+var _store = __webpack_require__(8);
+
+var _formatURL = __webpack_require__(15);
+
+var _getJumpBaseUrl = __webpack_require__(16);
+
+var _cryptoJs = __webpack_require__(17);
+
+var _cryptoJs2 = _interopRequireDefault(_cryptoJs);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var dom = weex.requireModule("dom"); //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var stream = weex.requireModule("stream");
+var animation = weex.requireModule("animation");
+var navigator = weex.requireModule("navigator-pri");
+var modal = weex.requireModule('modal');
+exports.default = {
+  data: function data() {
+    return {
+      requestOptions: {
+        method: "taobao.tbk.dg.item.coupon.get",
+        apiOptions: {
+          adzone_id: "91627500240",
+          platform: "2",
+          page_size: "40",
+          page_no: 1
+        }
+      },
+      items: [],
+      columnWidth: "auto",
+      columnCount: "2",
+      columnGap: "10",
+      leftGap: "20",
+      rightGap: "20",
+      console: "",
+      scrollFlag: false,
+      // headerShow: true,
+      headOpacity: 0,
+      loadingFlag: true, // 控制底部加载状态
+      toHeaderBtnFlag: false,
+      footerFlag: false,
+      upNumId: "",
+      upFlag: false
+    };
+  },
+
+  components: {
+    Banner: _Banner2.default,
+    Chunks: _Chunks2.default,
+    Onsale: _Onsale2.default,
+    ScollerRow: _ScollerRow2.default,
+    SearchBar: _SearchBar2.default
+  },
+  created: function created() {
+
+    var self = this;
+    var url = (0, _formatURL.formatURL)(this.requestOptions.method, this.requestOptions.apiOptions);
+    this.footerFlag = false;
+    stream.fetch({
+      method: "GET",
+      url: url,
+      type: "json"
+    }, function (res) {
+      try {
+        if (res.data) {
+          var items = res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon;
+          self.items = self.couponInfoDeal(items);
+        } else {
+          self.footerFlag = true;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  },
+  mounted: function mounted() {},
+  updated: function updated(e) {
+    if (this.upFlag) {
+      var el = this.$refs[this.upNumId][0];
+      dom.scrollToElement(el, { offset: -950, animated: false });
+      this.upFlag = false;
+    }
+  },
+
+  methods: {
+    couponInfoDeal: function couponInfoDeal(items) {
+      items.forEach(function (item, i) {
+        var _coupon_info = "";
+        // 记录"减的位置"
+        var jianPos = item.coupon_info.search("减");
+        _coupon_info = item.coupon_info.slice(jianPos + 1);
+        items[i].coupon_info = _coupon_info;
+      });
+      return items;
+    },
+    onScroll: function onScroll(e) {
+      // console.log(e)
+      // this.console = this.$refs.waterfall
+      e.contentOffset.y < -1000 ? this.toHeaderBtnFlag = true : this.toHeaderBtnFlag = false;
+      if (e.contentOffset.y < -110) {
+        this.scrollFlag = true;
+        _store.store.commit("changeScrollFlag", true);
+        if (this.headOpacity <= 1) {
+          this.headOpacity = (Math.abs(e.contentOffset.y) - 110) / 250;
+        } else {
+          this.headOpacity = 1;
+        }
+      } else {
+        this.scrollFlag = false;
+        _store.store.commit("changeScrollFlag", false);
+        // dom.scrollToElement(this.$refs.header,{offset:0,animated:false})
+      }
+    },
+
+    // onloading(e) {
+    //   this.loadingFlag = true;
+    //   this.footerFlag = false;
+    //   this.requestOptions.apiOptions.page_no++;
+    //   let self = this;
+    //   let url = formatURL(
+    //     this.requestOptions.method,
+    //     this.requestOptions.apiOptions
+    //   );
+
+    //   try {
+    //     stream.fetch(
+    //       {
+    //         method: "GET",
+    //         url: url,
+    //         type: "json"
+    //       },
+    //       res => {
+    //         if (res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon) {
+    //           let items =
+    //             res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon;
+    //           items = self.couponInfoDeal(items);
+    //           items.forEach(item => {
+    //             self.items.push(item);
+    //           });
+    //           self.loadingFlag = false;
+    //           self.upNumId = "item" + items[0].num_iid;
+    //           self.upFlag = true;
+
+    //           // let p = getComponentRect('viewport')
+    //           // dom.scrollToElement(el,{offset:0,animated:true})
+    //         } else {
+    //           self.footerFlag = true;
+    //         }
+    //       }
+    //     );
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+
+    //   setTimeout(() => {
+    //     this.loadingFlag = false;
+    //     // this.footerFlag = true
+    //   }, 5000);
+    // },
+    onloadmore: function onloadmore() {
+      var _this = this;
+
+      this.footerFlag = true;
+      this.requestOptions.apiOptions.page_no++;
+
+      var url = (0, _formatURL.formatURL)(this.requestOptions.method, this.requestOptions.apiOptions);
+
+      try {
+        stream.fetch({
+          method: "GET",
+          url: url,
+          type: "json"
+        }, function (res) {
+          if (res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon) {
+            var items = res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon;
+            items = _this.couponInfoDeal(items);
+            items.forEach(function (item) {
+              _this.items.push(item);
+            });
+          } else {
+            _this.footerFlag = false;
+          }
+        });
+      } catch (err) {
+        this.footerFlag = false;
+      }
+    },
+    onToHeader: function onToHeader(e) {
+      dom.scrollToElement(this.$refs.header, { offset: 0, animated: 'true' });
+    },
+    itemOnClick: function itemOnClick(e) {
+      var couponUrl = e.currentTarget.attr.couponUrl;
+      _store.store.commit("setCouponUrl", couponUrl);
+
+      navigator.push({
+        url: (0, _getJumpBaseUrl.getJumpBaseUrl)("coupon", couponUrl),
+        animated: "true"
+      });
+    }
+  }
+};
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(74)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(75)
+
+/* template */
+var __vue_template__ = __webpack_require__(83)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\components\\Banner.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-ff942d88"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "banner": {
+    "alignItems": "center",
+    "position": "relative"
+  },
+  "size": {
+    "width": "750",
+    "height": "500",
+    "borderRadius": "-100"
+  },
+  "slider": {
+    "position": "relative"
+  },
+  "indicator": {
+    "position": "absolute",
+    "left": 0,
+    "right": 0,
+    "bottom": "40",
+    "height": "40",
+    "itemColor": "#f8f8f8",
+    "itemSelectedColor": "#fa513a",
+    "itemSize": "8"
+  },
+  "footer-mask": {
+    "alignItems": "center",
+    "position": "absolute",
+    "bottom": "-2"
+  },
+  "footer-mask-img": {
+    "width": "800",
+    "height": "20"
+  }
+}
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _StickyHeader = __webpack_require__(76);
+
+var _StickyHeader2 = _interopRequireDefault(_StickyHeader);
+
+var _store = __webpack_require__(8);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+  data: function data() {
+    return {
+      posters: ['111.jpg', '444.jpg', '333.jpg', '222.jpg'],
+      scrollFlag: !_store.store.state.scrollFlag
+    };
+  },
+
+  methods: {},
+  components: {
+    StickyHeader: _StickyHeader2.default
+  }
+};
+
+/***/ }),
+/* 76 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(77)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(78)
+
+/* template */
+var __vue_template__ = __webpack_require__(82)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\components\\StickyHeader.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-4ae938e6"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "iconfont": {
+    "color": "#ffffff",
+    "fontSize": "50",
+    "fontFamily": "iconfont"
+  },
+  "stickyHeader": {
+    "position": "absolute",
+    "top": "25",
+    "flexDirection": "row",
+    "width": "750",
+    "height": "110",
+    "alignItems": "center",
+    "justifyContent": "center",
+    "backgroundColor": "rgba(0,0,0,0)"
+  },
+  "logo": {
+    "backgroundColor": "rgba(51,51,51,0.5)",
+    "width": "70",
+    "height": "70",
+    "alignItems": "center",
+    "justifyContent": "center",
+    "borderRadius": "70",
+    "position": "absolute",
+    "left": "10",
+    "top": "20"
+  },
+  "logo-letter": {
+    "fontSize": "20",
+    "color": "#ffffff"
+  }
+}
+
+/***/ }),
+/* 78 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _SearchBar = __webpack_require__(20);
+
+var _SearchBar2 = _interopRequireDefault(_SearchBar);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  components: {
+    SearchBar: _SearchBar2.default
+  }
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+/* 79 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "iconfont": {
+    "color": "#bbbbbb",
+    "fontSize": "32",
+    "fontFamily": "iconfont"
+  },
+  "search-bar": {
+    "position": "relative",
+    "justifyContent": "center",
+    "textAlign": "center"
+  },
+  "search": {
+    "width": "590",
+    "height": "60",
+    "marginLeft": "25",
+    "paddingLeft": "60",
+    "borderRadius": "40",
+    "backgroundColor": "#ffffff",
+    "fontSize": "28",
+    "color": "#333333",
+    "placeholderColor": "#bbb"
+  },
+  "search-btn": {
+    "position": "absolute",
+    "left": "30",
+    "top": "14",
+    "paddingLeft": "10"
+  },
+  "search-fake-box": {
+    "justifyContent": "center"
+  },
+  "search-fake-text": {
+    "color": "#bbbbbb",
+    "fontSize": "28"
+  }
+}
+
+/***/ }),
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _getJumpBaseUrl = __webpack_require__(16);
+
+var navigator = weex.requireModule("navigator-pri"); //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+exports.default = {
+  props: {
+    // searchAble: Boolean,
+    autoFocus: Boolean
+  },
+  methods: {
+    onSearch: function onSearch(e) {
+      e.stopPropagation();
+      navigator.push({
+        url: (0, _getJumpBaseUrl.getJumpBaseUrl)("searchPage"),
+        animated: "false"
+      });
+    }
+  }
+};
+
+/***/ }),
+/* 81 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["search-bar"]
+  }, [_c('div', {
+    staticClass: ["search", "search-fake-box"],
+    on: {
+      "click": _vm.onSearch
+    }
+  }, [_c('text', {
+    staticClass: ["search-fake-text"]
+  }, [_vm._v("搜索商品、店铺等")])]), _vm._m(0)])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["search-btn"]
+  }, [_c('text', {
+    staticClass: ["iconfont"]
+  }, [_vm._v("")])])
+}]}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 82 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["stickyHeader"]
+  }, [_vm._m(0), _c('searchBar', {
+    attrs: {
+      "searchDisable": "false"
+    }
+  })], 1)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["logo"]
+  }, [_c('text', {
+    staticClass: ["logo-letter"]
+  }, [_vm._v("淘折")])])
+}]}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 83 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["banner"]
+  }, [_c('slider', {
+    staticClass: ["slider", "size"],
+    attrs: {
+      "autoPlay": "true"
+    }
+  }, [_vm._l((_vm.posters), function(src, i) {
+    return _c('div', {
+      key: i
+    }, [_c('image', {
+      staticClass: ["size"],
+      attrs: {
+        "resize": "stretch",
+        "src": 'file:///android_asset/images/' + src
+      }
+    })])
+  }), _c('indicator', {
+    staticClass: ["indicator"]
+  })], 2), _vm._m(0), _c('sticky-header')], 1)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["footer-mask"]
+  }, [_c('image', {
+    staticClass: ["footer-mask-img"],
+    attrs: {
+      "src": "file:///android_asset/images/slider-mask.png",
+      "resize": "cover"
+    }
+  })])
+}]}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(85)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(86)
+
+/* template */
+var __vue_template__ = __webpack_require__(87)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\components\\Chunks.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-63d1c8b6"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 85 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "chunks": {
+    "height": "160",
+    "backgroundColor": "#ffffff",
+    "marginTop": "20",
+    "marginRight": "20",
+    "marginBottom": "20",
+    "marginLeft": "20",
+    "borderRadius": "30"
+  },
+  "cell": {
+    "flexDirection": "row",
+    "justifyContent": "center",
+    "alignItems": "center"
+  },
+  "B-box": {
+    "width": "140",
+    "justifyContent": "center",
+    "alignItems": "center",
+    "paddingTop": "10"
+  },
+  "B-title": {
+    "width": "140",
+    "fontSize": "20",
+    "textAlign": "center",
+    "paddingTop": "15",
+    "color": "#999999"
+  },
+  "B-icon": {
+    "width": "100",
+    "height": "100"
+  }
+}
+
+/***/ }),
+/* 86 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+  data: function data() {
+    return {
+      row1: [{
+        title: '腔调掌柜',
+        icon: 'http://img.alicdn.com/tfs/TB1sWLoRVXXXXbdXXXXXXXXXXXX-140-140.png'
+      }, {
+        title: '腔调掌柜',
+        icon: 'http://gw.alicdn.com/tfs/TB10.R_SpXXXXbtXXXXXXXXXXXX-140-140.png'
+      }, {
+        title: '腔调掌柜',
+        icon: 'http://img.alicdn.com/tfs/TB1fRVASpXXXXXdXXXXXXXXXXXX-140-140.png'
+      }, {
+        title: '腔调掌柜',
+        icon: 'http://img.alicdn.com/tfs/TB1_TkdPVXXXXcJXXXXXXXXXXXX-140-140.png'
+      }, {
+        title: '腔调掌柜',
+        icon: 'http://img.alicdn.com/tfs/TB1vRGhSpXXXXaLXpXXXXXXXXXX-140-140.png'
+      }]
+    };
+  }
+};
+
+/***/ }),
+/* 87 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["chunks"]
+  }, [_c('list', {
+    staticClass: ["list"]
+  }, [_c('cell', {
+    staticClass: ["cell"],
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, _vm._l((_vm.row1), function(item, i) {
+    return _c('div', {
+      key: i,
+      staticClass: ["B-box"]
+    }, [_c('image', {
+      staticClass: ["B-icon"],
+      attrs: {
+        "src": item.icon
+      }
+    }), _c('text', {
+      staticClass: ["B-title"]
+    }, [_vm._v(_vm._s(item.title))])])
+  }))])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(89)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(90)
+
+/* template */
+var __vue_template__ = __webpack_require__(91)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\components\\Onsale.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-5b4c3894"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 89 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "onsale": {
+    "marginTop": "20",
+    "marginRight": "20",
+    "marginBottom": "20",
+    "marginLeft": "20",
+    "backgroundColor": "#ffffff",
+    "borderRadius": "30",
+    "flexDirection": "row",
+    "position": "relative",
+    "paddingBottom": "20"
+  },
+  "title": {
+    "position": "absolute",
+    "left": 0,
+    "top": "18",
+    "backgroundImage": "linear-gradient(to top,#EB6A12,#FFA42A)",
+    "width": "180",
+    "height": "60",
+    "borderTopRightRadius": "60",
+    "borderBottomRightRadius": "60",
+    "justifyContent": "center",
+    "alignItems": "center",
+    "borderWidth": "2",
+    "borderColor": "#F5B488",
+    "borderStyle": "solid"
+  },
+  "title-txt": {
+    "color": "#ffffff",
+    "fontSize": "32"
+  },
+  "left-box": {
+    "borderRightWidth": "2",
+    "borderRightColor": "#ebecee",
+    "marginTop": "20",
+    "marginRight": "20",
+    "marginBottom": "20",
+    "marginLeft": "20",
+    "width": "340"
+  },
+  "box-title": {
+    "marginTop": "65"
+  },
+  "box-title-top": {
+    "fontSize": "36",
+    "color": "#fa513a"
+  },
+  "box-title-bottom": {
+    "fontSize": "24",
+    "marginBottom": "15",
+    "color": "#666666"
+  },
+  "buy-btn": {
+    "width": "140",
+    "height": "50",
+    "backgroundColor": "#fb3519",
+    "borderRadius": "10",
+    "justifyContent": "center",
+    "alignItems": "center",
+    "marginBottom": "15"
+  },
+  "buy-btn-txt": {
+    "color": "#ffffff",
+    "fontSize": "28"
+  },
+  "left-img": {
+    "width": "320",
+    "height": "200"
+  },
+  "right-box": {
+    "width": "320"
+  },
+  "right-top": {
+    "borderBottomWidth": "2",
+    "borderBottomColor": "#ebecee",
+    "borderBottomStyle": "solid",
+    "paddingBottom": "35",
+    "position": "relative"
+  },
+  "right-top-title": {
+    "marginTop": "40"
+  },
+  "right-bottom": {
+    "position": "relative"
+  },
+  "right-img-box": {
+    "position": "absolute",
+    "right": "5",
+    "top": "5"
+  },
+  "right-img": {
+    "width": "165",
+    "height": "200"
+  }
+}
+
+/***/ }),
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+exports.default = {};
+
+/***/ }),
+/* 91 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["onsale"]
+  }, [_c('div', {
+    staticClass: ["title"]
+  }, [_c('text', {
+    staticClass: ["title-txt"]
+  }, [_vm._v("活动专区")])]), _c('div', {
+    staticClass: ["left-box"]
+  }, [_c('div', {
+    staticClass: ["box-title"]
+  }, [_c('text', {
+    staticClass: ["box-title-top"]
+  }, [_vm._v("限时抢购")]), _c('text', {
+    staticClass: ["box-title-bottom"]
+  }, [_vm._v("实惠好物等你来抢")])]), _c('div', {
+    staticClass: ["buy-btn"]
+  }, [_c('text', {
+    staticClass: ["buy-btn-txt"]
+  }, [_vm._v("立即抢购")])]), _c('div', [_c('image', {
+    staticClass: ["left-img"],
+    attrs: {
+      "src": "file:///android_asset/images/sale1.png",
+      "resize": "cover"
+    }
+  })])]), _c('div', {
+    staticClass: ["right-box"]
+  }, [_c('div', {
+    staticClass: ["right-top"]
+  }, [_c('div', {
+    staticClass: ["right-img-box"]
+  }, [_c('image', {
+    staticClass: ["right-img"],
+    attrs: {
+      "src": "https://gd3.alicdn.com/imgextra/i3/47058671/TB28X.4buGSBuNjSspbXXciipXa_!!47058671.jpg_400x400.jpg_.webp",
+      "resize": "cover"
+    }
+  })]), _c('div', {
+    staticClass: ["box-title", "right-top-title"]
+  }, [_c('text', {
+    staticClass: ["box-title-top"]
+  }, [_vm._v("实惠团购")]), _c('text', {
+    staticClass: ["box-title-bottom"]
+  }, [_vm._v("拼着买更便宜")])]), _c('div', {
+    staticClass: ["buy-btn"]
+  }, [_c('text', {
+    staticClass: ["buy-btn-txt"]
+  }, [_vm._v("立即抢购")])])]), _c('div', {
+    staticClass: ["right-bottom"]
+  }, [_c('div', {
+    staticClass: ["right-img-box"]
+  }, [_c('image', {
+    staticClass: ["right-img"],
+    attrs: {
+      "src": "http://img.alicdn.com/imgextra/i1/725677994/O1CN01n5as6O28vIdtVlESK_!!0-item_pic.jpg_430x430q90.jpg",
+      "resize": "cover"
+    }
+  })]), _c('div', {
+    staticClass: ["box-title", "right-top-title"]
+  }, [_c('text', {
+    staticClass: ["box-title-top"]
+  }, [_vm._v("超大额券")]), _c('text', {
+    staticClass: ["box-title-bottom"]
+  }, [_vm._v("让实惠更实惠")])]), _c('div', {
+    staticClass: ["buy-btn"]
+  }, [_c('text', {
+    staticClass: ["buy-btn-txt"]
+  }, [_vm._v("立即抢购")])])])])])
+}]}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 92 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(93)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(94)
+
+/* template */
+var __vue_template__ = __webpack_require__(95)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\components\\ScollerRow.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-33deec7e"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 93 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "scroller": {
+    "height": "450",
+    "flexDirection": "row",
+    "marginRight": "20",
+    "marginBottom": "20"
+  },
+  "panel": {
+    "width": "300",
+    "backgroundColor": "#ffffff",
+    "borderWidth": "2",
+    "borderStyle": "solid",
+    "borderColor": "#ebecee",
+    "marginLeft": "20"
+  },
+  "item-photo": {
+    "width": "300",
+    "height": "300"
+  },
+  "item-title": {
+    "marginTop": "10",
+    "marginRight": "10",
+    "marginBottom": "10",
+    "marginLeft": "10",
+    "fontSize": 26,
+    "fontWeight": "500",
+    "lines": 2,
+    "textOverflow": "ellipsis"
+  },
+  "price": {
+    "flexDirection": "row",
+    "alignItems": "center"
+  },
+  "zk-price": {
+    "color": "#fa513a",
+    "fontSize": "32",
+    "marginTop": "5",
+    "marginRight": "5",
+    "marginBottom": "5",
+    "marginLeft": "5"
+  },
+  "reserve-price": {
+    "color": "#bbbbbb",
+    "fontSize": "24",
+    "marginTop": "5",
+    "marginRight": "5",
+    "marginBottom": "5",
+    "marginLeft": "5",
+    "textDecoration": "line-through"
+  }
+}
+
+/***/ }),
+/* 94 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+exports.default = {
+  data: function data() {
+    return {
+      list: [{
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=529348904068",
+        nick: "洋森之家",
+        num_iid: 529348904068,
+        pict_url: "https://img.alicdn.com/tfscom/i1/2736782442/TB2AWfralHH8KJjy0FbXXcqlpXa_!!2736782442.jpg",
+        provcity: "河北 石家庄",
+        reserve_price: "39.80",
+        seller_id: 2736782442,
+        shop_title: "柳润母婴生活馆",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i2/2736782442/TB2YtRTkk.HL1JjSZFuXXX8dXXa_!!2736782442.jpg", "https://img.alicdn.com/tfscom/i1/2736782442/TB2kUNdaesAV1JjSZFsXXadZXXa_!!2736782442.jpg", "https://img.alicdn.com/tfscom/i2/2736782442/TB2jlfhX.RIWKJjSZFgXXboxXXa_!!2736782442.jpg", "https://img.alicdn.com/tfscom/i1/2736782442/TB2tfmpmGmWQ1JjSZPhXXXCJFXa_!!2736782442.jpg"]
+        },
+        status: 1,
+        title: "超大老人防水纯棉防漏透气隔尿垫成人老年人护理垫床垫可洗尿不湿",
+        tk_rate: "1.50",
+        type: 1,
+        user_type: 0,
+        volume: 71,
+        zk_final_price: "19.90",
+        zk_final_price_wap: "19.90"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=582963602222",
+        nick: "松阳振晖",
+        num_iid: 582963602222,
+        pict_url: "https://img.alicdn.com/tfscom/i1/17197599/O1CN018etsq1260OBTKCA6w_!!0-item_pic.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "1680.00",
+        seller_id: 17197599,
+        shop_title: "唯你原创女装",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i1/17197599/O1CN01fgKCyT260OBT9N0pJ_!!17197599.jpg", "https://img.alicdn.com/tfscom/i3/17197599/O1CN01ugVuDd260OBRTOsgw_!!17197599.jpg", "https://img.alicdn.com/tfscom/i2/17197599/O1CN01qdpNox260OBROTLf0_!!17197599.jpg", "https://img.alicdn.com/tfscom/i1/17197599/O1CN0115dFAt260OBaQBCRt_!!17197599.jpg"]
+        },
+        status: 1,
+        title: "2018冬季新款女装中长款欧货时尚宽松显瘦加厚面包亮面羽绒服外套",
+        tk_rate: "4.50",
+        type: 1,
+        user_type: 0,
+        volume: 4268,
+        zk_final_price: "398.00",
+        zk_final_price_wap: "398.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=584205077923",
+        nick: "雯雯的便便hz",
+        num_iid: 584205077923,
+        pict_url: "https://img.alicdn.com/tfscom/i2/78403414/O1CN01uRfSOM1b5eejyHgle_!!78403414.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "312.00",
+        seller_id: 78403414,
+        shop_title: "小蚊子 女装",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i4/78403414/O1CN01AzNw881b5eege3Afh_!!78403414.jpg", "https://img.alicdn.com/tfscom/i1/78403414/O1CN013U4igi1b5eege0UD9_!!78403414.jpg", "https://img.alicdn.com/tfscom/i4/78403414/O1CN01EpsCLO1b5eehH2E8R_!!78403414.jpg", "https://img.alicdn.com/tfscom/i3/78403414/O1CN0165l4NN1b5eeZSgFlg_!!78403414.jpg"]
+        },
+        status: 1,
+        title: "亮面棉衣女装冬季2018新款假两件棉袄中长款加厚连帽羽绒棉服外套",
+        tk_rate: "1.80",
+        type: 1,
+        user_type: 0,
+        volume: 1628,
+        zk_final_price: "249.90",
+        zk_final_price_wap: "249.90"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=583259454597",
+        nick: "晓得111",
+        num_iid: 583259454597,
+        pict_url: "https://img.alicdn.com/tfscom/i1/1016012691/O1CN01CpD3uj1VkWIRPFfOI_!!1016012691.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "899.00",
+        seller_id: 1016012691,
+        shop_title: "MC韩国时尚女装",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i1/1016012691/O1CN01Meatpm1VkWIRVkbps_!!1016012691.jpg", "https://img.alicdn.com/tfscom/i2/1016012691/O1CN01cBEGNn1VkWINvycjb_!!1016012691.jpg", "https://img.alicdn.com/tfscom/i2/1016012691/O1CN01uwtdEi1VkWIQZqf0q_!!1016012691.jpg", "https://img.alicdn.com/tfscom/i2/1016012691/O1CN01I6F53s1VkWIJmROe4_!!1016012691.jpg"]
+        },
+        status: 1,
+        title: "2018新款女装冬中长款仿羊羔毛羊剪绒外套女格子拼接撞色毛毛大衣",
+        tk_rate: "9.00",
+        type: 1,
+        user_type: 0,
+        volume: 9358,
+        zk_final_price: "388.00",
+        zk_final_price_wap: "388.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=582277199763",
+        nick: "周末与白天",
+        num_iid: 582277199763,
+        pict_url: "https://img.alicdn.com/tfscom/i2/772616220/TB2r9b.ggnH8KJjSspcXXb3QFXa_!!772616220.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "1288.00",
+        seller_id: 772616220,
+        shop_title: "赵DD STUDIO",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i3/772616220/TB2p8x0ktbJ8KJjy1zjXXaqapXa_!!772616220.jpg", "https://img.alicdn.com/tfscom/i3/772616220/O1CN01oNgmNW1voo0xqiQ2r_!!772616220.png", "https://img.alicdn.com/tfscom/i4/772616220/TB2VylqjY_I8KJjy1XaXXbsxpXa_!!772616220.png", "https://img.alicdn.com/tfscom/i1/772616220/O1CN01P5PJy11voo0qo5FQX_!!772616220.jpg"]
+        },
+        status: 1,
+        title: "白鸭绒长款过膝白色羽绒服女2018冬季新款韩版大毛领气质加厚女装",
+        tk_rate: "2.40",
+        type: 4,
+        user_type: 0,
+        volume: 1383,
+        zk_final_price: "653.50",
+        zk_final_price_wap: "653.50"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=581105112160",
+        nick: "yxphy123001",
+        num_iid: 581105112160,
+        pict_url: "https://img.alicdn.com/tfscom/i1/131950134/O1CN011CrPXuUaGe14ZWW_!!131950134.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "998.00",
+        seller_id: 131950134,
+        shop_title: "ds313领袖丽人",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i4/131950134/O1CN011CrPXrRhdldT3Ut_!!131950134.jpg", "https://img.alicdn.com/tfscom/i3/131950134/O1CN01oMaiiR1CrPYJ2W2q4_!!131950134.jpg", "https://img.alicdn.com/tfscom/i4/131950134/O1CN01bIwbtU1CrPYoN1SYL_!!131950134.jpg", "https://img.alicdn.com/tfscom/i3/131950134/O1CN01R5iCol1CrPXnCCovH_!!131950134.jpg"]
+        },
+        status: 1,
+        title: "毛呢外套女中长款2018秋冬季新款流行女装韩版茧型显瘦呢子大衣潮",
+        tk_rate: "3.00",
+        type: 1,
+        user_type: 0,
+        volume: 3679,
+        zk_final_price: "198.00",
+        zk_final_price_wap: "198.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=575570459742",
+        nick: "云思木想旗舰店",
+        num_iid: 575570459742,
+        pict_url: "https://img.alicdn.com/tfscom/i2/1765328414/O1CN01mFeWvM2C1eycaNGgp_!!0-item_pic.jpg",
+        provcity: "广东 广州",
+        reserve_price: "494.00",
+        seller_id: 1765328414,
+        shop_title: "云思木想旗舰店",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i2/1765328414/TB2BdYGoVooBKNjSZPhXXc2CXXa_!!1765328414.jpg", "https://img.alicdn.com/tfscom/i3/1765328414/TB2JwKzpnqWBKNjSZFxXXcpLpXa_!!1765328414.jpg", "https://img.alicdn.com/tfscom/i2/1765328414/TB2p0N_pXkoBKNjSZFkXXb4tFXa_!!1765328414.jpg", "https://img.alicdn.com/tfscom/i3/1765328414/TB2_t.lo0cnBKNjSZR0XXcFqFXa_!!1765328414.jpg"]
+        },
+        status: 1,
+        title: "云思木想2018秋装新款女装凤凰印花荷叶袖套头立领卫衣女75815",
+        tk_rate: "4.50",
+        type: 1,
+        user_type: 1,
+        volume: 742,
+        zk_final_price: "241.00",
+        zk_final_price_wap: "241.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=583573811796",
+        nick: "点名时间到了",
+        num_iid: 583573811796,
+        pict_url: "https://img.alicdn.com/tfscom/i3/2107328912/O1CN01lWFdSx2FhkDjzQnVk_!!2107328912.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "888.00",
+        seller_id: 2107328912,
+        shop_title: "DmTime DM家潮流女装",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i4/2107328912/O1CN01z4nVl72FhkEYruQYL_!!2107328912.jpg", "https://img.alicdn.com/tfscom/i4/2107328912/O1CN01nQxmfG2FhkEa46l7T_!!2107328912.jpg", "https://img.alicdn.com/tfscom/i3/2107328912/O1CN016s0AiK2FhkDlGPRfy_!!2107328912.jpg", "https://img.alicdn.com/tfscom/i2/2107328912/O1CN01VVHKDx2FhkDkG19lA_!!2107328912.jpg"]
+        },
+        status: 1,
+        title: "2018秋冬新款女装韩版毛衣连衣裙针织毛衫长裙包臀裙内搭裙子冬季",
+        tk_rate: "9.00",
+        type: 1,
+        user_type: 0,
+        volume: 4407,
+        zk_final_price: "178.00",
+        zk_final_price_wap: "178.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=582956610447",
+        nick: "小六子女装",
+        num_iid: 582956610447,
+        pict_url: "https://img.alicdn.com/tfscom/i2/2274485118/O1CN01LyEGll1ng5XmfQOqW_!!2274485118.jpg",
+        provcity: "广东 广州",
+        reserve_price: "198.00",
+        seller_id: 2274485118,
+        shop_title: "小太阳大码衣舍",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i4/2274485118/O1CN01NjyEfm1ng5XpygqOX_!!2274485118.jpg", "https://img.alicdn.com/tfscom/i1/2274485118/O1CN01AbP22B1ng5Xnefvtp_!!2274485118.jpg", "https://img.alicdn.com/tfscom/i1/2274485118/O1CN01YlFucX1ng5XoDyFe9_!!2274485118.jpg", "https://img.alicdn.com/tfscom/i4/2274485118/O1CN01Sy8fy21ng5Xn467qK_!!2274485118.jpg"]
+        },
+        status: 1,
+        title: "胖女人秋冬装洋气胖mm200斤大码女装 2018新款微胖妹妹针织连衣裙",
+        tk_rate: "4.50",
+        type: 1,
+        user_type: 0,
+        volume: 1560,
+        zk_final_price: "198.00",
+        zk_final_price_wap: "198.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=582145521987",
+        nick: "美眉炫酷女装",
+        num_iid: 582145521987,
+        pict_url: "https://img.alicdn.com/tfscom/i4/1692945001/O1CN01xb9qmG1moVCSe0aaE_!!1692945001.jpg",
+        provcity: "北京",
+        reserve_price: "288.00",
+        seller_id: 1692945001,
+        shop_title: "这家大码店",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i4/1692945001/O1CN01K9cwTB1moVCXWdeJS_!!1692945001.jpg", "https://img.alicdn.com/tfscom/i1/1692945001/O1CN010026Ek1moVCbLokUZ_!!1692945001.jpg", "https://img.alicdn.com/tfscom/i4/1692945001/O1CN01ifcEjg1moVCZHop20_!!1692945001.jpg", "https://img.alicdn.com/tfscom/i3/1692945001/O1CN010ZBEp81moVCYrV3YG_!!1692945001.jpg"]
+        },
+        status: 1,
+        title: "特大码女装棉服中长款2018新款冬装加厚棉衣胖妹妹过膝230斤棉袄",
+        tk_rate: "2.49",
+        type: 4,
+        user_type: 0,
+        volume: 1712,
+        zk_final_price: "199.00",
+        zk_final_price_wap: "199.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=579657145491",
+        nick: "小衣橱管家",
+        num_iid: 579657145491,
+        pict_url: "https://img.alicdn.com/tfscom/i1/854951489/O1CN011Ms0CyrieXQFJaQ_!!854951489.jpg",
+        provcity: "广东 广州",
+        reserve_price: "188.00",
+        seller_id: 854951489,
+        shop_title: "小衣橱管家",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i1/854951489/O1CN011Ms0D0BlFpi1W81_!!854951489.jpg", "https://img.alicdn.com/tfscom/i4/854951489/O1CN011Ms0CzMarazTRpy_!!854951489.jpg", "https://img.alicdn.com/tfscom/i1/854951489/O1CN011Ms0Czxg5hYo3Jf_!!854951489.jpg", "https://img.alicdn.com/tfscom/i3/854951489/O1CN011Ms0CzednSnuxye_!!854951489.jpg"]
+        },
+        status: 1,
+        title: "waitmore高冷气质冷系女装大衣外套港味格子西装毛呢外套赫本风女",
+        tk_rate: "3.00",
+        type: 1,
+        user_type: 0,
+        volume: 3165,
+        zk_final_price: "188.00",
+        zk_final_price_wap: "188.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=583007088959",
+        nick: "自然依人19889",
+        num_iid: 583007088959,
+        pict_url: "https://img.alicdn.com/tfscom/i4/815547271/O1CN01YwHZel23aAHDmaMPm_!!815547271.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "580.00",
+        seller_id: 815547271,
+        shop_title: "索菲欧原创女装",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i1/815547271/O1CN01n2AUUv23aAHC2zN0I_!!815547271.jpg", "https://img.alicdn.com/tfscom/i4/815547271/O1CN01JteMXR23aAHAp03hu_!!815547271.jpg", "https://img.alicdn.com/tfscom/i4/815547271/O1CN01pWhHCj23aAH9Wos7x_!!815547271.jpg", "https://img.alicdn.com/tfscom/i3/815547271/O1CN01wJgQed23aAHL5CA3r_!!815547271.jpg"]
+        },
+        status: 1,
+        title: "棉衣女中长款2018冬装新款女装chic黑色大毛领小个子羽绒棉服外套",
+        tk_rate: "4.50",
+        type: 1,
+        user_type: 0,
+        volume: 1545,
+        zk_final_price: "258.00",
+        zk_final_price_wap: "258.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=582161127636",
+        nick: "chaoming528",
+        num_iid: 582161127636,
+        pict_url: "https://img.alicdn.com/tfscom/i4/2507973110/O1CN01GAJU4C1YqQExHFbSi_!!2507973110.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "1088.00",
+        seller_id: 2507973110,
+        shop_title: "西西原创女装",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i1/2507973110/O1CN01aw2fjX1YqQFFMwvtR_!!2507973110.jpg", "https://img.alicdn.com/tfscom/i2/2507973110/O1CN01kasgYx1YqQExRkaM5_!!2507973110.jpg", "https://img.alicdn.com/tfscom/i4/2507973110/O1CN01B5KLTq1YqQEwdQ3HU_!!2507973110.jpg", "https://img.alicdn.com/tfscom/i3/2507973110/O1CN01cZBIam1YqQFNhSQJo_!!2507973110.jpg"]
+        },
+        status: 1,
+        title: "2018新款女装冬中长款仿羊羔毛羊剪绒外套女宽松大码毛领毛毛大衣",
+        tk_rate: "3.00",
+        type: 4,
+        user_type: 0,
+        volume: 1482,
+        zk_final_price: "328.00",
+        zk_final_price_wap: "328.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=578935268077",
+        nick: "皮改艳4699",
+        num_iid: 578935268077,
+        pict_url: "https://img.alicdn.com/tfscom/i1/585373984/O1CN011fIiOKtOeSE2PmQ_!!585373984.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "599.00",
+        seller_id: 585373984,
+        shop_title: "CC美丽公主",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i4/585373984/O1CN011fIiOKhCFGdlxT7_!!585373984.jpg", "https://img.alicdn.com/tfscom/i3/585373984/O1CN01dHNgKJ1fIiOo5gW67_!!585373984.jpg", "https://img.alicdn.com/tfscom/i2/585373984/O1CN01oDC4pz1fIiOqrwpBw_!!585373984.jpg", "https://img.alicdn.com/tfscom/i4/585373984/O1CN011fIiOD3cZ1lUVyv_!!585373984.jpg"]
+        },
+        status: 1,
+        title: "毛呢外套女2018秋冬新款复古休闲系带加厚呢子小西装短款外套女装",
+        tk_rate: "4.50",
+        type: 1,
+        user_type: 0,
+        volume: 3650,
+        zk_final_price: "168.00",
+        zk_final_price_wap: "168.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=584788965989",
+        nick: "vipwangting",
+        num_iid: 584788965989,
+        pict_url: "https://img.alicdn.com/tfscom/i3/112638574/O1CN01zCPEKF2DCwMAL0VE0_!!112638574.jpg",
+        provcity: "浙江 嘉兴",
+        reserve_price: "198.00",
+        seller_id: 112638574,
+        shop_title: "羊毛家",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i3/112638574/O1CN01MmHL722DCwMEBliIP_!!112638574.jpg", "https://img.alicdn.com/tfscom/i3/112638574/O1CN01VgMk8Q2DCwMCyzrqF_!!112638574.jpg", "https://img.alicdn.com/tfscom/i2/112638574/O1CN01pMILuU2DCwMELVAmb_!!112638574.jpg", "https://img.alicdn.com/tfscom/i3/112638574/O1CN01BuCRNv2DCwMAjxRmC_!!112638574.jpg"]
+        },
+        status: 1,
+        title: "2019新款女装很仙的法国小众雪纺连衣裙女中长款仙女裙蕾丝裙春装",
+        tk_rate: "1.50",
+        type: 4,
+        user_type: 0,
+        volume: 3294,
+        zk_final_price: "99.00",
+        zk_final_price_wap: "99.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=582749105088",
+        nick: "果果一女人",
+        num_iid: 582749105088,
+        pict_url: "https://img.alicdn.com/tfscom/i2/595412874/O1CN01OMrO3v1X6KlzXrnfc_!!595412874.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "249.90",
+        seller_id: 595412874,
+        shop_title: "果果家 GGWOMEN定制 韩范精品女装",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i4/595412874/O1CN01f07Klw1X6KlzZukCh_!!595412874.jpg", "https://img.alicdn.com/tfscom/i3/595412874/O1CN01ZHKfkM1X6Klx2s4pA_!!595412874.jpg", "https://img.alicdn.com/tfscom/i2/595412874/O1CN01m03R1U1X6KlzZwgnv_!!595412874.jpg", "https://img.alicdn.com/tfscom/i1/595412874/O1CN01btyNGq1X6Km09RNYP_!!595412874.jpg"]
+        },
+        status: 1,
+        title: "女装冬装2018新款韩版小个子闺蜜装格子毛呢外套短款大衣女冬加厚",
+        tk_rate: "1.56",
+        type: 4,
+        user_type: 0,
+        volume: 6586,
+        zk_final_price: "249.90",
+        zk_final_price_wap: "249.90"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=558489402187",
+        nick: "百里挑衣_198",
+        num_iid: 558489402187,
+        pict_url: "https://img.alicdn.com/tfscom/i2/2111084029/TB2HcQqa0qUQKJjSZFIXXcOkFXa_!!2111084029.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "389.00",
+        seller_id: 2111084029,
+        shop_title: "红都衣舍时装",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i2/2111084029/O1CN011fdKDLnPMj1bYtM_!!2111084029.jpg", "https://img.alicdn.com/tfscom/i4/2111084029/O1CN011fdKDLnNxSj9Ya5_!!2111084029.jpg", "https://img.alicdn.com/tfscom/i4/2111084029/O1CN011fdKDMyx0n23yuD_!!2111084029.jpg", "https://img.alicdn.com/tfscom/i1/2111084029/TB2YPX5e.F7MKJjSZFLXXcMBVXa_!!2111084029.jpg"]
+        },
+        status: 1,
+        title: "2019春秋新款女装遮肚子冬季连衣裙女加厚小香风针织秋冬款打底裙",
+        tk_rate: "1.50",
+        type: 1,
+        user_type: 0,
+        volume: 2701,
+        zk_final_price: "89.00",
+        zk_final_price_wap: "89.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=581297838159",
+        nick: "我是阿武",
+        num_iid: 581297838159,
+        pict_url: "https://img.alicdn.com/tfscom/i3/37082293/O1CN01A7Nivd1SoEedKMnvy_!!37082293.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "772.40",
+        seller_id: 37082293,
+        shop_title: "我是阿式设计定制女装",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i2/37082293/O1CN01BFrkVS1SoEePZva8M_!!37082293.jpg", "https://img.alicdn.com/tfscom/i1/37082293/O1CN017wfPEn1SoEeRMgUcB_!!37082293.jpg", "https://img.alicdn.com/tfscom/i4/37082293/O1CN01GTgFDM1SoEeSgBbX6_!!37082293.jpg", "https://img.alicdn.com/tfscom/i2/37082293/O1CN01P1uguU1SoEeQXGl1L_!!37082293.jpg"]
+        },
+        status: 1,
+        title: "原创设计 2018冬季新款女装加厚仿貂绒中长款A字毛呢大衣呢子外套",
+        tk_rate: "1.50",
+        type: 1,
+        user_type: 0,
+        volume: 2214,
+        zk_final_price: "386.20",
+        zk_final_price_wap: "386.20"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=582826822377",
+        nick: "银猴小小崽崽",
+        num_iid: 582826822377,
+        pict_url: "https://img.alicdn.com/tfscom/i1/1593146983/O1CN01AVWniB21SGD03MY3D_!!1593146983.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "1299.00",
+        seller_id: 1593146983,
+        shop_title: "云端锦绣",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i3/1593146983/O1CN01SYuqPe21SGDRtk1PW_!!1593146983.jpg", "https://img.alicdn.com/tfscom/i4/1593146983/O1CN01sNe6aZ21SGDBxbCgK_!!1593146983.jpg", "https://img.alicdn.com/tfscom/i3/1593146983/O1CN01zYPsiX21SGCyTC6jq_!!1593146983.jpg", "https://img.alicdn.com/tfscom/i4/1593146983/O1CN016cGe3m21SGD5MqQRf_!!1593146983.jpg"]
+        },
+        status: 1,
+        title: "短款羽绒服女2018新款冬季女装韩版宽松加厚大毛领时尚收腰外套女",
+        tk_rate: "3.00",
+        type: 4,
+        user_type: 0,
+        volume: 2939,
+        zk_final_price: "388.00",
+        zk_final_price_wap: "388.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=582208280598",
+        nick: "果果一女人",
+        num_iid: 582208280598,
+        pict_url: "https://img.alicdn.com/tfscom/i2/595412874/O1CN01GuZGQb1X6KlroYsiD_!!595412874.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "129.90",
+        seller_id: 595412874,
+        shop_title: "果果家 GGWOMEN定制 韩范精品女装",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i1/595412874/O1CN011VoJRl1X6KlsBkqKV_!!595412874.jpg", "https://img.alicdn.com/tfscom/i1/595412874/O1CN01ihqZxU1X6Klu2fh7g_!!595412874.jpg", "https://img.alicdn.com/tfscom/i2/595412874/O1CN01JPmqCe1X6KlpyMBOr_!!595412874.jpg", "https://img.alicdn.com/tfscom/i1/595412874/O1CN01GYkY9C1X6Kltwldhs_!!595412874.jpg"]
+        },
+        status: 1,
+        title: "2018秋冬新款网红女装裙子黑色网纱仙女裙小个子收腰吊带裙连衣裙",
+        tk_rate: "1.56",
+        type: 4,
+        user_type: 0,
+        volume: 3384,
+        zk_final_price: "123.41",
+        zk_final_price_wap: "123.41"
+      }]
+    };
+  }
+};
+
+/***/ }),
+/* 95 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["scoller-row"]
+  }, [_c('scroller', {
+    staticClass: ["scroller"],
+    attrs: {
+      "scrollDirection": "horizontal"
+    }
+  }, _vm._l((_vm.list), function(item) {
+    return _c('div', {
+      key: item.num_iid,
+      staticClass: ["panel"]
+    }, [_c('image', {
+      staticClass: ["item-photo"],
+      attrs: {
+        "src": item.pict_url,
+        "resize": "cover"
+      }
+    }), _c('text', {
+      staticClass: ["item-title"]
+    }, [_vm._v(_vm._s(item.title))]), _c('div', {
+      staticClass: ["price"]
+    }, [_c('text', {
+      staticClass: ["zk-price"]
+    }, [_vm._v("￥" + _vm._s(item.zk_final_price))]), _c('text', {
+      staticClass: ["reserve-price"]
+    }, [_vm._v("￥" + _vm._s(item.reserve_price))])])])
+  }))])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
 
 /***/ }),
 /* 96 */
@@ -24245,17 +23790,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: ["zk-price-num"]
     }, [_vm._v("￥" + _vm._s(item.zk_final_price))])])])])])
   }), (_vm.toHeaderBtnFlag) ? _c('header', {
-    staticClass: ["toHeader"],
     appendAsTree: true,
     attrs: {
       "append": "tree"
-    },
+    }
+  }, [_c('div', {
+    staticClass: ["toHeader"],
     on: {
       "click": _vm.onToHeader
     }
   }, [_c('text', {
     staticClass: ["iconfont"]
-  }, [_vm._v("")])]) : _vm._e(), _c('header', {
+  }, [_vm._v("")])])]) : _vm._e(), _c('header', {
     ref: "footer",
     staticClass: ["footer"],
     appendAsTree: true,
@@ -24329,7 +23875,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _weexUi = __webpack_require__(28);
+var _weexUi = __webpack_require__(29);
 
 exports.default = {
   components: { WxcSearchbar: _weexUi.WxcSearchbar },
@@ -25598,7 +25144,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(20);
+var _index = __webpack_require__(21);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -25892,7 +25438,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(20);
+var _index = __webpack_require__(21);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -26114,15 +25660,15 @@ var _tab = __webpack_require__(128);
 
 var _tab2 = _interopRequireDefault(_tab);
 
-var _wxcSearchbar = __webpack_require__(21);
+var _wxcSearchbar = __webpack_require__(22);
 
 var _wxcSearchbar2 = _interopRequireDefault(_wxcSearchbar);
 
-var _wxcResult = __webpack_require__(22);
+var _wxcResult = __webpack_require__(23);
 
 var _wxcResult2 = _interopRequireDefault(_wxcResult);
 
-var _wxcIndexlist = __webpack_require__(23);
+var _wxcIndexlist = __webpack_require__(24);
 
 var _wxcIndexlist2 = _interopRequireDefault(_wxcIndexlist);
 
@@ -31208,7 +30754,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 
-var _wxcMask = __webpack_require__(24);
+var _wxcMask = __webpack_require__(25);
 
 var _wxcMask2 = _interopRequireDefault(_wxcMask);
 
@@ -31817,7 +31363,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _type = __webpack_require__(25);
+var _type = __webpack_require__(26);
 
 var _utils = __webpack_require__(1);
 
@@ -33496,7 +33042,7 @@ var _utils = __webpack_require__(1);
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _wxcMinibar = __webpack_require__(26);
+var _wxcMinibar = __webpack_require__(27);
 
 var _wxcMinibar2 = _interopRequireDefault(_wxcMinibar);
 
@@ -34458,7 +34004,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _type = __webpack_require__(25);
+var _type = __webpack_require__(26);
 
 exports.default = {
   props: {
@@ -36538,7 +36084,7 @@ exports.default = {
     WxcRichTextText: __webpack_require__(14),
     WxcRichTextLink: __webpack_require__(275),
     WxcRichTextIcon: __webpack_require__(278),
-    WxcRichTextTag: __webpack_require__(27)
+    WxcRichTextTag: __webpack_require__(28)
   },
   props: {
     configList: {
@@ -39021,7 +38567,7 @@ var _wxcRichTextText = __webpack_require__(14);
 
 var _wxcRichTextText2 = _interopRequireDefault(_wxcRichTextText);
 
-var _wxcRichTextTag = __webpack_require__(27);
+var _wxcRichTextTag = __webpack_require__(28);
 
 var _wxcRichTextTag2 = _interopRequireDefault(_wxcRichTextTag);
 
@@ -41133,10 +40679,7 @@ module.exports = __vue_exports__
 
 module.exports = {
   "iconfont": {
-    "color": "#FF6000",
-    "fontSize": "40",
-    "fontFamily": "iconfont",
-    "lineHeight": "100"
+    "fontFamily": "iconfont"
   },
   "header": {
     "position": "sticky"
@@ -41151,7 +40694,10 @@ module.exports = {
   },
   "back-btn": {
     "position": "absolute",
-    "left": "30"
+    "left": "30",
+    "color": "#FF6000",
+    "fontSize": "40",
+    "lineHeight": "100"
   },
   "title": {
     "fontSize": "36",
@@ -41175,7 +40721,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _store = __webpack_require__(8);
 
-var _weexUi = __webpack_require__(28);
+var _weexUi = __webpack_require__(29);
 
 //
 //
@@ -41193,7 +40739,7 @@ var _weexUi = __webpack_require__(28);
 
 var domModule = weex.requireModule('dom');
 var navigator = weex.requireModule('navigator');
-var webview = weex.requireModule('webview');
+// const webview = weex.requireModule('webview');
 
 exports.default = {
   data: function data() {
@@ -41208,13 +40754,7 @@ exports.default = {
       return _weexUi.Utils.env.getPageHeight();
     }
   },
-  created: function created() {
 
-    domModule.addRule('fontFace', {
-      'fontFamily': "iconfont",
-      'src': "url('http://at.alicdn.com/t/font_1035245_0qzo6c6mrfk.ttf')"
-    });
-  },
   mounted: function mounted() {
     var bundleUrl = weex.config.bundleUrl;
     bundleUrl = new String(bundleUrl);

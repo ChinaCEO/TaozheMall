@@ -14,7 +14,7 @@
 <script>
   const domModule = weex.requireModule('dom');
   const navigator = weex.requireModule('navigator')
-  const webview = weex.requireModule('webview');
+  // const webview = weex.requireModule('webview');
 
   import { store } from '../store.js'
   import { Utils } from 'weex-ui';
@@ -31,13 +31,7 @@
         return Utils.env.getPageHeight();
       }
     },
-    created() {
-  
-      domModule.addRule('fontFace', {
-        'fontFamily': "iconfont",
-        'src': "url('http://at.alicdn.com/t/font_1035245_0qzo6c6mrfk.ttf')"
-      });     
-    },
+   
     mounted() {
       let bundleUrl = weex.config.bundleUrl
           bundleUrl = new String(bundleUrl);
@@ -68,12 +62,9 @@
 </script>
 
 <style scoped>
-  .iconfont {
-    color: #FF6000;
-    font-size: 40px;
+  .iconfont { 
     font-family: iconfont;
-    /*font-weight: bold;*/
-    line-height: 100px;
+    /*font-weight: bold;*/   
   }
 
   .header {
@@ -92,6 +83,9 @@
   .back-btn {
     position: absolute;
     left: 30px;
+    color: #FF6000;
+    font-size: 40px;
+    line-height: 100px;
   }
 
   .title {

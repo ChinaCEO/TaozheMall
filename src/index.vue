@@ -9,6 +9,7 @@
 <script>
 import NavFooter from "./components/NavFooter.vue";
 import { store } from './store.js'
+
 export default {
     name: 'App',
     data() {
@@ -18,9 +19,9 @@ export default {
     },
     
     created() {
-      // this.console = WXEnvironment
-      var domModule = weex.requireModule('dom');
       
+      
+      var domModule = weex.requireModule('dom');
       domModule.addRule('fontFace', {
         'fontFamily': "iconfont",
         'src': "url('http://at.alicdn.com/t/font_1035245_35bmaltzza2.ttf')"

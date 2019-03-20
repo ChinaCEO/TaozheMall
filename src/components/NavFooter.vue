@@ -12,11 +12,12 @@
     <div class="nav-item nav-icon" @click="navTo('category')">
       <text class="iconfont" :class="[this.isActive('category')]">&#xe636;</text>
       <text class="nav-title" :class="[this.isActive('category')]">分类</text>
-    </div class="nav-item nav-icon">
-    <div class="nav-item" @click="navTo('find')">
+    </div>
+    <div class="nav-item nav-icon" @click="navTo('find')">
       <text class="iconfont" :class="[this.isActive('find')]">&#xe638;</text>
       <text class="nav-title" :class="[this.isActive('find')]">发现</text>
     </div>
+    
     <div class="nav-item nav-icon nav-item-last" @click="navTo('mine')">
       <text class="iconfont" :class="[this.isActive('mine')]">&#xe634;</text>
       <text class="nav-title" :class="[this.isActive('mine')]">我的</text>
