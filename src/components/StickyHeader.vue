@@ -3,15 +3,15 @@
     <div class="logo">
       <text class="logo-letter">淘折</text>      
     </div>
-    <searchBar search-disable="false"></searchBar>    
+    <search-bar-dis search-disable="false"></search-bar-dis>    
   </div>
 </template>
 
 <script>
-  import SearchBar from './SearchBar.vue';
+  import SearchBarDis from './SearchBarDis.vue';
 	export default {
 		components: {
-      SearchBar
+      SearchBarDis
     }
 	}
 </script>

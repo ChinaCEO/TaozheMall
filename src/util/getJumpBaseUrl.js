@@ -5,7 +5,7 @@ export const getJumpBaseUrl = (toUrl, webUrl) => {
     let native;
     let toWebUrl; 
     if(webUrl) {
-      toWebUrl = "?couponUrl=" + webUrl
+      toWebUrl = "?webUrl=" + webUrl
     }else {
       toWebUrl = ''
     }

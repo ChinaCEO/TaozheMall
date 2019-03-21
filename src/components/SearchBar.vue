@@ -1,87 +1,103 @@
-<template>  
+<template>
   <div class="search-bar">
-    <!-- <input v-if="searchAble" 
-      :disabled="false" 
-      :autofocus="autoFocus" 
-      type="text" 
-      return-key-type="search" 
-      singleline="true" 
-      class="search" 
-      placeholder="搜索商品、店铺等" /> -->
-    <div class="search search-fake-box" @click="onSearch">
-      <text class="search-fake-text">搜索商品、店铺等</text>
-    </div>
-    <div class="search-btn">
-      <text class="iconfont">&#xe639;</text>
-    </div>
-  </div>
+      <text class="back-btn iconfont" @click="onback" >&#xe625;</text>
+      <input
+          type="text"
+          autofocus="true"
+          placeholder="搜索商品、店铺等"
+          return-key-type="search" 
+          singleline="true"                  
+          class="search-bar"
+          ref="input"
+          :value="value"
+          @input="oninput"
+          @return="onreturn"
+          @focus="onfocus"
+          @blur="onblur" >
+      </input>
+      <text class="iconfont search-icon">&#xe639;</text>
+      <div class="clear" @click="oninputClear" v-if="showInputClearBtn">
+        <text class="iconfont clear-icon">&#xe657;</text>
+      </div>
+  </div> 
 </template>
 
 <script>
-
-  import { getJumpBaseUrl } from "../util/getJumpBaseUrl.js";
-
-  const navigator = weex.requireModule("navigator-pri");
-
-	export default {
-		props:{
-      // searchAble: Boolean,
-      autoFocus: Boolean
-    },
-    methods: {
-      onSearch(e) {
-        e.stopPropagation()
-        navigator.push({
-          url: getJumpBaseUrl("searchPage"),
-          animated: "false"
-        });
+  export default {
+    data() {
+      return {
+        value: '',
+        showInputClearBtn: false
       }
+    },
+    methods() {
+      
     }
-	}
+  }
 </script>
 
 <style scoped>
-	.iconfont {
-    color: #bbb;
-    font-size: 32px;
+  .iconfont {   
     font-family: iconfont;
   }
-  
+
   .search-bar {
-    position: relative;
+    height: 80px;
+    flex-direction: row;
+    align-items: center;
     justify-content: center;
-    text-align: center;
+    background-color: #fff;
+    position: relative;
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+    border-bottom-color: #ebecee; 
   }
 
-  .search {
-    width: 590px;
+  .back-btn {
+    position: absolute;
+    left: 20px;
+    line-height: 80px;
+    font-size: 40px; 
+    color: #fa513a
+  }
+
+  .search-bar {
+    width: 650px;
     height: 60px;
-    margin-left: 25px;
-    padding-left: 60px;
-    border-radius: 40px;
-    background-color: #fff;
-    font-size: 28px;
+    margin-left: 20px;
+    padding-left: 70px;
+    border-radius: 30px;
+    background-color: #f8f8f8;
+    font-size: 26px;
     color: #333;
     placeholder-color: #bbb;
   }
-
-  .search-btn {
-    position: absolute;
-    left: 30px;
-    top: 14px;
-    /* border-left-style: solid;
-    border-left-width: 2px;
-    border-left-color: #bbb; */
-    padding-left: 10px;
-  }
-
-  .search-fake-box {
-    justify-content: center;
-  }
-
-  .search-fake-text {
-    color: #bbb;
-    font-size: 28px;
-  }
   
+  .search-icon {
+    position: absolute;
+    left: 80px;  
+    font-size: 36px; 
+    color: #bbb;
+    line-height: 80px;
+  }
+
+  .clear {
+    width: 30px;
+    height: 30px;
+    background-color: #666;
+    border-radius: 30px;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 60px;
+    top: 25px;
+  }
+
+  .clear-icon {
+    font-size: 20px;
+    color: #fff;
+  }
 </style>
+
+
+

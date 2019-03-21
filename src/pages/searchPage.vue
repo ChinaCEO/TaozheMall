@@ -46,9 +46,9 @@
         </div>
 
         <!-- 搜索页 -->
-        
+        <text>{{console}}</text>
         <div class="search-result" v-if="showResult && !showRecommend" ref="searchResult" :style="{height: searchResultHeight + 'px'}">
-          <!-- <text>{{console}}</text> -->
+          
           <div class="rank-box">
             <text class="rank-txt" :class="[sortWords.isCommon ?  'select-color' : '']" @click="onCommon">综合</text>
             <text class="rank-txt" :class="[sortWords.isVolume ?  'select-color' : '']" @click="onVolume">销量</text>
@@ -322,7 +322,7 @@
     },
 
     beforeMount() {
-      
+  
       position.getUserLocation(res => {
 
         if(res.data.positionCity) {
@@ -333,19 +333,30 @@
       },err => {
         this.location = "定位失败"
       })
-      storage.getItem('searchRecord', e => {
-        if(e.result === "success" && e.data) {
-         
-          this.searchRecord = e.data.split('$$$')
-          this.hasRecord = true
-        }else {
-          this.hasRecord = false
-        }       
-      })      
+        
     },
     mounted() {
+      // 处理分类传来的数据
+      let bundleUrl = weex.config.bundleUrl
+          bundleUrl = new String(bundleUrl);
+      storage.getItem('searchRecord', e => {
+        if(e.result === "success" && e.data) {
+        
+          this.searchRecord = e.data.split('$$$')
+          this.hasRecord = true
+
+        }else {
+          this.hasRecord = false
+        }
+        if(bundleUrl.indexOf('?webUrl=') >= 0) {
+          let word = bundleUrl.slice(bundleUrl.search(/\=/)+1)
+          this.toSearch(word,true)         
+        }              
+      })
       
+        
     },
+   
     components: { 
       itemList,
       WxcPopup,
@@ -415,7 +426,7 @@
         })
       },
       oninput(e) {
-        
+       
         this.value = e.value;
         this.showInputClearBtn =true
 
@@ -452,7 +463,6 @@
       },
       onreturn() {
         if(this.value) {
-          this.showRecommend = false
           this.toSearch(this.value,true)
         }        
       },
@@ -465,7 +475,6 @@
       toSearch(value,addRecord) {
         this.$refs['input'].blur(); 
         this.showRecommend = false    
-        let self = this;
         this.toSearchFlag = true
         if(value) {
           this.searchResultList = []

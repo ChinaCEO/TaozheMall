@@ -5,6 +5,7 @@ import index from "@/index.vue";
 import guessLike from '@/pages/guessLike.vue';
 import home from '@/pages/home.vue';
 import find from '@/pages/find.vue';
+import category from '@/pages/category.vue';
 
 
 Vue.use(Router)
@@ -30,6 +31,11 @@ export const router = new Router({
       path: '/find',
       name: 'find',
       component: find
+    },
+    {
+      path: '/category',
+      name: 'category',
+      component: category
     }
   ]
 })

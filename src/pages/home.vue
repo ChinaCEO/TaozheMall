@@ -2,7 +2,7 @@
     <waterfall 
       class="water-fall" 
       ref="waterfall" 
-      show-scrollbar="false"
+      show-scrollbar="true"
       :column-width="columnWidth" 
       :column-count="columnCount" 
       :column-gap="columnGap" 
@@ -12,7 +12,7 @@
         <!-- <header style="position: sticky;"><text style="color: green;">{{console}}</text></header> -->
         <header class="sticky-header">
           <div class="sticky-header-box" :class="[!scrollFlag ? 'sticky-header-scroll' : '']" :style="{opacity:headOpacity}">            
-            <search-bar v-if="scrollFlag ? true : false" search-disable="false"></search-bar>
+            <search-bar-dis v-if="scrollFlag ? true : false"></search-bar-dis>
           </div>
         </header>
         <!-- <refresh class="refresh" @pullingdown="onpullingdown">
@@ -72,8 +72,8 @@
   import Chunks from "../components/Chunks.vue";
   import Onsale from "../components/Onsale.vue";
   import ScollerRow from "../components/ScollerRow.vue";
-  import SearchBar from "../components/SearchBar.vue";
-  import { store } from "../store.js";
+  import SearchBarDis from "../components/SearchBarDis.vue";
+  // import { store } from "../store.js";
   import { formatURL } from "../util/formatURL.js";
   import { getJumpBaseUrl } from "../util/getJumpBaseUrl.js";
   import CryptoJS from "crypto-js";
@@ -117,7 +117,7 @@
       Chunks,
       Onsale,
       ScollerRow,
-      SearchBar
+      SearchBarDis
     },
     created() {
       
@@ -174,7 +174,7 @@
           : (this.toHeaderBtnFlag = false);
         if (e.contentOffset.y < -110) {
           this.scrollFlag = true;
-          store.commit("changeScrollFlag", true);
+          // store.commit("changeScrollFlag", true);
           if (this.headOpacity <= 1) {
             this.headOpacity = (Math.abs(e.contentOffset.y) - 110) / 250;
           } else {
@@ -182,7 +182,7 @@
           }
         } else {
           this.scrollFlag = false;
-          store.commit("changeScrollFlag", false);
+          // store.commit("changeScrollFlag", false);
           // dom.scrollToElement(this.$refs.header,{offset:0,animated:false})
         }
       },
@@ -269,7 +269,7 @@
       },
       itemOnClick(e) {      
         let couponUrl = e.currentTarget.attr.couponUrl;
-        store.commit("setCouponUrl", couponUrl);
+        // store.commit("setCouponUrl", couponUrl);
         
         navigator.push({
           url: getJumpBaseUrl("coupon", couponUrl),

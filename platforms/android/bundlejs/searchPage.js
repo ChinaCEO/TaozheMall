@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 333);
+/******/ 	return __webpack_require__(__webpack_require__.s = 337);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -2076,7 +2076,7 @@ exports.default = Utils;
 ;(function (root, factory, undef) {
 	if (true) {
 		// CommonJS
-		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(11), __webpack_require__(12));
+		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(12), __webpack_require__(13));
 	}
 	else if (typeof define === "function" && define.amd) {
 		// AMD
@@ -3064,6 +3064,65 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.store = undefined;
+
+var _vue = __webpack_require__(38);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+var _vuex = __webpack_require__(39);
+
+var _vuex2 = _interopRequireDefault(_vuex);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+if (WXEnvironment.platform !== 'Web') {
+  _vue2.default.use(_vuex2.default);
+}
+
+_vue2.default.use(_vuex2.default);
+
+var store = exports.store = new _vuex2.default.Store({
+  state: {
+    haoquanApi: 'taobao.tbk.dg.item.coupon.get',
+    searchApi: 'taobao.tbk.item.get',
+    xuanpinkuApi: 'taobao.tbk.uatm.favorites.item.get',
+    taoqianggouApi: 'taobao.tbk.ju.tqg.get',
+    currentPage: 'home',
+    scrollFlag: false,
+    couponUrl: '',
+    deviceHeight: WXEnvironment.deviceHeight,
+    categotySearchWord: ''
+  },
+  mutations: {
+    to: function to(state, _pageName) {
+      state.currentPage = _pageName;
+    },
+    changeScrollFlag: function changeScrollFlag(state, _flag) {
+      state.scrollFlag = _flag;
+    },
+    setCouponUrl: function setCouponUrl(state, _url) {
+      state.couponUrl = _url;
+    },
+    setDeviceHeight: function setDeviceHeight(state, height) {
+      state.deviceHeight = height;
+    },
+    setCategotySearchWord: function setCategotySearchWord(state, word) {
+      state.categotySearchWord = word;
+    }
+  }
+});
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
 ;(function (root, factory) {
 	if (true) {
 		// CommonJS
@@ -3201,7 +3260,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
 }));
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory) {
@@ -3472,61 +3531,6 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
 	return CryptoJS.MD5;
 
 }));
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.store = undefined;
-
-var _vue = __webpack_require__(38);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-var _vuex = __webpack_require__(39);
-
-var _vuex2 = _interopRequireDefault(_vuex);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-if (WXEnvironment.platform !== 'Web') {
-  _vue2.default.use(_vuex2.default);
-}
-
-_vue2.default.use(_vuex2.default);
-
-var store = exports.store = new _vuex2.default.Store({
-  state: {
-    haoquanApi: 'taobao.tbk.dg.item.coupon.get',
-    searchApi: 'taobao.tbk.item.get',
-    xuanpinkuApi: 'taobao.tbk.uatm.favorites.item.get',
-    taoqianggouApi: 'taobao.tbk.ju.tqg.get',
-    currentPage: 'home',
-    scrollFlag: false,
-    couponUrl: '',
-    deviceHeight: WXEnvironment.deviceHeight
-  },
-  mutations: {
-    to: function to(state, _pageName) {
-      state.currentPage = _pageName;
-    },
-    changeScrollFlag: function changeScrollFlag(state, _flag) {
-      state.scrollFlag = _flag;
-    },
-    setCouponUrl: function setCouponUrl(state, _url) {
-      state.couponUrl = _url;
-    },
-    setDeviceHeight: function setDeviceHeight(state, height) {
-      state.deviceHeight = height;
-    }
-  }
-});
 
 /***/ }),
 /* 9 */
@@ -3863,6 +3867,64 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var getJumpBaseUrl = exports.getJumpBaseUrl = function getJumpBaseUrl(toUrl, webUrl) {
+  var bundleUrl = weex.config.bundleUrl;
+  bundleUrl = new String(bundleUrl);
+  var nativeBase = void 0;
+  var native = void 0;
+  var toWebUrl = void 0;
+  if (webUrl) {
+    toWebUrl = "?webUrl=" + webUrl;
+  } else {
+    toWebUrl = '';
+  }
+
+  if (WXEnvironment.platform === "android") {
+    // nativeBase = 'file://assets/dist/';
+    // native = nativeBase + toUrl + ".js"
+    var isAndroidAssets = bundleUrl.indexOf('file://assets/') >= 0;
+    if (isAndroidAssets) {
+      nativeBase = 'local://' + 'file://assets/dist/';
+      native = nativeBase + toUrl + ".js" + toWebUrl;
+    } else {
+      nativeBase = bundleUrl.substring(0, bundleUrl.lastIndexOf("/") + 1);
+      native = nativeBase + toUrl + ".js" + toWebUrl;
+    }
+  } else if (WXEnvironment.platform === "iOS") {
+    nativeBase = bundleUrl.substring(0, bundleUrl.lastIndexOf("/") + 1);
+    native = nativeBase + toUrl + ".js" + toWebUrl;
+  } else {
+    var host = "localhost:8081";
+    var matches = /\/\/([^\/]+?)\//.exec(bundleUrl);
+    if (matches && matches.length >= 2) {
+      host = matches[1];
+    }
+
+    //此处需注意一下,tabbar 用的直接是jsbundle 的路径,但是navigator是直接跳转到新页面上的.
+    if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === "object") {
+      nativeBase = "http://" + host + "/";
+    } else {
+      nativeBase = "http://" + host + "/";
+    }
+
+    native = nativeBase + toUrl + ".html" + toWebUrl;
+  }
+  return native;
+};
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
 ;(function (root, factory) {
 	if (true) {
 		// CommonJS
@@ -4015,7 +4077,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 }));
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory) {
@@ -4163,7 +4225,51 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 }));
 
 /***/ }),
-/* 13 */
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(79)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(80)
+
+/* template */
+var __vue_template__ = __webpack_require__(81)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\components\\SearchBarDis.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-1653b3d3"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4185,7 +4291,7 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
@@ -4229,7 +4335,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4238,106 +4344,76 @@ module.exports = __vue_exports__
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.formatURL = undefined;
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _cryptoJs = __webpack_require__(18);
 
-var getJumpBaseUrl = exports.getJumpBaseUrl = function getJumpBaseUrl(toUrl, webUrl) {
-  var bundleUrl = weex.config.bundleUrl;
-  bundleUrl = new String(bundleUrl);
-  var nativeBase = void 0;
-  var native = void 0;
-  var toWebUrl = void 0;
-  if (webUrl) {
-    toWebUrl = "?couponUrl=" + webUrl;
-  } else {
-    toWebUrl = '';
+var _cryptoJs2 = _interopRequireDefault(_cryptoJs);
+
+var _mallConfig = __webpack_require__(68);
+
+var _mallConfig2 = _interopRequireDefault(_mallConfig);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var formatURL = exports.formatURL = function formatURL(method, _apiOptions) {
+  var appsecret = _mallConfig2.default.AppSecret;
+
+  var _time = new Date();
+
+  // 时间戳
+  var _timestamp = _time.getFullYear() + '-' + (_time.getMonth() + 1 < 10 ? '0' + (_time.getMonth() + 1) : _time.getMonth() + 1) + '-' + (_time.getDate() < 10 ? '0' + _time.getDate() : _time.getDate()) + ' ' + (_time.getHours() < 10 ? '0' + _time.getHours() : _time.getHours()) + ':' + (_time.getMinutes() < 10 ? '0' + _time.getMinutes() : _time.getMinutes()) + ':' + (_time.getSeconds() < 10 ? '0' + _time.getSeconds() : _time.getSeconds());
+
+  var systemOptions = {
+    method: method,
+    timestamp: _timestamp,
+    format: 'json',
+    app_key: _mallConfig2.default.appKey,
+    v: '2.0',
+    sign_method: 'md5'
+  };
+
+  var apiOptions = _apiOptions;
+
+  //合并排序
+  var _optionsArr = [];
+
+  for (var i in systemOptions) {
+    _optionsArr.push(i + systemOptions[i]);
   }
 
-  if (WXEnvironment.platform === "android") {
-    // nativeBase = 'file://assets/dist/';
-    // native = nativeBase + toUrl + ".js"
-    var isAndroidAssets = bundleUrl.indexOf('file://assets/') >= 0;
-    if (isAndroidAssets) {
-      nativeBase = 'local://' + 'file://assets/dist/';
-      native = nativeBase + toUrl + ".js" + toWebUrl;
-    } else {
-      nativeBase = bundleUrl.substring(0, bundleUrl.lastIndexOf("/") + 1);
-      native = nativeBase + toUrl + ".js" + toWebUrl;
-    }
-  } else if (WXEnvironment.platform === "iOS") {
-    nativeBase = bundleUrl.substring(0, bundleUrl.lastIndexOf("/") + 1);
-    native = nativeBase + toUrl + ".js" + toWebUrl;
-  } else {
-    var host = "localhost:8081";
-    var matches = /\/\/([^\/]+?)\//.exec(bundleUrl);
-    if (matches && matches.length >= 2) {
-      host = matches[1];
-    }
-
-    //此处需注意一下,tabbar 用的直接是jsbundle 的路径,但是navigator是直接跳转到新页面上的.
-    if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === "object") {
-      nativeBase = "http://" + host + "/";
-    } else {
-      nativeBase = "http://" + host + "/";
-    }
-
-    native = nativeBase + toUrl + ".html" + toWebUrl;
+  for (var j in apiOptions) {
+    _optionsArr.push(j + apiOptions[j]);
   }
-  return native;
+  _optionsArr.sort();
+
+  var _optionsStr = _optionsArr.join('');
+
+  var _finalOptions = appsecret + _optionsStr + appsecret;
+
+  var sign = _cryptoJs2.default.MD5(_finalOptions).toString().toUpperCase();
+
+  var url = 'http://gw.api.taobao.com/router/rest?sign=' + sign;
+  for (var _i in systemOptions) {
+    url += '&' + _i + '=' + encodeURIComponent(systemOptions[_i]);
+  }
+
+  for (var _j in apiOptions) {
+    url += '&' + _j + '=' + encodeURIComponent(apiOptions[_j]);
+  }
+  url = url.replace(/\%20/g, '+');
+
+  return url;
 };
 
 /***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(55)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(56)
-
-/* template */
-var __vue_template__ = __webpack_require__(57)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\components\\SearchBar.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-01779c2a"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-
-
-/***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
 	if (true) {
 		// CommonJS
-		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(9), __webpack_require__(72), __webpack_require__(73), __webpack_require__(6), __webpack_require__(7), __webpack_require__(11), __webpack_require__(18), __webpack_require__(74), __webpack_require__(19), __webpack_require__(75), __webpack_require__(76), __webpack_require__(77), __webpack_require__(12), __webpack_require__(78), __webpack_require__(3), __webpack_require__(2), __webpack_require__(79), __webpack_require__(80), __webpack_require__(81), __webpack_require__(82), __webpack_require__(83), __webpack_require__(84), __webpack_require__(85), __webpack_require__(86), __webpack_require__(87), __webpack_require__(88), __webpack_require__(89), __webpack_require__(90), __webpack_require__(91), __webpack_require__(92), __webpack_require__(93), __webpack_require__(94));
+		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(9), __webpack_require__(45), __webpack_require__(46), __webpack_require__(7), __webpack_require__(8), __webpack_require__(12), __webpack_require__(19), __webpack_require__(47), __webpack_require__(20), __webpack_require__(48), __webpack_require__(49), __webpack_require__(50), __webpack_require__(13), __webpack_require__(51), __webpack_require__(3), __webpack_require__(2), __webpack_require__(52), __webpack_require__(53), __webpack_require__(54), __webpack_require__(55), __webpack_require__(56), __webpack_require__(57), __webpack_require__(58), __webpack_require__(59), __webpack_require__(60), __webpack_require__(61), __webpack_require__(62), __webpack_require__(63), __webpack_require__(64), __webpack_require__(65), __webpack_require__(66), __webpack_require__(67));
 	}
 	else if (typeof define === "function" && define.amd) {
 		// AMD
@@ -4354,7 +4430,7 @@ module.exports = __vue_exports__
 }));
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory) {
@@ -4558,7 +4634,7 @@ module.exports = __vue_exports__
 }));
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -4886,7 +4962,7 @@ module.exports = __vue_exports__
 }));
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
@@ -4930,7 +5006,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4952,7 +5028,7 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4974,7 +5050,7 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4996,7 +5072,7 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5018,7 +5094,7 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5036,7 +5112,7 @@ var BLACK_GIF = exports.BLACK_GIF = 'https://img.alicdn.com/tfs/TB1Ep_9NVXXXXb8X
 var PART = exports.PART = 'https://gtms02.alicdn.com/tfs/TB1y4QbSXXXXXbgapXXXXXXXXXX-50-50.gif';
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5058,7 +5134,7 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
@@ -5102,7 +5178,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5125,7 +5201,7 @@ var _wxcButton = __webpack_require__(103);
 
 var _wxcButton2 = _interopRequireDefault(_wxcButton);
 
-var _wxcCell = __webpack_require__(13);
+var _wxcCell = __webpack_require__(15);
 
 var _wxcCell2 = _interopRequireDefault(_wxcCell);
 
@@ -5165,7 +5241,7 @@ var _wxcIcon = __webpack_require__(182);
 
 var _wxcIcon2 = _interopRequireDefault(_wxcIcon);
 
-var _wxcIndexlist = __webpack_require__(23);
+var _wxcIndexlist = __webpack_require__(24);
 
 var _wxcIndexlist2 = _interopRequireDefault(_wxcIndexlist);
 
@@ -5181,11 +5257,11 @@ var _wxcLotteryRain = __webpack_require__(202);
 
 var _wxcLotteryRain2 = _interopRequireDefault(_wxcLotteryRain);
 
-var _wxcMask = __webpack_require__(24);
+var _wxcMask = __webpack_require__(25);
 
 var _wxcMask2 = _interopRequireDefault(_wxcMask);
 
-var _wxcMinibar = __webpack_require__(26);
+var _wxcMinibar = __webpack_require__(27);
 
 var _wxcMinibar2 = _interopRequireDefault(_wxcMinibar);
 
@@ -5229,7 +5305,7 @@ var _wxcRefresher = __webpack_require__(263);
 
 var _wxcRefresher2 = _interopRequireDefault(_wxcRefresher);
 
-var _wxcResult = __webpack_require__(22);
+var _wxcResult = __webpack_require__(23);
 
 var _wxcResult2 = _interopRequireDefault(_wxcResult);
 
@@ -5237,7 +5313,7 @@ var _wxcRichText = __webpack_require__(268);
 
 var _wxcRichText2 = _interopRequireDefault(_wxcRichText);
 
-var _wxcSearchbar = __webpack_require__(21);
+var _wxcSearchbar = __webpack_require__(22);
 
 var _wxcSearchbar2 = _interopRequireDefault(_wxcSearchbar);
 
@@ -5322,7 +5398,7 @@ exports.WxcTabPage = _wxcTabPage2.default;
 exports.WxcTag = _wxcTag2.default;
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
@@ -5366,78 +5442,6 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 30 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.formatURL = undefined;
-
-var _cryptoJs = __webpack_require__(17);
-
-var _cryptoJs2 = _interopRequireDefault(_cryptoJs);
-
-var _mallConfig = __webpack_require__(95);
-
-var _mallConfig2 = _interopRequireDefault(_mallConfig);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var formatURL = exports.formatURL = function formatURL(method, _apiOptions) {
-  var appsecret = _mallConfig2.default.AppSecret;
-
-  var _time = new Date();
-
-  // 时间戳
-  var _timestamp = _time.getFullYear() + '-' + (_time.getMonth() + 1 < 10 ? '0' + (_time.getMonth() + 1) : _time.getMonth() + 1) + '-' + (_time.getDate() < 10 ? '0' + _time.getDate() : _time.getDate()) + ' ' + (_time.getHours() < 10 ? '0' + _time.getHours() : _time.getHours()) + ':' + (_time.getMinutes() < 10 ? '0' + _time.getMinutes() : _time.getMinutes()) + ':' + (_time.getSeconds() < 10 ? '0' + _time.getSeconds() : _time.getSeconds());
-
-  var systemOptions = {
-    method: method,
-    timestamp: _timestamp,
-    format: 'json',
-    app_key: _mallConfig2.default.appKey,
-    v: '2.0',
-    sign_method: 'md5'
-  };
-
-  var apiOptions = _apiOptions;
-
-  //合并排序
-  var _optionsArr = [];
-
-  for (var i in systemOptions) {
-    _optionsArr.push(i + systemOptions[i]);
-  }
-
-  for (var j in apiOptions) {
-    _optionsArr.push(j + apiOptions[j]);
-  }
-  _optionsArr.sort();
-
-  var _optionsStr = _optionsArr.join('');
-
-  var _finalOptions = appsecret + _optionsStr + appsecret;
-
-  var sign = _cryptoJs2.default.MD5(_finalOptions).toString().toUpperCase();
-
-  var url = 'http://gw.api.taobao.com/router/rest?sign=' + sign;
-  for (var _i in systemOptions) {
-    url += '&' + _i + '=' + encodeURIComponent(systemOptions[_i]);
-  }
-
-  for (var _j in apiOptions) {
-    url += '&' + _j + '=' + encodeURIComponent(apiOptions[_j]);
-  }
-  url = url.replace(/\%20/g, '+');
-
-  return url;
-};
-
-/***/ }),
 /* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5453,7 +5457,7 @@ var _vueRouter = __webpack_require__(32);
 
 var _vueRouter2 = _interopRequireDefault(_vueRouter);
 
-var _index = __webpack_require__(29);
+var _index = __webpack_require__(30);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -5461,7 +5465,7 @@ var _guessLike = __webpack_require__(42);
 
 var _guessLike2 = _interopRequireDefault(_guessLike);
 
-var _home = __webpack_require__(46);
+var _home = __webpack_require__(70);
 
 var _home2 = _interopRequireDefault(_home);
 
@@ -5469,9 +5473,15 @@ var _find = __webpack_require__(97);
 
 var _find2 = _interopRequireDefault(_find);
 
+var _category = __webpack_require__(327);
+
+var _category2 = _interopRequireDefault(_category);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-Vue.use(_vueRouter2.default); /*global Vue*/
+/*global Vue*/
+Vue.use(_vueRouter2.default);
+
 var router = exports.router = new _vueRouter2.default({
   routes: [{
     path: '/',
@@ -5489,6 +5499,10 @@ var router = exports.router = new _vueRouter2.default({
     path: '/find',
     name: 'find',
     component: _find2.default
+  }, {
+    path: '/category',
+    name: 'category',
+    component: _category2.default
   }]
 });
 
@@ -8139,7 +8153,7 @@ var _NavFooter = __webpack_require__(35);
 
 var _NavFooter2 = _interopRequireDefault(_NavFooter);
 
-var _store = __webpack_require__(8);
+var _store = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8275,7 +8289,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _store = __webpack_require__(8);
+var _store = __webpack_require__(6);
 
 exports.default = {
   data: function data() {
@@ -17879,7 +17893,7 @@ __vue_styles__.push(__webpack_require__(43)
 __vue_exports__ = __webpack_require__(44)
 
 /* template */
-var __vue_template__ = __webpack_require__(45)
+var __vue_template__ = __webpack_require__(69)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -18000,11 +18014,28 @@ module.exports = {
     "color": "#fa513a",
     "fontSize": "32"
   },
+  "toHeader": {
+    "position": "fixed",
+    "bottom": "130",
+    "right": "20",
+    "width": "80",
+    "height": "80",
+    "backgroundColor": "rgba(255,255,255,0.8)",
+    "borderWidth": "2",
+    "borderColor": "#ebecee",
+    "borderRadius": "80",
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
   "footer": {
     "width": "750",
     "paddingTop": "10",
     "paddingBottom": "10",
     "alignItems": "center"
+  },
+  "indicator-text": {
+    "color": "#666666",
+    "fontSize": "28"
   }
 }
 
@@ -18019,7 +18050,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _formatURL = __webpack_require__(30);
+var _formatURL = __webpack_require__(17);
+
+var _store = __webpack_require__(6);
+
+var _getJumpBaseUrl = __webpack_require__(11);
 
 var getImei = weex.requireModule('getImei'); //
 //
@@ -18062,9 +18097,17 @@ var getImei = weex.requireModule('getImei'); //
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 var stream = weex.requireModule("stream");
 var modal = weex.requireModule('modal');
+var dom = weex.requireModule("dom");
+var navigator = weex.requireModule("navigator-pri");
 
 exports.default = {
   data: function data() {
@@ -18088,12 +18131,13 @@ exports.default = {
       rightGap: "20",
       loadingFlag: true,
       items: [],
+      toHeaderBtnFlag: false,
       console: ''
     };
   },
 
   components: {},
-  created: function created() {
+  beforeMount: function beforeMount() {
     var _this = this;
 
     getImei.getIMEI(function (res) {
@@ -18106,656 +18150,30 @@ exports.default = {
       }
     });
 
-    var url = 'http://gw.api.taobao.com/router/rest?sign=12B86232A6DF8E1D4FB15332B4C540FD&timestamp=2019-03-20+21%3A43%3A28&v=2.0&app_key=25635637&method=taobao.tbk.dg.optimus.material&sign_method=hmac&partner_id=top-apitools&format=json&adzone_id=91627500240&material_id=6708&force_sensitive_param_fuzzy=true';
+    this.fetch(function (res) {
 
-    // try {
-    //   stream.fetch(
-    //     {
-    //       method: "GET",
-    //       url: url,
-    //       type: "json"
-    //     },
-    //     res => {
-    //       let data = res.tbk_dg_optimus_material_response.result_list.map_data
-    //       this.console = res
-    //       if(data.length) {
-    //         this.items = data  
-    //       }else {
-
-    //         modal.toast({
-    //           message: '网络异常',
-    //           duration: 0.3
-    //         })
-    //       }
-
-    //     }
-    //   );
-    // } catch (err) {
-    //   modal.toast({
-    //     message: '网络异常',
-    //     duration: 0.3
-    //   })
-    // }
-
-    stream.fetch({
-      method: "GET",
-      url: url,
-      type: "json"
-    }, function (res) {
-      var data = res.tbk_dg_optimus_material_response.result_list.map_data;
-      _this.console = res;
-      if (data.length) {
+      if (res.data.tbk_dg_optimus_material_response) {
+        var data = res.data.tbk_dg_optimus_material_response.result_list.map_data;
         _this.items = data;
       } else {
-
+        _this.loadingFlag = false;
         modal.toast({
           message: '网络异常',
           duration: 0.3
         });
       }
+    }, function (err) {
+      _this.loadingFlag = false;
+      modal.toast({
+        message: '网络异常',
+        duration: 0.3
+      });
     });
   },
 
   methods: {
-    couponFinalPrice: function couponFinalPrice(zk_final_price, coupon_amount) {
-
-      var _couponFinalPrice = Math.round(zk_final_price * 100 - coupon_amount * 100) / 100;
-      return _couponFinalPrice;
-    },
-    onloadmore: function onloadmore() {
-      var _this2 = this;
-
-      stream.fetch({
-        method: "GET",
-        url: url,
-        type: "json"
-      }, function (res) {
-        var data = res.tbk_dg_optimus_material_response.result_list.map_data;
-        _this2.console = res;
-        if (data.length) {
-          _this2.items = data;
-        } else {
-
-          modal.toast({
-            message: '网络异常',
-            duration: 0.3
-          });
-        }
-      });
-    }
-  }
-};
-
-/***/ }),
-/* 45 */
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('waterfall', {
-    ref: "guessLike",
-    staticClass: ["guess-like"],
-    attrs: {
-      "showScrollbar": "false",
-      "columnWidth": _vm.columnWidth,
-      "columnCount": _vm.columnCount,
-      "columnGap": _vm.columnGap,
-      "leftGap": _vm.leftGap,
-      "rightGap": _vm.rightGap
-    }
-  }, [_c('header', {
-    staticClass: ["header"],
-    appendAsTree: true,
-    attrs: {
-      "append": "tree"
-    }
-  }, [_c('div', {
-    staticClass: ["header-wrapper"]
-  }, [_c('text', {
-    staticClass: ["title"]
-  }, [_vm._v("猜你喜欢")])])]), _c('header', {
-    appendAsTree: true,
-    attrs: {
-      "append": "tree"
-    }
-  }, [_c('text', [_vm._v(_vm._s(_vm.console))])]), _vm._l((_vm.items), function(item) {
-    return _c('cell', {
-      key: item.num_iid,
-      ref: 'item' + item.num_iid,
-      refInFor: true,
-      staticClass: ["cell"],
-      appendAsTree: true,
-      attrs: {
-        "append": "tree"
-      }
-    }, [_c('div', {
-      staticClass: ["item"],
-      attrs: {
-        "couponUrl": item.coupon_click_url
-      },
-      on: {
-        "click": _vm.itemOnClick
-      }
-    }, [_c('image', {
-      staticClass: ["item-photo"],
-      attrs: {
-        "src": item.white_image ? item.white_image : item.pict_url,
-        "resize": "cover"
-      }
-    }), _c('text', {
-      staticClass: ["item-title"]
-    }, [_vm._v(_vm._s(item.title))]), _c('div', {
-      staticClass: ["item-price-box"]
-    }, [_c('div', {
-      staticClass: ["coupon"]
-    }, [_c('text', {
-      staticClass: ["iconfont", "coupon-icon"]
-    }, [_vm._v("")]), _c('text', {
-      staticClass: ["coupon-text"]
-    }, [_vm._v(_vm._s(item.coupon_amount) + "元")])]), _c('div', {
-      staticClass: ["price"]
-    }, [_c('text', {
-      staticClass: ["zk-price-txt"]
-    }, [_vm._v("折后价")]), _c('text', {
-      staticClass: ["zk-price-num"]
-    }, [_vm._v("￥" + _vm._s(_vm.couponFinalPrice(item.zk_final_price, item.coupon_amount)))])])])])])
-  }), _c('header', {
-    ref: "footer",
-    staticClass: ["footer"],
-    appendAsTree: true,
-    attrs: {
-      "append": "tree"
-    },
-    on: {
-      "appear": _vm.onloadmore
-    }
-  }, [(_vm.loadingFlag) ? _c('image', {
-    staticStyle: {
-      width: "70px",
-      height: "70px"
-    },
-    attrs: {
-      "src": "file:///android_asset/images/loading.gif"
-    }
-  }) : _c('text', {
-    staticClass: ["indicator-text"]
-  }, [_vm._v("没有更多了...")])])], 2)
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-
-/***/ }),
-/* 46 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(47)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(48)
-
-/* template */
-var __vue_template__ = __webpack_require__(96)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\pages\\home.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-324fb87d"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-
-
-/***/ }),
-/* 47 */
-/***/ (function(module, exports) {
-
-module.exports = {
-  "iconfont": {
-    "color": "#ff6000",
-    "fontSize": "40",
-    "fontFamily": "iconfont"
-  },
-  "water-fall": {
-    "marginBottom": "90"
-  },
-  "sticky-header": {
-    "position": "sticky"
-  },
-  "sticky-header-box": {
-    "flexDirection": "row",
-    "alignItems": "flex-end",
-    "justifyContent": "center",
-    "height": "130",
-    "paddingBottom": "20",
-    "backgroundColor": "rgba(250,81,58,0.9)"
-  },
-  "sticky-header-scroll": {
-    "position": "absolute",
-    "top": 0
-  },
-  "logo": {
-    "fontSize": "24",
-    "backgroundColor": "rgba(51,51,51,0.5)",
-    "width": "70",
-    "height": "70",
-    "alignItems": "center",
-    "justifyContent": "center",
-    "borderRadius": "70"
-  },
-  "logo-letter": {
-    "fontSize": "20",
-    "color": "#ffffff"
-  },
-  "main-title-box": {
-    "paddingTop": "15",
-    "paddingRight": "15",
-    "paddingBottom": "15",
-    "paddingLeft": "15",
-    "marginTop": 0,
-    "marginRight": "20",
-    "marginBottom": "20",
-    "marginLeft": "20",
-    "borderBottomWidth": "3",
-    "borderBottomStyle": "solid",
-    "borderBottomColor": "#ebecee",
-    "alignItems": "center"
-  },
-  "main-title": {
-    "color": "#333333",
-    "fontSize": "36"
-  },
-  "cell": {
-    "paddingTop": "6",
-    "paddingBottom": "6"
-  },
-  "item": {
-    "backgroundColor": "#ffffff",
-    "borderWidth": "2",
-    "borderColor": "#ebecee"
-  },
-  "item-photo": {
-    "height": "360",
-    "marginTop": "1",
-    "marginRight": "1",
-    "marginBottom": 0,
-    "marginLeft": "1"
-  },
-  "item-title": {
-    "marginTop": "10",
-    "marginRight": "10",
-    "marginBottom": "10",
-    "marginLeft": "10",
-    "fontSize": 26,
-    "fontWeight": "500",
-    "lines": 2,
-    "textOverflow": "ellipsis"
-  },
-  "item-price-box": {
-    "flexDirection": "row",
-    "paddingBottom": "10",
-    "marginRight": "10",
-    "marginLeft": "10",
-    "alignItems": "center",
-    "justifyContent": "space-between"
-  },
-  "coupon": {
-    "flexDirection": "row",
-    "alignItems": "center"
-  },
-  "coupon-icon": {
-    "marginRight": "2"
-  },
-  "coupon-text": {
-    "color": "#fe9f92",
-    "fontSize": "24"
-  },
-  "price": {
-    "flexDirection": "row",
-    "alignItems": "center"
-  },
-  "zk-price-txt": {
-    "color": "#666666",
-    "fontSize": "24"
-  },
-  "zk-price-num": {
-    "color": "#fa513a",
-    "fontSize": "32"
-  },
-  "water-footer": {
-    "alignItems": "center",
-    "paddingTop": "20",
-    "paddingRight": "20",
-    "paddingBottom": "20",
-    "paddingLeft": "20"
-  },
-  "water-footer-text": {
-    "fontSize": "30"
-  },
-  "loading": {
-    "width": "750",
-    "height": "200",
-    "MsFlexAlign": "center",
-    "WebkitAlignItems": "center",
-    "WebkitBoxAlign": "center",
-    "alignItems": "center"
-  },
-  "indicator-text": {
-    "color": "#bbbbbb",
-    "fontSize": "20",
-    "textAlign": "center"
-  },
-  "loading-indicator": {
-    "width": "40",
-    "height": "40",
-    "color": "#bbbbbb"
-  },
-  "toHeader": {
-    "position": "fixed",
-    "bottom": "130",
-    "right": "20",
-    "width": "80",
-    "height": "80",
-    "backgroundColor": "#ffffff",
-    "borderWidth": "2",
-    "borderColor": "#ebecee",
-    "borderRadius": "80",
-    "alignItems": "center",
-    "justifyContent": "center"
-  },
-  "footer": {
-    "width": "750",
-    "paddingTop": "10",
-    "paddingBottom": "10",
-    "alignItems": "center"
-  }
-}
-
-/***/ }),
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _Banner = __webpack_require__(49);
-
-var _Banner2 = _interopRequireDefault(_Banner);
-
-var _Chunks = __webpack_require__(60);
-
-var _Chunks2 = _interopRequireDefault(_Chunks);
-
-var _Onsale = __webpack_require__(64);
-
-var _Onsale2 = _interopRequireDefault(_Onsale);
-
-var _ScollerRow = __webpack_require__(68);
-
-var _ScollerRow2 = _interopRequireDefault(_ScollerRow);
-
-var _SearchBar = __webpack_require__(16);
-
-var _SearchBar2 = _interopRequireDefault(_SearchBar);
-
-var _store = __webpack_require__(8);
-
-var _formatURL = __webpack_require__(30);
-
-var _getJumpBaseUrl = __webpack_require__(15);
-
-var _cryptoJs = __webpack_require__(17);
-
-var _cryptoJs2 = _interopRequireDefault(_cryptoJs);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var dom = weex.requireModule("dom"); //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-var stream = weex.requireModule("stream");
-var animation = weex.requireModule("animation");
-var navigator = weex.requireModule("navigator-pri");
-var modal = weex.requireModule('modal');
-exports.default = {
-  data: function data() {
-    return {
-      requestOptions: {
-        method: "taobao.tbk.dg.item.coupon.get",
-        apiOptions: {
-          adzone_id: "91627500240",
-          platform: "2",
-          page_size: "40",
-          page_no: 1
-        }
-      },
-      items: [],
-      columnWidth: "auto",
-      columnCount: "2",
-      columnGap: "10",
-      leftGap: "20",
-      rightGap: "20",
-      console: "",
-      scrollFlag: false,
-      // headerShow: true,
-      headOpacity: 0,
-      loadingFlag: true, // 控制底部加载状态
-      toHeaderBtnFlag: false,
-      footerFlag: false,
-      upNumId: "",
-      upFlag: false
-    };
-  },
-
-  components: {
-    Banner: _Banner2.default,
-    Chunks: _Chunks2.default,
-    Onsale: _Onsale2.default,
-    ScollerRow: _ScollerRow2.default,
-    SearchBar: _SearchBar2.default
-  },
-  created: function created() {
-
-    var self = this;
-    var url = (0, _formatURL.formatURL)(this.requestOptions.method, this.requestOptions.apiOptions);
-    this.footerFlag = false;
-    stream.fetch({
-      method: "GET",
-      url: url,
-      type: "json"
-    }, function (res) {
-      try {
-        if (res.data) {
-          var items = res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon;
-          self.items = self.couponInfoDeal(items);
-        } else {
-          self.footerFlag = true;
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    });
-  },
-  mounted: function mounted() {},
-  updated: function updated(e) {
-    if (this.upFlag) {
-      var el = this.$refs[this.upNumId][0];
-      dom.scrollToElement(el, { offset: -950, animated: false });
-      this.upFlag = false;
-    }
-  },
-
-  methods: {
-    couponInfoDeal: function couponInfoDeal(items) {
-      items.forEach(function (item, i) {
-        var _coupon_info = "";
-        // 记录"减的位置"
-        var jianPos = item.coupon_info.search("减");
-        _coupon_info = item.coupon_info.slice(jianPos + 1);
-        items[i].coupon_info = _coupon_info;
-      });
-      return items;
-    },
-    onScroll: function onScroll(e) {
-      // console.log(e)
-      // this.console = this.$refs.waterfall
-      e.contentOffset.y < -1000 ? this.toHeaderBtnFlag = true : this.toHeaderBtnFlag = false;
-      if (e.contentOffset.y < -110) {
-        this.scrollFlag = true;
-        _store.store.commit("changeScrollFlag", true);
-        if (this.headOpacity <= 1) {
-          this.headOpacity = (Math.abs(e.contentOffset.y) - 110) / 250;
-        } else {
-          this.headOpacity = 1;
-        }
-      } else {
-        this.scrollFlag = false;
-        _store.store.commit("changeScrollFlag", false);
-        // dom.scrollToElement(this.$refs.header,{offset:0,animated:false})
-      }
-    },
-
-    // onloading(e) {
-    //   this.loadingFlag = true;
-    //   this.footerFlag = false;
-    //   this.requestOptions.apiOptions.page_no++;
-    //   let self = this;
-    //   let url = formatURL(
-    //     this.requestOptions.method,
-    //     this.requestOptions.apiOptions
-    //   );
-
-    //   try {
-    //     stream.fetch(
-    //       {
-    //         method: "GET",
-    //         url: url,
-    //         type: "json"
-    //       },
-    //       res => {
-    //         if (res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon) {
-    //           let items =
-    //             res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon;
-    //           items = self.couponInfoDeal(items);
-    //           items.forEach(item => {
-    //             self.items.push(item);
-    //           });
-    //           self.loadingFlag = false;
-    //           self.upNumId = "item" + items[0].num_iid;
-    //           self.upFlag = true;
-
-    //           // let p = getComponentRect('viewport')
-    //           // dom.scrollToElement(el,{offset:0,animated:true})
-    //         } else {
-    //           self.footerFlag = true;
-    //         }
-    //       }
-    //     );
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-
-    //   setTimeout(() => {
-    //     this.loadingFlag = false;
-    //     // this.footerFlag = true
-    //   }, 5000);
-    // },
-    onloadmore: function onloadmore() {
-      var _this = this;
-
-      this.footerFlag = true;
-      this.requestOptions.apiOptions.page_no++;
+    // 公共方法
+    fetch: function fetch(seccCallback, errCallback) {
 
       var url = (0, _formatURL.formatURL)(this.requestOptions.method, this.requestOptions.apiOptions);
 
@@ -18765,25 +18183,48 @@ exports.default = {
           url: url,
           type: "json"
         }, function (res) {
-          if (res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon) {
-            var items = res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon;
-            items = _this.couponInfoDeal(items);
-            items.forEach(function (item) {
-              _this.items.push(item);
-            });
-          } else {
-            _this.footerFlag = false;
+          if (typeof seccCallback === "function") {
+            seccCallback(res);
           }
         });
       } catch (err) {
-        this.footerFlag = false;
+        if (typeof errCallback === "function") {
+          errCallback(err);
+        }
       }
+    },
+    couponFinalPrice: function couponFinalPrice(zk_final_price, coupon_amount) {
+
+      var _couponFinalPrice = Math.round(zk_final_price * 100 - coupon_amount * 100) / 100;
+      return _couponFinalPrice;
+    },
+    onScroll: function onScroll(e) {
+
+      e.contentOffset.y < -1000 ? this.toHeaderBtnFlag = true : this.toHeaderBtnFlag = false;
     },
     onToHeader: function onToHeader(e) {
       dom.scrollToElement(this.$refs.header, { offset: 0, animated: 'true' });
     },
+    onloadmore: function onloadmore() {
+      var _this2 = this;
+
+      this.requestOptions.apiOptions.page_no++;
+      this.fetch(function (res) {
+        if (res.data.tbk_dg_optimus_material_response) {
+          var data = res.data.tbk_dg_optimus_material_response.result_list.map_data;
+          data.forEach(function (el) {
+            _this2.items.push(el);
+          });
+        } else {
+          _this2.loadingFlag = false;
+        }
+      }, function (err) {
+        _this2.loadingFlag = false;
+      });
+    },
     itemOnClick: function itemOnClick(e) {
-      var couponUrl = e.currentTarget.attr.couponUrl;
+
+      var couponUrl = 'https://' + e.currentTarget.attr.couponUrl;
       _store.store.commit("setCouponUrl", couponUrl);
 
       navigator.push({
@@ -18795,1479 +18236,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 49 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(50)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(51)
-
-/* template */
-var __vue_template__ = __webpack_require__(59)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\components\\Banner.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-ff942d88"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-
-
-/***/ }),
-/* 50 */
-/***/ (function(module, exports) {
-
-module.exports = {
-  "banner": {
-    "alignItems": "center",
-    "position": "relative"
-  },
-  "size": {
-    "width": "750",
-    "height": "500",
-    "borderRadius": "-100"
-  },
-  "slider": {
-    "position": "relative"
-  },
-  "indicator": {
-    "position": "absolute",
-    "left": 0,
-    "right": 0,
-    "bottom": "40",
-    "height": "40",
-    "itemColor": "#f8f8f8",
-    "itemSelectedColor": "#fa513a",
-    "itemSize": "8"
-  },
-  "footer-mask": {
-    "alignItems": "center",
-    "position": "absolute",
-    "bottom": "-2"
-  },
-  "footer-mask-img": {
-    "width": "800",
-    "height": "20"
-  }
-}
-
-/***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _StickyHeader = __webpack_require__(52);
-
-var _StickyHeader2 = _interopRequireDefault(_StickyHeader);
-
-var _store = __webpack_require__(8);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-exports.default = {
-  data: function data() {
-    return {
-      posters: ['111.jpg', '444.jpg', '333.jpg', '222.jpg'],
-      scrollFlag: !_store.store.state.scrollFlag
-    };
-  },
-
-  methods: {},
-  components: {
-    StickyHeader: _StickyHeader2.default
-  }
-};
-
-/***/ }),
-/* 52 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(53)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(54)
-
-/* template */
-var __vue_template__ = __webpack_require__(58)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\components\\StickyHeader.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-4ae938e6"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-
-
-/***/ }),
-/* 53 */
-/***/ (function(module, exports) {
-
-module.exports = {
-  "iconfont": {
-    "color": "#ffffff",
-    "fontSize": "50",
-    "fontFamily": "iconfont"
-  },
-  "stickyHeader": {
-    "position": "absolute",
-    "top": "25",
-    "flexDirection": "row",
-    "width": "750",
-    "height": "110",
-    "alignItems": "center",
-    "justifyContent": "center",
-    "backgroundColor": "rgba(0,0,0,0)"
-  },
-  "logo": {
-    "backgroundColor": "rgba(51,51,51,0.5)",
-    "width": "70",
-    "height": "70",
-    "alignItems": "center",
-    "justifyContent": "center",
-    "borderRadius": "70",
-    "position": "absolute",
-    "left": "10",
-    "top": "20"
-  },
-  "logo-letter": {
-    "fontSize": "20",
-    "color": "#ffffff"
-  }
-}
-
-/***/ }),
-/* 54 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _SearchBar = __webpack_require__(16);
-
-var _SearchBar2 = _interopRequireDefault(_SearchBar);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-  components: {
-    SearchBar: _SearchBar2.default
-  }
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-
-/***/ }),
-/* 55 */
-/***/ (function(module, exports) {
-
-module.exports = {
-  "iconfont": {
-    "color": "#bbbbbb",
-    "fontSize": "32",
-    "fontFamily": "iconfont"
-  },
-  "search-bar": {
-    "position": "relative",
-    "justifyContent": "center",
-    "textAlign": "center"
-  },
-  "search": {
-    "width": "590",
-    "height": "60",
-    "marginLeft": "25",
-    "paddingLeft": "60",
-    "borderRadius": "40",
-    "backgroundColor": "#ffffff",
-    "fontSize": "28",
-    "color": "#333333",
-    "placeholderColor": "#bbb"
-  },
-  "search-btn": {
-    "position": "absolute",
-    "left": "30",
-    "top": "14",
-    "paddingLeft": "10"
-  },
-  "search-fake-box": {
-    "justifyContent": "center"
-  },
-  "search-fake-text": {
-    "color": "#bbbbbb",
-    "fontSize": "28"
-  }
-}
-
-/***/ }),
-/* 56 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _getJumpBaseUrl = __webpack_require__(15);
-
-var navigator = weex.requireModule("navigator-pri"); //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-exports.default = {
-  props: {
-    // searchAble: Boolean,
-    autoFocus: Boolean
-  },
-  methods: {
-    onSearch: function onSearch(e) {
-      e.stopPropagation();
-      navigator.push({
-        url: (0, _getJumpBaseUrl.getJumpBaseUrl)("searchPage"),
-        animated: "false"
-      });
-    }
-  }
-};
-
-/***/ }),
-/* 57 */
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["search-bar"]
-  }, [_c('div', {
-    staticClass: ["search", "search-fake-box"],
-    on: {
-      "click": _vm.onSearch
-    }
-  }, [_c('text', {
-    staticClass: ["search-fake-text"]
-  }, [_vm._v("搜索商品、店铺等")])]), _vm._m(0)])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["search-btn"]
-  }, [_c('text', {
-    staticClass: ["iconfont"]
-  }, [_vm._v("")])])
-}]}
-module.exports.render._withStripped = true
-
-/***/ }),
-/* 58 */
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["stickyHeader"]
-  }, [_vm._m(0), _c('searchBar', {
-    attrs: {
-      "searchDisable": "false"
-    }
-  })], 1)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["logo"]
-  }, [_c('text', {
-    staticClass: ["logo-letter"]
-  }, [_vm._v("淘折")])])
-}]}
-module.exports.render._withStripped = true
-
-/***/ }),
-/* 59 */
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["banner"]
-  }, [_c('slider', {
-    staticClass: ["slider", "size"],
-    attrs: {
-      "autoPlay": "true"
-    }
-  }, [_vm._l((_vm.posters), function(src, i) {
-    return _c('div', {
-      key: i
-    }, [_c('image', {
-      staticClass: ["size"],
-      attrs: {
-        "resize": "stretch",
-        "src": 'file:///android_asset/images/' + src
-      }
-    })])
-  }), _c('indicator', {
-    staticClass: ["indicator"]
-  })], 2), _vm._m(0), _c('sticky-header')], 1)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["footer-mask"]
-  }, [_c('image', {
-    staticClass: ["footer-mask-img"],
-    attrs: {
-      "src": "file:///android_asset/images/slider-mask.png",
-      "resize": "cover"
-    }
-  })])
-}]}
-module.exports.render._withStripped = true
-
-/***/ }),
-/* 60 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(61)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(62)
-
-/* template */
-var __vue_template__ = __webpack_require__(63)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\components\\Chunks.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-63d1c8b6"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-
-
-/***/ }),
-/* 61 */
-/***/ (function(module, exports) {
-
-module.exports = {
-  "chunks": {
-    "height": "160",
-    "backgroundColor": "#ffffff",
-    "marginTop": "20",
-    "marginRight": "20",
-    "marginBottom": "20",
-    "marginLeft": "20",
-    "borderRadius": "30"
-  },
-  "cell": {
-    "flexDirection": "row",
-    "justifyContent": "center",
-    "alignItems": "center"
-  },
-  "B-box": {
-    "width": "140",
-    "justifyContent": "center",
-    "alignItems": "center",
-    "paddingTop": "10"
-  },
-  "B-title": {
-    "width": "140",
-    "fontSize": "20",
-    "textAlign": "center",
-    "paddingTop": "15",
-    "color": "#999999"
-  },
-  "B-icon": {
-    "width": "100",
-    "height": "100"
-  }
-}
-
-/***/ }),
-/* 62 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-exports.default = {
-  data: function data() {
-    return {
-      row1: [{
-        title: '腔调掌柜',
-        icon: 'http://img.alicdn.com/tfs/TB1sWLoRVXXXXbdXXXXXXXXXXXX-140-140.png'
-      }, {
-        title: '腔调掌柜',
-        icon: 'http://gw.alicdn.com/tfs/TB10.R_SpXXXXbtXXXXXXXXXXXX-140-140.png'
-      }, {
-        title: '腔调掌柜',
-        icon: 'http://img.alicdn.com/tfs/TB1fRVASpXXXXXdXXXXXXXXXXXX-140-140.png'
-      }, {
-        title: '腔调掌柜',
-        icon: 'http://img.alicdn.com/tfs/TB1_TkdPVXXXXcJXXXXXXXXXXXX-140-140.png'
-      }, {
-        title: '腔调掌柜',
-        icon: 'http://img.alicdn.com/tfs/TB1vRGhSpXXXXaLXpXXXXXXXXXX-140-140.png'
-      }]
-    };
-  }
-};
-
-/***/ }),
-/* 63 */
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["chunks"]
-  }, [_c('list', {
-    staticClass: ["list"]
-  }, [_c('cell', {
-    staticClass: ["cell"],
-    appendAsTree: true,
-    attrs: {
-      "append": "tree"
-    }
-  }, _vm._l((_vm.row1), function(item, i) {
-    return _c('div', {
-      key: i,
-      staticClass: ["B-box"]
-    }, [_c('image', {
-      staticClass: ["B-icon"],
-      attrs: {
-        "src": item.icon
-      }
-    }), _c('text', {
-      staticClass: ["B-title"]
-    }, [_vm._v(_vm._s(item.title))])])
-  }))])])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-
-/***/ }),
-/* 64 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(65)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(66)
-
-/* template */
-var __vue_template__ = __webpack_require__(67)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\components\\Onsale.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-5b4c3894"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-
-
-/***/ }),
-/* 65 */
-/***/ (function(module, exports) {
-
-module.exports = {
-  "onsale": {
-    "marginTop": "20",
-    "marginRight": "20",
-    "marginBottom": "20",
-    "marginLeft": "20",
-    "backgroundColor": "#ffffff",
-    "borderRadius": "30",
-    "flexDirection": "row",
-    "position": "relative",
-    "paddingBottom": "20"
-  },
-  "title": {
-    "position": "absolute",
-    "left": 0,
-    "top": "18",
-    "backgroundImage": "linear-gradient(to top,#EB6A12,#FFA42A)",
-    "width": "180",
-    "height": "60",
-    "borderTopRightRadius": "60",
-    "borderBottomRightRadius": "60",
-    "justifyContent": "center",
-    "alignItems": "center",
-    "borderWidth": "2",
-    "borderColor": "#F5B488",
-    "borderStyle": "solid"
-  },
-  "title-txt": {
-    "color": "#ffffff",
-    "fontSize": "32"
-  },
-  "left-box": {
-    "borderRightWidth": "2",
-    "borderRightColor": "#ebecee",
-    "marginTop": "20",
-    "marginRight": "20",
-    "marginBottom": "20",
-    "marginLeft": "20",
-    "width": "340"
-  },
-  "box-title": {
-    "marginTop": "65"
-  },
-  "box-title-top": {
-    "fontSize": "36",
-    "color": "#fa513a"
-  },
-  "box-title-bottom": {
-    "fontSize": "24",
-    "marginBottom": "15",
-    "color": "#666666"
-  },
-  "buy-btn": {
-    "width": "140",
-    "height": "50",
-    "backgroundColor": "#fb3519",
-    "borderRadius": "10",
-    "justifyContent": "center",
-    "alignItems": "center",
-    "marginBottom": "15"
-  },
-  "buy-btn-txt": {
-    "color": "#ffffff",
-    "fontSize": "28"
-  },
-  "left-img": {
-    "width": "320",
-    "height": "200"
-  },
-  "right-box": {
-    "width": "320"
-  },
-  "right-top": {
-    "borderBottomWidth": "2",
-    "borderBottomColor": "#ebecee",
-    "borderBottomStyle": "solid",
-    "paddingBottom": "35",
-    "position": "relative"
-  },
-  "right-top-title": {
-    "marginTop": "40"
-  },
-  "right-bottom": {
-    "position": "relative"
-  },
-  "right-img-box": {
-    "position": "absolute",
-    "right": "5",
-    "top": "5"
-  },
-  "right-img": {
-    "width": "165",
-    "height": "200"
-  }
-}
-
-/***/ }),
-/* 66 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-exports.default = {};
-
-/***/ }),
-/* 67 */
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["onsale"]
-  }, [_c('div', {
-    staticClass: ["title"]
-  }, [_c('text', {
-    staticClass: ["title-txt"]
-  }, [_vm._v("活动专区")])]), _c('div', {
-    staticClass: ["left-box"]
-  }, [_c('div', {
-    staticClass: ["box-title"]
-  }, [_c('text', {
-    staticClass: ["box-title-top"]
-  }, [_vm._v("限时抢购")]), _c('text', {
-    staticClass: ["box-title-bottom"]
-  }, [_vm._v("实惠好物等你来抢")])]), _c('div', {
-    staticClass: ["buy-btn"]
-  }, [_c('text', {
-    staticClass: ["buy-btn-txt"]
-  }, [_vm._v("立即抢购")])]), _c('div', [_c('image', {
-    staticClass: ["left-img"],
-    attrs: {
-      "src": "file:///android_asset/images/sale1.png",
-      "resize": "cover"
-    }
-  })])]), _c('div', {
-    staticClass: ["right-box"]
-  }, [_c('div', {
-    staticClass: ["right-top"]
-  }, [_c('div', {
-    staticClass: ["right-img-box"]
-  }, [_c('image', {
-    staticClass: ["right-img"],
-    attrs: {
-      "src": "https://gd3.alicdn.com/imgextra/i3/47058671/TB28X.4buGSBuNjSspbXXciipXa_!!47058671.jpg_400x400.jpg_.webp",
-      "resize": "cover"
-    }
-  })]), _c('div', {
-    staticClass: ["box-title", "right-top-title"]
-  }, [_c('text', {
-    staticClass: ["box-title-top"]
-  }, [_vm._v("实惠团购")]), _c('text', {
-    staticClass: ["box-title-bottom"]
-  }, [_vm._v("拼着买更便宜")])]), _c('div', {
-    staticClass: ["buy-btn"]
-  }, [_c('text', {
-    staticClass: ["buy-btn-txt"]
-  }, [_vm._v("立即抢购")])])]), _c('div', {
-    staticClass: ["right-bottom"]
-  }, [_c('div', {
-    staticClass: ["right-img-box"]
-  }, [_c('image', {
-    staticClass: ["right-img"],
-    attrs: {
-      "src": "http://img.alicdn.com/imgextra/i1/725677994/O1CN01n5as6O28vIdtVlESK_!!0-item_pic.jpg_430x430q90.jpg",
-      "resize": "cover"
-    }
-  })]), _c('div', {
-    staticClass: ["box-title", "right-top-title"]
-  }, [_c('text', {
-    staticClass: ["box-title-top"]
-  }, [_vm._v("超大额券")]), _c('text', {
-    staticClass: ["box-title-bottom"]
-  }, [_vm._v("让实惠更实惠")])]), _c('div', {
-    staticClass: ["buy-btn"]
-  }, [_c('text', {
-    staticClass: ["buy-btn-txt"]
-  }, [_vm._v("立即抢购")])])])])])
-}]}
-module.exports.render._withStripped = true
-
-/***/ }),
-/* 68 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(69)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(70)
-
-/* template */
-var __vue_template__ = __webpack_require__(71)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\components\\ScollerRow.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-33deec7e"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-
-
-/***/ }),
-/* 69 */
-/***/ (function(module, exports) {
-
-module.exports = {
-  "scroller": {
-    "height": "450",
-    "flexDirection": "row",
-    "marginRight": "20",
-    "marginBottom": "20"
-  },
-  "panel": {
-    "width": "300",
-    "backgroundColor": "#ffffff",
-    "borderWidth": "2",
-    "borderStyle": "solid",
-    "borderColor": "#ebecee",
-    "marginLeft": "20"
-  },
-  "item-photo": {
-    "width": "300",
-    "height": "300"
-  },
-  "item-title": {
-    "marginTop": "10",
-    "marginRight": "10",
-    "marginBottom": "10",
-    "marginLeft": "10",
-    "fontSize": 26,
-    "fontWeight": "500",
-    "lines": 2,
-    "textOverflow": "ellipsis"
-  },
-  "price": {
-    "flexDirection": "row",
-    "alignItems": "center"
-  },
-  "zk-price": {
-    "color": "#fa513a",
-    "fontSize": "32",
-    "marginTop": "5",
-    "marginRight": "5",
-    "marginBottom": "5",
-    "marginLeft": "5"
-  },
-  "reserve-price": {
-    "color": "#bbbbbb",
-    "fontSize": "24",
-    "marginTop": "5",
-    "marginRight": "5",
-    "marginBottom": "5",
-    "marginLeft": "5",
-    "textDecoration": "line-through"
-  }
-}
-
-/***/ }),
-/* 70 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-exports.default = {
-  data: function data() {
-    return {
-      list: [{
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=529348904068",
-        nick: "洋森之家",
-        num_iid: 529348904068,
-        pict_url: "https://img.alicdn.com/tfscom/i1/2736782442/TB2AWfralHH8KJjy0FbXXcqlpXa_!!2736782442.jpg",
-        provcity: "河北 石家庄",
-        reserve_price: "39.80",
-        seller_id: 2736782442,
-        shop_title: "柳润母婴生活馆",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i2/2736782442/TB2YtRTkk.HL1JjSZFuXXX8dXXa_!!2736782442.jpg", "https://img.alicdn.com/tfscom/i1/2736782442/TB2kUNdaesAV1JjSZFsXXadZXXa_!!2736782442.jpg", "https://img.alicdn.com/tfscom/i2/2736782442/TB2jlfhX.RIWKJjSZFgXXboxXXa_!!2736782442.jpg", "https://img.alicdn.com/tfscom/i1/2736782442/TB2tfmpmGmWQ1JjSZPhXXXCJFXa_!!2736782442.jpg"]
-        },
-        status: 1,
-        title: "超大老人防水纯棉防漏透气隔尿垫成人老年人护理垫床垫可洗尿不湿",
-        tk_rate: "1.50",
-        type: 1,
-        user_type: 0,
-        volume: 71,
-        zk_final_price: "19.90",
-        zk_final_price_wap: "19.90"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=582963602222",
-        nick: "松阳振晖",
-        num_iid: 582963602222,
-        pict_url: "https://img.alicdn.com/tfscom/i1/17197599/O1CN018etsq1260OBTKCA6w_!!0-item_pic.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "1680.00",
-        seller_id: 17197599,
-        shop_title: "唯你原创女装",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i1/17197599/O1CN01fgKCyT260OBT9N0pJ_!!17197599.jpg", "https://img.alicdn.com/tfscom/i3/17197599/O1CN01ugVuDd260OBRTOsgw_!!17197599.jpg", "https://img.alicdn.com/tfscom/i2/17197599/O1CN01qdpNox260OBROTLf0_!!17197599.jpg", "https://img.alicdn.com/tfscom/i1/17197599/O1CN0115dFAt260OBaQBCRt_!!17197599.jpg"]
-        },
-        status: 1,
-        title: "2018冬季新款女装中长款欧货时尚宽松显瘦加厚面包亮面羽绒服外套",
-        tk_rate: "4.50",
-        type: 1,
-        user_type: 0,
-        volume: 4268,
-        zk_final_price: "398.00",
-        zk_final_price_wap: "398.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=584205077923",
-        nick: "雯雯的便便hz",
-        num_iid: 584205077923,
-        pict_url: "https://img.alicdn.com/tfscom/i2/78403414/O1CN01uRfSOM1b5eejyHgle_!!78403414.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "312.00",
-        seller_id: 78403414,
-        shop_title: "小蚊子 女装",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i4/78403414/O1CN01AzNw881b5eege3Afh_!!78403414.jpg", "https://img.alicdn.com/tfscom/i1/78403414/O1CN013U4igi1b5eege0UD9_!!78403414.jpg", "https://img.alicdn.com/tfscom/i4/78403414/O1CN01EpsCLO1b5eehH2E8R_!!78403414.jpg", "https://img.alicdn.com/tfscom/i3/78403414/O1CN0165l4NN1b5eeZSgFlg_!!78403414.jpg"]
-        },
-        status: 1,
-        title: "亮面棉衣女装冬季2018新款假两件棉袄中长款加厚连帽羽绒棉服外套",
-        tk_rate: "1.80",
-        type: 1,
-        user_type: 0,
-        volume: 1628,
-        zk_final_price: "249.90",
-        zk_final_price_wap: "249.90"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=583259454597",
-        nick: "晓得111",
-        num_iid: 583259454597,
-        pict_url: "https://img.alicdn.com/tfscom/i1/1016012691/O1CN01CpD3uj1VkWIRPFfOI_!!1016012691.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "899.00",
-        seller_id: 1016012691,
-        shop_title: "MC韩国时尚女装",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i1/1016012691/O1CN01Meatpm1VkWIRVkbps_!!1016012691.jpg", "https://img.alicdn.com/tfscom/i2/1016012691/O1CN01cBEGNn1VkWINvycjb_!!1016012691.jpg", "https://img.alicdn.com/tfscom/i2/1016012691/O1CN01uwtdEi1VkWIQZqf0q_!!1016012691.jpg", "https://img.alicdn.com/tfscom/i2/1016012691/O1CN01I6F53s1VkWIJmROe4_!!1016012691.jpg"]
-        },
-        status: 1,
-        title: "2018新款女装冬中长款仿羊羔毛羊剪绒外套女格子拼接撞色毛毛大衣",
-        tk_rate: "9.00",
-        type: 1,
-        user_type: 0,
-        volume: 9358,
-        zk_final_price: "388.00",
-        zk_final_price_wap: "388.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=582277199763",
-        nick: "周末与白天",
-        num_iid: 582277199763,
-        pict_url: "https://img.alicdn.com/tfscom/i2/772616220/TB2r9b.ggnH8KJjSspcXXb3QFXa_!!772616220.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "1288.00",
-        seller_id: 772616220,
-        shop_title: "赵DD STUDIO",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i3/772616220/TB2p8x0ktbJ8KJjy1zjXXaqapXa_!!772616220.jpg", "https://img.alicdn.com/tfscom/i3/772616220/O1CN01oNgmNW1voo0xqiQ2r_!!772616220.png", "https://img.alicdn.com/tfscom/i4/772616220/TB2VylqjY_I8KJjy1XaXXbsxpXa_!!772616220.png", "https://img.alicdn.com/tfscom/i1/772616220/O1CN01P5PJy11voo0qo5FQX_!!772616220.jpg"]
-        },
-        status: 1,
-        title: "白鸭绒长款过膝白色羽绒服女2018冬季新款韩版大毛领气质加厚女装",
-        tk_rate: "2.40",
-        type: 4,
-        user_type: 0,
-        volume: 1383,
-        zk_final_price: "653.50",
-        zk_final_price_wap: "653.50"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=581105112160",
-        nick: "yxphy123001",
-        num_iid: 581105112160,
-        pict_url: "https://img.alicdn.com/tfscom/i1/131950134/O1CN011CrPXuUaGe14ZWW_!!131950134.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "998.00",
-        seller_id: 131950134,
-        shop_title: "ds313领袖丽人",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i4/131950134/O1CN011CrPXrRhdldT3Ut_!!131950134.jpg", "https://img.alicdn.com/tfscom/i3/131950134/O1CN01oMaiiR1CrPYJ2W2q4_!!131950134.jpg", "https://img.alicdn.com/tfscom/i4/131950134/O1CN01bIwbtU1CrPYoN1SYL_!!131950134.jpg", "https://img.alicdn.com/tfscom/i3/131950134/O1CN01R5iCol1CrPXnCCovH_!!131950134.jpg"]
-        },
-        status: 1,
-        title: "毛呢外套女中长款2018秋冬季新款流行女装韩版茧型显瘦呢子大衣潮",
-        tk_rate: "3.00",
-        type: 1,
-        user_type: 0,
-        volume: 3679,
-        zk_final_price: "198.00",
-        zk_final_price_wap: "198.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=575570459742",
-        nick: "云思木想旗舰店",
-        num_iid: 575570459742,
-        pict_url: "https://img.alicdn.com/tfscom/i2/1765328414/O1CN01mFeWvM2C1eycaNGgp_!!0-item_pic.jpg",
-        provcity: "广东 广州",
-        reserve_price: "494.00",
-        seller_id: 1765328414,
-        shop_title: "云思木想旗舰店",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i2/1765328414/TB2BdYGoVooBKNjSZPhXXc2CXXa_!!1765328414.jpg", "https://img.alicdn.com/tfscom/i3/1765328414/TB2JwKzpnqWBKNjSZFxXXcpLpXa_!!1765328414.jpg", "https://img.alicdn.com/tfscom/i2/1765328414/TB2p0N_pXkoBKNjSZFkXXb4tFXa_!!1765328414.jpg", "https://img.alicdn.com/tfscom/i3/1765328414/TB2_t.lo0cnBKNjSZR0XXcFqFXa_!!1765328414.jpg"]
-        },
-        status: 1,
-        title: "云思木想2018秋装新款女装凤凰印花荷叶袖套头立领卫衣女75815",
-        tk_rate: "4.50",
-        type: 1,
-        user_type: 1,
-        volume: 742,
-        zk_final_price: "241.00",
-        zk_final_price_wap: "241.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=583573811796",
-        nick: "点名时间到了",
-        num_iid: 583573811796,
-        pict_url: "https://img.alicdn.com/tfscom/i3/2107328912/O1CN01lWFdSx2FhkDjzQnVk_!!2107328912.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "888.00",
-        seller_id: 2107328912,
-        shop_title: "DmTime DM家潮流女装",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i4/2107328912/O1CN01z4nVl72FhkEYruQYL_!!2107328912.jpg", "https://img.alicdn.com/tfscom/i4/2107328912/O1CN01nQxmfG2FhkEa46l7T_!!2107328912.jpg", "https://img.alicdn.com/tfscom/i3/2107328912/O1CN016s0AiK2FhkDlGPRfy_!!2107328912.jpg", "https://img.alicdn.com/tfscom/i2/2107328912/O1CN01VVHKDx2FhkDkG19lA_!!2107328912.jpg"]
-        },
-        status: 1,
-        title: "2018秋冬新款女装韩版毛衣连衣裙针织毛衫长裙包臀裙内搭裙子冬季",
-        tk_rate: "9.00",
-        type: 1,
-        user_type: 0,
-        volume: 4407,
-        zk_final_price: "178.00",
-        zk_final_price_wap: "178.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=582956610447",
-        nick: "小六子女装",
-        num_iid: 582956610447,
-        pict_url: "https://img.alicdn.com/tfscom/i2/2274485118/O1CN01LyEGll1ng5XmfQOqW_!!2274485118.jpg",
-        provcity: "广东 广州",
-        reserve_price: "198.00",
-        seller_id: 2274485118,
-        shop_title: "小太阳大码衣舍",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i4/2274485118/O1CN01NjyEfm1ng5XpygqOX_!!2274485118.jpg", "https://img.alicdn.com/tfscom/i1/2274485118/O1CN01AbP22B1ng5Xnefvtp_!!2274485118.jpg", "https://img.alicdn.com/tfscom/i1/2274485118/O1CN01YlFucX1ng5XoDyFe9_!!2274485118.jpg", "https://img.alicdn.com/tfscom/i4/2274485118/O1CN01Sy8fy21ng5Xn467qK_!!2274485118.jpg"]
-        },
-        status: 1,
-        title: "胖女人秋冬装洋气胖mm200斤大码女装 2018新款微胖妹妹针织连衣裙",
-        tk_rate: "4.50",
-        type: 1,
-        user_type: 0,
-        volume: 1560,
-        zk_final_price: "198.00",
-        zk_final_price_wap: "198.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=582145521987",
-        nick: "美眉炫酷女装",
-        num_iid: 582145521987,
-        pict_url: "https://img.alicdn.com/tfscom/i4/1692945001/O1CN01xb9qmG1moVCSe0aaE_!!1692945001.jpg",
-        provcity: "北京",
-        reserve_price: "288.00",
-        seller_id: 1692945001,
-        shop_title: "这家大码店",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i4/1692945001/O1CN01K9cwTB1moVCXWdeJS_!!1692945001.jpg", "https://img.alicdn.com/tfscom/i1/1692945001/O1CN010026Ek1moVCbLokUZ_!!1692945001.jpg", "https://img.alicdn.com/tfscom/i4/1692945001/O1CN01ifcEjg1moVCZHop20_!!1692945001.jpg", "https://img.alicdn.com/tfscom/i3/1692945001/O1CN010ZBEp81moVCYrV3YG_!!1692945001.jpg"]
-        },
-        status: 1,
-        title: "特大码女装棉服中长款2018新款冬装加厚棉衣胖妹妹过膝230斤棉袄",
-        tk_rate: "2.49",
-        type: 4,
-        user_type: 0,
-        volume: 1712,
-        zk_final_price: "199.00",
-        zk_final_price_wap: "199.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=579657145491",
-        nick: "小衣橱管家",
-        num_iid: 579657145491,
-        pict_url: "https://img.alicdn.com/tfscom/i1/854951489/O1CN011Ms0CyrieXQFJaQ_!!854951489.jpg",
-        provcity: "广东 广州",
-        reserve_price: "188.00",
-        seller_id: 854951489,
-        shop_title: "小衣橱管家",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i1/854951489/O1CN011Ms0D0BlFpi1W81_!!854951489.jpg", "https://img.alicdn.com/tfscom/i4/854951489/O1CN011Ms0CzMarazTRpy_!!854951489.jpg", "https://img.alicdn.com/tfscom/i1/854951489/O1CN011Ms0Czxg5hYo3Jf_!!854951489.jpg", "https://img.alicdn.com/tfscom/i3/854951489/O1CN011Ms0CzednSnuxye_!!854951489.jpg"]
-        },
-        status: 1,
-        title: "waitmore高冷气质冷系女装大衣外套港味格子西装毛呢外套赫本风女",
-        tk_rate: "3.00",
-        type: 1,
-        user_type: 0,
-        volume: 3165,
-        zk_final_price: "188.00",
-        zk_final_price_wap: "188.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=583007088959",
-        nick: "自然依人19889",
-        num_iid: 583007088959,
-        pict_url: "https://img.alicdn.com/tfscom/i4/815547271/O1CN01YwHZel23aAHDmaMPm_!!815547271.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "580.00",
-        seller_id: 815547271,
-        shop_title: "索菲欧原创女装",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i1/815547271/O1CN01n2AUUv23aAHC2zN0I_!!815547271.jpg", "https://img.alicdn.com/tfscom/i4/815547271/O1CN01JteMXR23aAHAp03hu_!!815547271.jpg", "https://img.alicdn.com/tfscom/i4/815547271/O1CN01pWhHCj23aAH9Wos7x_!!815547271.jpg", "https://img.alicdn.com/tfscom/i3/815547271/O1CN01wJgQed23aAHL5CA3r_!!815547271.jpg"]
-        },
-        status: 1,
-        title: "棉衣女中长款2018冬装新款女装chic黑色大毛领小个子羽绒棉服外套",
-        tk_rate: "4.50",
-        type: 1,
-        user_type: 0,
-        volume: 1545,
-        zk_final_price: "258.00",
-        zk_final_price_wap: "258.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=582161127636",
-        nick: "chaoming528",
-        num_iid: 582161127636,
-        pict_url: "https://img.alicdn.com/tfscom/i4/2507973110/O1CN01GAJU4C1YqQExHFbSi_!!2507973110.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "1088.00",
-        seller_id: 2507973110,
-        shop_title: "西西原创女装",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i1/2507973110/O1CN01aw2fjX1YqQFFMwvtR_!!2507973110.jpg", "https://img.alicdn.com/tfscom/i2/2507973110/O1CN01kasgYx1YqQExRkaM5_!!2507973110.jpg", "https://img.alicdn.com/tfscom/i4/2507973110/O1CN01B5KLTq1YqQEwdQ3HU_!!2507973110.jpg", "https://img.alicdn.com/tfscom/i3/2507973110/O1CN01cZBIam1YqQFNhSQJo_!!2507973110.jpg"]
-        },
-        status: 1,
-        title: "2018新款女装冬中长款仿羊羔毛羊剪绒外套女宽松大码毛领毛毛大衣",
-        tk_rate: "3.00",
-        type: 4,
-        user_type: 0,
-        volume: 1482,
-        zk_final_price: "328.00",
-        zk_final_price_wap: "328.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=578935268077",
-        nick: "皮改艳4699",
-        num_iid: 578935268077,
-        pict_url: "https://img.alicdn.com/tfscom/i1/585373984/O1CN011fIiOKtOeSE2PmQ_!!585373984.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "599.00",
-        seller_id: 585373984,
-        shop_title: "CC美丽公主",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i4/585373984/O1CN011fIiOKhCFGdlxT7_!!585373984.jpg", "https://img.alicdn.com/tfscom/i3/585373984/O1CN01dHNgKJ1fIiOo5gW67_!!585373984.jpg", "https://img.alicdn.com/tfscom/i2/585373984/O1CN01oDC4pz1fIiOqrwpBw_!!585373984.jpg", "https://img.alicdn.com/tfscom/i4/585373984/O1CN011fIiOD3cZ1lUVyv_!!585373984.jpg"]
-        },
-        status: 1,
-        title: "毛呢外套女2018秋冬新款复古休闲系带加厚呢子小西装短款外套女装",
-        tk_rate: "4.50",
-        type: 1,
-        user_type: 0,
-        volume: 3650,
-        zk_final_price: "168.00",
-        zk_final_price_wap: "168.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=584788965989",
-        nick: "vipwangting",
-        num_iid: 584788965989,
-        pict_url: "https://img.alicdn.com/tfscom/i3/112638574/O1CN01zCPEKF2DCwMAL0VE0_!!112638574.jpg",
-        provcity: "浙江 嘉兴",
-        reserve_price: "198.00",
-        seller_id: 112638574,
-        shop_title: "羊毛家",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i3/112638574/O1CN01MmHL722DCwMEBliIP_!!112638574.jpg", "https://img.alicdn.com/tfscom/i3/112638574/O1CN01VgMk8Q2DCwMCyzrqF_!!112638574.jpg", "https://img.alicdn.com/tfscom/i2/112638574/O1CN01pMILuU2DCwMELVAmb_!!112638574.jpg", "https://img.alicdn.com/tfscom/i3/112638574/O1CN01BuCRNv2DCwMAjxRmC_!!112638574.jpg"]
-        },
-        status: 1,
-        title: "2019新款女装很仙的法国小众雪纺连衣裙女中长款仙女裙蕾丝裙春装",
-        tk_rate: "1.50",
-        type: 4,
-        user_type: 0,
-        volume: 3294,
-        zk_final_price: "99.00",
-        zk_final_price_wap: "99.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=582749105088",
-        nick: "果果一女人",
-        num_iid: 582749105088,
-        pict_url: "https://img.alicdn.com/tfscom/i2/595412874/O1CN01OMrO3v1X6KlzXrnfc_!!595412874.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "249.90",
-        seller_id: 595412874,
-        shop_title: "果果家 GGWOMEN定制 韩范精品女装",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i4/595412874/O1CN01f07Klw1X6KlzZukCh_!!595412874.jpg", "https://img.alicdn.com/tfscom/i3/595412874/O1CN01ZHKfkM1X6Klx2s4pA_!!595412874.jpg", "https://img.alicdn.com/tfscom/i2/595412874/O1CN01m03R1U1X6KlzZwgnv_!!595412874.jpg", "https://img.alicdn.com/tfscom/i1/595412874/O1CN01btyNGq1X6Km09RNYP_!!595412874.jpg"]
-        },
-        status: 1,
-        title: "女装冬装2018新款韩版小个子闺蜜装格子毛呢外套短款大衣女冬加厚",
-        tk_rate: "1.56",
-        type: 4,
-        user_type: 0,
-        volume: 6586,
-        zk_final_price: "249.90",
-        zk_final_price_wap: "249.90"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=558489402187",
-        nick: "百里挑衣_198",
-        num_iid: 558489402187,
-        pict_url: "https://img.alicdn.com/tfscom/i2/2111084029/TB2HcQqa0qUQKJjSZFIXXcOkFXa_!!2111084029.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "389.00",
-        seller_id: 2111084029,
-        shop_title: "红都衣舍时装",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i2/2111084029/O1CN011fdKDLnPMj1bYtM_!!2111084029.jpg", "https://img.alicdn.com/tfscom/i4/2111084029/O1CN011fdKDLnNxSj9Ya5_!!2111084029.jpg", "https://img.alicdn.com/tfscom/i4/2111084029/O1CN011fdKDMyx0n23yuD_!!2111084029.jpg", "https://img.alicdn.com/tfscom/i1/2111084029/TB2YPX5e.F7MKJjSZFLXXcMBVXa_!!2111084029.jpg"]
-        },
-        status: 1,
-        title: "2019春秋新款女装遮肚子冬季连衣裙女加厚小香风针织秋冬款打底裙",
-        tk_rate: "1.50",
-        type: 1,
-        user_type: 0,
-        volume: 2701,
-        zk_final_price: "89.00",
-        zk_final_price_wap: "89.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=581297838159",
-        nick: "我是阿武",
-        num_iid: 581297838159,
-        pict_url: "https://img.alicdn.com/tfscom/i3/37082293/O1CN01A7Nivd1SoEedKMnvy_!!37082293.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "772.40",
-        seller_id: 37082293,
-        shop_title: "我是阿式设计定制女装",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i2/37082293/O1CN01BFrkVS1SoEePZva8M_!!37082293.jpg", "https://img.alicdn.com/tfscom/i1/37082293/O1CN017wfPEn1SoEeRMgUcB_!!37082293.jpg", "https://img.alicdn.com/tfscom/i4/37082293/O1CN01GTgFDM1SoEeSgBbX6_!!37082293.jpg", "https://img.alicdn.com/tfscom/i2/37082293/O1CN01P1uguU1SoEeQXGl1L_!!37082293.jpg"]
-        },
-        status: 1,
-        title: "原创设计 2018冬季新款女装加厚仿貂绒中长款A字毛呢大衣呢子外套",
-        tk_rate: "1.50",
-        type: 1,
-        user_type: 0,
-        volume: 2214,
-        zk_final_price: "386.20",
-        zk_final_price_wap: "386.20"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=582826822377",
-        nick: "银猴小小崽崽",
-        num_iid: 582826822377,
-        pict_url: "https://img.alicdn.com/tfscom/i1/1593146983/O1CN01AVWniB21SGD03MY3D_!!1593146983.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "1299.00",
-        seller_id: 1593146983,
-        shop_title: "云端锦绣",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i3/1593146983/O1CN01SYuqPe21SGDRtk1PW_!!1593146983.jpg", "https://img.alicdn.com/tfscom/i4/1593146983/O1CN01sNe6aZ21SGDBxbCgK_!!1593146983.jpg", "https://img.alicdn.com/tfscom/i3/1593146983/O1CN01zYPsiX21SGCyTC6jq_!!1593146983.jpg", "https://img.alicdn.com/tfscom/i4/1593146983/O1CN016cGe3m21SGD5MqQRf_!!1593146983.jpg"]
-        },
-        status: 1,
-        title: "短款羽绒服女2018新款冬季女装韩版宽松加厚大毛领时尚收腰外套女",
-        tk_rate: "3.00",
-        type: 4,
-        user_type: 0,
-        volume: 2939,
-        zk_final_price: "388.00",
-        zk_final_price_wap: "388.00"
-      }, {
-        event_end_time: "1970-01-01 00:00:00",
-        event_start_time: "1970-01-01 00:00:00",
-        item_url: "http://item.taobao.com/item.htm?id=582208280598",
-        nick: "果果一女人",
-        num_iid: 582208280598,
-        pict_url: "https://img.alicdn.com/tfscom/i2/595412874/O1CN01GuZGQb1X6KlroYsiD_!!595412874.jpg",
-        provcity: "浙江 杭州",
-        reserve_price: "129.90",
-        seller_id: 595412874,
-        shop_title: "果果家 GGWOMEN定制 韩范精品女装",
-        small_images: {
-          string: ["https://img.alicdn.com/tfscom/i1/595412874/O1CN011VoJRl1X6KlsBkqKV_!!595412874.jpg", "https://img.alicdn.com/tfscom/i1/595412874/O1CN01ihqZxU1X6Klu2fh7g_!!595412874.jpg", "https://img.alicdn.com/tfscom/i2/595412874/O1CN01JPmqCe1X6KlpyMBOr_!!595412874.jpg", "https://img.alicdn.com/tfscom/i1/595412874/O1CN01GYkY9C1X6Kltwldhs_!!595412874.jpg"]
-        },
-        status: 1,
-        title: "2018秋冬新款网红女装裙子黑色网纱仙女裙小个子收腰吊带裙连衣裙",
-        tk_rate: "1.56",
-        type: 4,
-        user_type: 0,
-        volume: 3384,
-        zk_final_price: "123.41",
-        zk_final_price_wap: "123.41"
-      }]
-    };
-  }
-};
-
-/***/ }),
-/* 71 */
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["scoller-row"]
-  }, [_c('scroller', {
-    staticClass: ["scroller"],
-    attrs: {
-      "scrollDirection": "horizontal"
-    }
-  }, _vm._l((_vm.list), function(item) {
-    return _c('div', {
-      key: item.num_iid,
-      staticClass: ["panel"]
-    }, [_c('image', {
-      staticClass: ["item-photo"],
-      attrs: {
-        "src": item.pict_url,
-        "resize": "cover"
-      }
-    }), _c('text', {
-      staticClass: ["item-title"]
-    }, [_vm._v(_vm._s(item.title))]), _c('div', {
-      staticClass: ["price"]
-    }, [_c('text', {
-      staticClass: ["zk-price"]
-    }, [_vm._v("￥" + _vm._s(item.zk_final_price))]), _c('text', {
-      staticClass: ["reserve-price"]
-    }, [_vm._v("￥" + _vm._s(item.reserve_price))])])])
-  }))])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-
-/***/ }),
-/* 72 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory) {
@@ -20348,7 +18317,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 73 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory) {
@@ -20502,13 +18471,13 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 74 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
 	if (true) {
 		// CommonJS
-		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(18));
+		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(19));
 	}
 	else if (typeof define === "function" && define.amd) {
 		// AMD
@@ -20587,13 +18556,13 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 75 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
 	if (true) {
 		// CommonJS
-		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(9), __webpack_require__(19));
+		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(9), __webpack_require__(20));
 	}
 	else if (typeof define === "function" && define.amd) {
 		// AMD
@@ -20675,7 +18644,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 76 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -21003,7 +18972,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 77 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory) {
@@ -21275,13 +19244,13 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 78 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
 	if (true) {
 		// CommonJS
-		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(11), __webpack_require__(12));
+		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(12), __webpack_require__(13));
 	}
 	else if (typeof define === "function" && define.amd) {
 		// AMD
@@ -21425,7 +19394,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 79 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -21508,7 +19477,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 80 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -21571,7 +19540,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 81 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -21692,7 +19661,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 82 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -21751,7 +19720,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 83 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -21796,7 +19765,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 84 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -21850,7 +19819,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 85 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -21899,7 +19868,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 86 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -21944,7 +19913,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 87 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -21994,7 +19963,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 88 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -22029,7 +19998,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 89 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
@@ -22100,13 +20069,13 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 90 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
 	if (true) {
 		// CommonJS
-		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(6), __webpack_require__(7), __webpack_require__(3), __webpack_require__(2));
+		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(7), __webpack_require__(8), __webpack_require__(3), __webpack_require__(2));
 	}
 	else if (typeof define === "function" && define.amd) {
 		// AMD
@@ -22337,13 +20306,13 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 91 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
 	if (true) {
 		// CommonJS
-		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(6), __webpack_require__(7), __webpack_require__(3), __webpack_require__(2));
+		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(7), __webpack_require__(8), __webpack_require__(3), __webpack_require__(2));
 	}
 	else if (typeof define === "function" && define.amd) {
 		// AMD
@@ -23112,13 +21081,13 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 92 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
 	if (true) {
 		// CommonJS
-		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(6), __webpack_require__(7), __webpack_require__(3), __webpack_require__(2));
+		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(7), __webpack_require__(8), __webpack_require__(3), __webpack_require__(2));
 	}
 	else if (typeof define === "function" && define.amd) {
 		// AMD
@@ -23256,13 +21225,13 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 93 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
 	if (true) {
 		// CommonJS
-		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(6), __webpack_require__(7), __webpack_require__(3), __webpack_require__(2));
+		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(7), __webpack_require__(8), __webpack_require__(3), __webpack_require__(2));
 	}
 	else if (typeof define === "function" && define.amd) {
 		// AMD
@@ -23453,13 +21422,13 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 94 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ;(function (root, factory, undef) {
 	if (true) {
 		// CommonJS
-		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(6), __webpack_require__(7), __webpack_require__(3), __webpack_require__(2));
+		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(7), __webpack_require__(8), __webpack_require__(3), __webpack_require__(2));
 	}
 	else if (typeof define === "function" && define.amd) {
 		// AMD
@@ -23648,7 +21617,7 @@ module.exports.render._withStripped = true
 }));
 
 /***/ }),
-/* 95 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23665,6 +21634,2097 @@ var config = {
 };
 
 exports.default = config;
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('waterfall', {
+    ref: "guessLike",
+    staticClass: ["guess-like"],
+    attrs: {
+      "showScrollbar": "false",
+      "columnWidth": _vm.columnWidth,
+      "columnCount": _vm.columnCount,
+      "columnGap": _vm.columnGap,
+      "leftGap": _vm.leftGap,
+      "rightGap": _vm.rightGap
+    },
+    on: {
+      "scroll": _vm.onScroll
+    }
+  }, [_c('header', {
+    ref: "header",
+    staticClass: ["header"],
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_c('div', {
+    staticClass: ["header-wrapper"]
+  }, [_c('text', {
+    staticClass: ["title"]
+  }, [_vm._v("猜你喜欢")])])]), _vm._l((_vm.items), function(item) {
+    return _c('cell', {
+      key: item.num_iid,
+      ref: 'item' + item.num_iid,
+      refInFor: true,
+      staticClass: ["cell"],
+      appendAsTree: true,
+      attrs: {
+        "append": "tree"
+      }
+    }, [_c('div', {
+      staticClass: ["item"],
+      attrs: {
+        "couponUrl": item.coupon_share_url
+      },
+      on: {
+        "click": _vm.itemOnClick
+      }
+    }, [_c('image', {
+      staticClass: ["item-photo"],
+      attrs: {
+        "src": item.white_image ? item.white_image : item.pict_url,
+        "resize": "cover"
+      }
+    }), _c('text', {
+      staticClass: ["item-title"]
+    }, [_vm._v(_vm._s(item.title))]), _c('div', {
+      staticClass: ["item-price-box"]
+    }, [_c('div', {
+      staticClass: ["coupon"]
+    }, [_c('text', {
+      staticClass: ["iconfont", "coupon-icon"]
+    }, [_vm._v("")]), _c('text', {
+      staticClass: ["coupon-text"]
+    }, [_vm._v(_vm._s(item.coupon_amount) + "元")])]), _c('div', {
+      staticClass: ["price"]
+    }, [_c('text', {
+      staticClass: ["zk-price-txt"]
+    }, [_vm._v("折后价")]), _c('text', {
+      staticClass: ["zk-price-num"]
+    }, [_vm._v("￥" + _vm._s(_vm.couponFinalPrice(item.zk_final_price, item.coupon_amount)))])])])])])
+  }), (_vm.toHeaderBtnFlag) ? _c('header', {
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_c('div', {
+    staticClass: ["toHeader"],
+    on: {
+      "click": _vm.onToHeader
+    }
+  }, [_c('text', {
+    staticClass: ["iconfont"]
+  }, [_vm._v("")])])]) : _vm._e(), _c('header', {
+    ref: "footer",
+    staticClass: ["footer"],
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    },
+    on: {
+      "appear": _vm.onloadmore
+    }
+  }, [(_vm.loadingFlag) ? _c('image', {
+    staticStyle: {
+      width: "70px",
+      height: "70px"
+    },
+    attrs: {
+      "src": "file:///android_asset/images/loading.gif"
+    }
+  }) : _c('text', {
+    staticClass: ["indicator-text"]
+  }, [_vm._v("~没有更多了~")])])], 2)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(71)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(72)
+
+/* template */
+var __vue_template__ = __webpack_require__(96)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\pages\\home.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-324fb87d"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 71 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "iconfont": {
+    "color": "#ff6000",
+    "fontSize": "40",
+    "fontFamily": "iconfont"
+  },
+  "water-fall": {
+    "marginBottom": "90"
+  },
+  "sticky-header": {
+    "position": "sticky"
+  },
+  "sticky-header-box": {
+    "flexDirection": "row",
+    "alignItems": "flex-end",
+    "justifyContent": "center",
+    "height": "130",
+    "paddingBottom": "20",
+    "backgroundColor": "rgba(250,81,58,0.9)"
+  },
+  "sticky-header-scroll": {
+    "position": "absolute",
+    "top": 0
+  },
+  "logo": {
+    "fontSize": "24",
+    "backgroundColor": "rgba(51,51,51,0.5)",
+    "width": "70",
+    "height": "70",
+    "alignItems": "center",
+    "justifyContent": "center",
+    "borderRadius": "70"
+  },
+  "logo-letter": {
+    "fontSize": "20",
+    "color": "#ffffff"
+  },
+  "main-title-box": {
+    "paddingTop": "15",
+    "paddingRight": "15",
+    "paddingBottom": "15",
+    "paddingLeft": "15",
+    "marginTop": 0,
+    "marginRight": "20",
+    "marginBottom": "20",
+    "marginLeft": "20",
+    "borderBottomWidth": "3",
+    "borderBottomStyle": "solid",
+    "borderBottomColor": "#ebecee",
+    "alignItems": "center"
+  },
+  "main-title": {
+    "color": "#333333",
+    "fontSize": "36"
+  },
+  "cell": {
+    "paddingTop": "6",
+    "paddingBottom": "6"
+  },
+  "item": {
+    "backgroundColor": "#ffffff",
+    "borderWidth": "2",
+    "borderColor": "#ebecee"
+  },
+  "item-photo": {
+    "height": "360",
+    "marginTop": "1",
+    "marginRight": "1",
+    "marginBottom": 0,
+    "marginLeft": "1"
+  },
+  "item-title": {
+    "marginTop": "10",
+    "marginRight": "10",
+    "marginBottom": "10",
+    "marginLeft": "10",
+    "fontSize": 26,
+    "fontWeight": "500",
+    "lines": 2,
+    "textOverflow": "ellipsis"
+  },
+  "item-price-box": {
+    "flexDirection": "row",
+    "paddingBottom": "10",
+    "marginRight": "10",
+    "marginLeft": "10",
+    "alignItems": "center",
+    "justifyContent": "space-between"
+  },
+  "coupon": {
+    "flexDirection": "row",
+    "alignItems": "center"
+  },
+  "coupon-icon": {
+    "marginRight": "2"
+  },
+  "coupon-text": {
+    "color": "#fe9f92",
+    "fontSize": "24"
+  },
+  "price": {
+    "flexDirection": "row",
+    "alignItems": "center"
+  },
+  "zk-price-txt": {
+    "color": "#666666",
+    "fontSize": "24"
+  },
+  "zk-price-num": {
+    "color": "#fa513a",
+    "fontSize": "32"
+  },
+  "water-footer": {
+    "alignItems": "center",
+    "paddingTop": "20",
+    "paddingRight": "20",
+    "paddingBottom": "20",
+    "paddingLeft": "20"
+  },
+  "water-footer-text": {
+    "fontSize": "30"
+  },
+  "loading": {
+    "width": "750",
+    "height": "200",
+    "MsFlexAlign": "center",
+    "WebkitAlignItems": "center",
+    "WebkitBoxAlign": "center",
+    "alignItems": "center"
+  },
+  "indicator-text": {
+    "color": "#bbbbbb",
+    "fontSize": "20",
+    "textAlign": "center"
+  },
+  "loading-indicator": {
+    "width": "40",
+    "height": "40",
+    "color": "#bbbbbb"
+  },
+  "toHeader": {
+    "position": "fixed",
+    "bottom": "130",
+    "right": "20",
+    "width": "80",
+    "height": "80",
+    "backgroundColor": "rgba(255,255,255,0.8)",
+    "borderWidth": "2",
+    "borderColor": "#ebecee",
+    "borderRadius": "80",
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  "footer": {
+    "width": "750",
+    "paddingTop": "10",
+    "paddingBottom": "10",
+    "alignItems": "center"
+  }
+}
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _Banner = __webpack_require__(73);
+
+var _Banner2 = _interopRequireDefault(_Banner);
+
+var _Chunks = __webpack_require__(84);
+
+var _Chunks2 = _interopRequireDefault(_Chunks);
+
+var _Onsale = __webpack_require__(88);
+
+var _Onsale2 = _interopRequireDefault(_Onsale);
+
+var _ScollerRow = __webpack_require__(92);
+
+var _ScollerRow2 = _interopRequireDefault(_ScollerRow);
+
+var _SearchBarDis = __webpack_require__(14);
+
+var _SearchBarDis2 = _interopRequireDefault(_SearchBarDis);
+
+var _store = __webpack_require__(6);
+
+var _formatURL = __webpack_require__(17);
+
+var _getJumpBaseUrl = __webpack_require__(11);
+
+var _cryptoJs = __webpack_require__(18);
+
+var _cryptoJs2 = _interopRequireDefault(_cryptoJs);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var dom = weex.requireModule("dom"); //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var stream = weex.requireModule("stream");
+var animation = weex.requireModule("animation");
+var navigator = weex.requireModule("navigator-pri");
+var modal = weex.requireModule('modal');
+exports.default = {
+  data: function data() {
+    return {
+      requestOptions: {
+        method: "taobao.tbk.dg.item.coupon.get",
+        apiOptions: {
+          adzone_id: "91627500240",
+          platform: "2",
+          page_size: "40",
+          page_no: 1
+        }
+      },
+      items: [],
+      columnWidth: "auto",
+      columnCount: "2",
+      columnGap: "10",
+      leftGap: "20",
+      rightGap: "20",
+      console: "",
+      scrollFlag: false,
+      // headerShow: true,
+      headOpacity: 0,
+      loadingFlag: true, // 控制底部加载状态
+      toHeaderBtnFlag: false,
+      footerFlag: false,
+      upNumId: "",
+      upFlag: false
+    };
+  },
+
+  components: {
+    Banner: _Banner2.default,
+    Chunks: _Chunks2.default,
+    Onsale: _Onsale2.default,
+    ScollerRow: _ScollerRow2.default,
+    SearchBarDis: _SearchBarDis2.default
+  },
+  created: function created() {
+
+    var self = this;
+    var url = (0, _formatURL.formatURL)(this.requestOptions.method, this.requestOptions.apiOptions);
+    this.footerFlag = false;
+    stream.fetch({
+      method: "GET",
+      url: url,
+      type: "json"
+    }, function (res) {
+      try {
+        if (res.data) {
+          var items = res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon;
+          self.items = self.couponInfoDeal(items);
+        } else {
+          self.footerFlag = true;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  },
+  mounted: function mounted() {},
+  updated: function updated(e) {
+    if (this.upFlag) {
+      var el = this.$refs[this.upNumId][0];
+      dom.scrollToElement(el, { offset: -950, animated: false });
+      this.upFlag = false;
+    }
+  },
+
+  methods: {
+    couponInfoDeal: function couponInfoDeal(items) {
+      items.forEach(function (item, i) {
+        var _coupon_info = "";
+        // 记录"减的位置"
+        var jianPos = item.coupon_info.search("减");
+        _coupon_info = item.coupon_info.slice(jianPos + 1);
+        items[i].coupon_info = _coupon_info;
+      });
+      return items;
+    },
+    onScroll: function onScroll(e) {
+      // console.log(e)
+      // this.console = this.$refs.waterfall
+      e.contentOffset.y < -1000 ? this.toHeaderBtnFlag = true : this.toHeaderBtnFlag = false;
+      if (e.contentOffset.y < -110) {
+        this.scrollFlag = true;
+        _store.store.commit("changeScrollFlag", true);
+        if (this.headOpacity <= 1) {
+          this.headOpacity = (Math.abs(e.contentOffset.y) - 110) / 250;
+        } else {
+          this.headOpacity = 1;
+        }
+      } else {
+        this.scrollFlag = false;
+        _store.store.commit("changeScrollFlag", false);
+        // dom.scrollToElement(this.$refs.header,{offset:0,animated:false})
+      }
+    },
+
+    // onloading(e) {
+    //   this.loadingFlag = true;
+    //   this.footerFlag = false;
+    //   this.requestOptions.apiOptions.page_no++;
+    //   let self = this;
+    //   let url = formatURL(
+    //     this.requestOptions.method,
+    //     this.requestOptions.apiOptions
+    //   );
+
+    //   try {
+    //     stream.fetch(
+    //       {
+    //         method: "GET",
+    //         url: url,
+    //         type: "json"
+    //       },
+    //       res => {
+    //         if (res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon) {
+    //           let items =
+    //             res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon;
+    //           items = self.couponInfoDeal(items);
+    //           items.forEach(item => {
+    //             self.items.push(item);
+    //           });
+    //           self.loadingFlag = false;
+    //           self.upNumId = "item" + items[0].num_iid;
+    //           self.upFlag = true;
+
+    //           // let p = getComponentRect('viewport')
+    //           // dom.scrollToElement(el,{offset:0,animated:true})
+    //         } else {
+    //           self.footerFlag = true;
+    //         }
+    //       }
+    //     );
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+
+    //   setTimeout(() => {
+    //     this.loadingFlag = false;
+    //     // this.footerFlag = true
+    //   }, 5000);
+    // },
+    onloadmore: function onloadmore() {
+      var _this = this;
+
+      this.footerFlag = true;
+      this.requestOptions.apiOptions.page_no++;
+
+      var url = (0, _formatURL.formatURL)(this.requestOptions.method, this.requestOptions.apiOptions);
+
+      try {
+        stream.fetch({
+          method: "GET",
+          url: url,
+          type: "json"
+        }, function (res) {
+          if (res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon) {
+            var items = res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon;
+            items = _this.couponInfoDeal(items);
+            items.forEach(function (item) {
+              _this.items.push(item);
+            });
+          } else {
+            _this.footerFlag = false;
+          }
+        });
+      } catch (err) {
+        this.footerFlag = false;
+      }
+    },
+    onToHeader: function onToHeader(e) {
+      dom.scrollToElement(this.$refs.header, { offset: 0, animated: 'true' });
+    },
+    itemOnClick: function itemOnClick(e) {
+      var couponUrl = e.currentTarget.attr.couponUrl;
+      _store.store.commit("setCouponUrl", couponUrl);
+
+      navigator.push({
+        url: (0, _getJumpBaseUrl.getJumpBaseUrl)("coupon", couponUrl),
+        animated: "true"
+      });
+    }
+  }
+};
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(74)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(75)
+
+/* template */
+var __vue_template__ = __webpack_require__(83)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\components\\Banner.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-ff942d88"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "banner": {
+    "alignItems": "center",
+    "position": "relative"
+  },
+  "size": {
+    "width": "750",
+    "height": "500",
+    "borderRadius": "-100"
+  },
+  "slider": {
+    "position": "relative"
+  },
+  "indicator": {
+    "position": "absolute",
+    "left": 0,
+    "right": 0,
+    "bottom": "40",
+    "height": "40",
+    "itemColor": "#f8f8f8",
+    "itemSelectedColor": "#fa513a",
+    "itemSize": "8"
+  },
+  "footer-mask": {
+    "alignItems": "center",
+    "position": "absolute",
+    "bottom": "-2"
+  },
+  "footer-mask-img": {
+    "width": "800",
+    "height": "20"
+  }
+}
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _StickyHeader = __webpack_require__(76);
+
+var _StickyHeader2 = _interopRequireDefault(_StickyHeader);
+
+var _store = __webpack_require__(6);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+  data: function data() {
+    return {
+      posters: ['111.jpg', '444.jpg', '333.jpg', '222.jpg'],
+      scrollFlag: !_store.store.state.scrollFlag
+    };
+  },
+
+  methods: {},
+  components: {
+    StickyHeader: _StickyHeader2.default
+  }
+};
+
+/***/ }),
+/* 76 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(77)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(78)
+
+/* template */
+var __vue_template__ = __webpack_require__(82)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\components\\StickyHeader.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-4ae938e6"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "iconfont": {
+    "color": "#ffffff",
+    "fontSize": "50",
+    "fontFamily": "iconfont"
+  },
+  "stickyHeader": {
+    "position": "absolute",
+    "top": "25",
+    "flexDirection": "row",
+    "width": "750",
+    "height": "110",
+    "alignItems": "center",
+    "justifyContent": "center",
+    "backgroundColor": "rgba(0,0,0,0)"
+  },
+  "logo": {
+    "backgroundColor": "rgba(51,51,51,0.5)",
+    "width": "70",
+    "height": "70",
+    "alignItems": "center",
+    "justifyContent": "center",
+    "borderRadius": "70",
+    "position": "absolute",
+    "left": "10",
+    "top": "20"
+  },
+  "logo-letter": {
+    "fontSize": "20",
+    "color": "#ffffff"
+  }
+}
+
+/***/ }),
+/* 78 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _SearchBarDis = __webpack_require__(14);
+
+var _SearchBarDis2 = _interopRequireDefault(_SearchBarDis);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  components: {
+    SearchBarDis: _SearchBarDis2.default
+  }
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+/* 79 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "iconfont": {
+    "color": "#bbbbbb",
+    "fontSize": "32",
+    "fontFamily": "iconfont"
+  },
+  "search-bar": {
+    "position": "relative",
+    "justifyContent": "center",
+    "textAlign": "center"
+  },
+  "search": {
+    "width": "590",
+    "height": "60",
+    "marginLeft": "25",
+    "paddingLeft": "60",
+    "borderRadius": "40",
+    "backgroundColor": "#ffffff",
+    "fontSize": "28",
+    "color": "#333333",
+    "placeholderColor": "#bbb"
+  },
+  "search-btn": {
+    "position": "absolute",
+    "left": "30",
+    "top": "14",
+    "paddingLeft": "10"
+  },
+  "search-fake-box": {
+    "justifyContent": "center"
+  },
+  "search-fake-text": {
+    "color": "#bbbbbb",
+    "fontSize": "28"
+  }
+}
+
+/***/ }),
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _getJumpBaseUrl = __webpack_require__(11);
+
+var navigator = weex.requireModule("navigator-pri"); //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+exports.default = {
+  props: {
+    // searchAble: Boolean,
+    autoFocus: Boolean
+  },
+  methods: {
+    onSearch: function onSearch(e) {
+      e.stopPropagation();
+      navigator.push({
+        url: (0, _getJumpBaseUrl.getJumpBaseUrl)("searchPage"),
+        animated: "false"
+      });
+    }
+  }
+};
+
+/***/ }),
+/* 81 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["search-bar"]
+  }, [_c('div', {
+    staticClass: ["search", "search-fake-box"],
+    on: {
+      "click": _vm.onSearch
+    }
+  }, [_c('text', {
+    staticClass: ["search-fake-text"]
+  }, [_vm._v("搜索商品、店铺等")])]), _vm._m(0)])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["search-btn"]
+  }, [_c('text', {
+    staticClass: ["iconfont"]
+  }, [_vm._v("")])])
+}]}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 82 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["stickyHeader"]
+  }, [_vm._m(0), _c('search-bar-dis', {
+    attrs: {
+      "searchDisable": "false"
+    }
+  })], 1)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["logo"]
+  }, [_c('text', {
+    staticClass: ["logo-letter"]
+  }, [_vm._v("淘折")])])
+}]}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 83 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["banner"]
+  }, [_c('slider', {
+    staticClass: ["slider", "size"],
+    attrs: {
+      "autoPlay": "true"
+    }
+  }, [_vm._l((_vm.posters), function(src, i) {
+    return _c('div', {
+      key: i
+    }, [_c('image', {
+      staticClass: ["size"],
+      attrs: {
+        "resize": "stretch",
+        "src": 'file:///android_asset/images/' + src
+      }
+    })])
+  }), _c('indicator', {
+    staticClass: ["indicator"]
+  })], 2), _vm._m(0), _c('sticky-header')], 1)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["footer-mask"]
+  }, [_c('image', {
+    staticClass: ["footer-mask-img"],
+    attrs: {
+      "src": "file:///android_asset/images/slider-mask.png",
+      "resize": "cover"
+    }
+  })])
+}]}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(85)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(86)
+
+/* template */
+var __vue_template__ = __webpack_require__(87)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\components\\Chunks.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-63d1c8b6"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 85 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "chunks": {
+    "height": "160",
+    "backgroundColor": "#ffffff",
+    "marginTop": "20",
+    "marginRight": "20",
+    "marginBottom": "20",
+    "marginLeft": "20",
+    "borderRadius": "30"
+  },
+  "cell": {
+    "flexDirection": "row",
+    "justifyContent": "center",
+    "alignItems": "center"
+  },
+  "B-box": {
+    "width": "140",
+    "justifyContent": "center",
+    "alignItems": "center",
+    "paddingTop": "10"
+  },
+  "B-title": {
+    "width": "140",
+    "fontSize": "20",
+    "textAlign": "center",
+    "paddingTop": "15",
+    "color": "#999999"
+  },
+  "B-icon": {
+    "width": "100",
+    "height": "100"
+  }
+}
+
+/***/ }),
+/* 86 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+  data: function data() {
+    return {
+      row1: [{
+        title: '腔调掌柜',
+        icon: 'http://img.alicdn.com/tfs/TB1sWLoRVXXXXbdXXXXXXXXXXXX-140-140.png'
+      }, {
+        title: '腔调掌柜',
+        icon: 'http://gw.alicdn.com/tfs/TB10.R_SpXXXXbtXXXXXXXXXXXX-140-140.png'
+      }, {
+        title: '腔调掌柜',
+        icon: 'http://img.alicdn.com/tfs/TB1fRVASpXXXXXdXXXXXXXXXXXX-140-140.png'
+      }, {
+        title: '腔调掌柜',
+        icon: 'http://img.alicdn.com/tfs/TB1_TkdPVXXXXcJXXXXXXXXXXXX-140-140.png'
+      }, {
+        title: '腔调掌柜',
+        icon: 'http://img.alicdn.com/tfs/TB1vRGhSpXXXXaLXpXXXXXXXXXX-140-140.png'
+      }]
+    };
+  }
+};
+
+/***/ }),
+/* 87 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["chunks"]
+  }, [_c('list', {
+    staticClass: ["list"]
+  }, [_c('cell', {
+    staticClass: ["cell"],
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, _vm._l((_vm.row1), function(item, i) {
+    return _c('div', {
+      key: i,
+      staticClass: ["B-box"]
+    }, [_c('image', {
+      staticClass: ["B-icon"],
+      attrs: {
+        "src": item.icon
+      }
+    }), _c('text', {
+      staticClass: ["B-title"]
+    }, [_vm._v(_vm._s(item.title))])])
+  }))])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(89)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(90)
+
+/* template */
+var __vue_template__ = __webpack_require__(91)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\components\\Onsale.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-5b4c3894"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 89 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "onsale": {
+    "marginTop": "20",
+    "marginRight": "20",
+    "marginBottom": "20",
+    "marginLeft": "20",
+    "backgroundColor": "#ffffff",
+    "borderRadius": "30",
+    "flexDirection": "row",
+    "position": "relative",
+    "paddingBottom": "20"
+  },
+  "title": {
+    "position": "absolute",
+    "left": 0,
+    "top": "18",
+    "backgroundImage": "linear-gradient(to top,#EB6A12,#FFA42A)",
+    "width": "180",
+    "height": "60",
+    "borderTopRightRadius": "60",
+    "borderBottomRightRadius": "60",
+    "justifyContent": "center",
+    "alignItems": "center",
+    "borderWidth": "2",
+    "borderColor": "#F5B488",
+    "borderStyle": "solid"
+  },
+  "title-txt": {
+    "color": "#ffffff",
+    "fontSize": "32"
+  },
+  "left-box": {
+    "borderRightWidth": "2",
+    "borderRightColor": "#ebecee",
+    "marginTop": "20",
+    "marginRight": "20",
+    "marginBottom": "20",
+    "marginLeft": "20",
+    "width": "340"
+  },
+  "box-title": {
+    "marginTop": "65"
+  },
+  "box-title-top": {
+    "fontSize": "36",
+    "color": "#fa513a"
+  },
+  "box-title-bottom": {
+    "fontSize": "24",
+    "marginBottom": "15",
+    "color": "#666666"
+  },
+  "buy-btn": {
+    "width": "140",
+    "height": "50",
+    "backgroundColor": "#fb3519",
+    "borderRadius": "10",
+    "justifyContent": "center",
+    "alignItems": "center",
+    "marginBottom": "15"
+  },
+  "buy-btn-txt": {
+    "color": "#ffffff",
+    "fontSize": "28"
+  },
+  "left-img": {
+    "width": "320",
+    "height": "200"
+  },
+  "right-box": {
+    "width": "320"
+  },
+  "right-top": {
+    "borderBottomWidth": "2",
+    "borderBottomColor": "#ebecee",
+    "borderBottomStyle": "solid",
+    "paddingBottom": "35",
+    "position": "relative"
+  },
+  "right-top-title": {
+    "marginTop": "40"
+  },
+  "right-bottom": {
+    "position": "relative"
+  },
+  "right-img-box": {
+    "position": "absolute",
+    "right": "5",
+    "top": "5"
+  },
+  "right-img": {
+    "width": "165",
+    "height": "200"
+  }
+}
+
+/***/ }),
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+exports.default = {};
+
+/***/ }),
+/* 91 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["onsale"]
+  }, [_c('div', {
+    staticClass: ["title"]
+  }, [_c('text', {
+    staticClass: ["title-txt"]
+  }, [_vm._v("活动专区")])]), _c('div', {
+    staticClass: ["left-box"]
+  }, [_c('div', {
+    staticClass: ["box-title"]
+  }, [_c('text', {
+    staticClass: ["box-title-top"]
+  }, [_vm._v("限时抢购")]), _c('text', {
+    staticClass: ["box-title-bottom"]
+  }, [_vm._v("实惠好物等你来抢")])]), _c('div', {
+    staticClass: ["buy-btn"]
+  }, [_c('text', {
+    staticClass: ["buy-btn-txt"]
+  }, [_vm._v("立即抢购")])]), _c('div', [_c('image', {
+    staticClass: ["left-img"],
+    attrs: {
+      "src": "file:///android_asset/images/sale1.png",
+      "resize": "cover"
+    }
+  })])]), _c('div', {
+    staticClass: ["right-box"]
+  }, [_c('div', {
+    staticClass: ["right-top"]
+  }, [_c('div', {
+    staticClass: ["right-img-box"]
+  }, [_c('image', {
+    staticClass: ["right-img"],
+    attrs: {
+      "src": "https://gd3.alicdn.com/imgextra/i3/47058671/TB28X.4buGSBuNjSspbXXciipXa_!!47058671.jpg_400x400.jpg_.webp",
+      "resize": "cover"
+    }
+  })]), _c('div', {
+    staticClass: ["box-title", "right-top-title"]
+  }, [_c('text', {
+    staticClass: ["box-title-top"]
+  }, [_vm._v("实惠团购")]), _c('text', {
+    staticClass: ["box-title-bottom"]
+  }, [_vm._v("拼着买更便宜")])]), _c('div', {
+    staticClass: ["buy-btn"]
+  }, [_c('text', {
+    staticClass: ["buy-btn-txt"]
+  }, [_vm._v("立即抢购")])])]), _c('div', {
+    staticClass: ["right-bottom"]
+  }, [_c('div', {
+    staticClass: ["right-img-box"]
+  }, [_c('image', {
+    staticClass: ["right-img"],
+    attrs: {
+      "src": "http://img.alicdn.com/imgextra/i1/725677994/O1CN01n5as6O28vIdtVlESK_!!0-item_pic.jpg_430x430q90.jpg",
+      "resize": "cover"
+    }
+  })]), _c('div', {
+    staticClass: ["box-title", "right-top-title"]
+  }, [_c('text', {
+    staticClass: ["box-title-top"]
+  }, [_vm._v("超大额券")]), _c('text', {
+    staticClass: ["box-title-bottom"]
+  }, [_vm._v("让实惠更实惠")])]), _c('div', {
+    staticClass: ["buy-btn"]
+  }, [_c('text', {
+    staticClass: ["buy-btn-txt"]
+  }, [_vm._v("立即抢购")])])])])])
+}]}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 92 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(93)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(94)
+
+/* template */
+var __vue_template__ = __webpack_require__(95)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\components\\ScollerRow.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-33deec7e"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 93 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "scroller": {
+    "height": "450",
+    "flexDirection": "row",
+    "marginRight": "20",
+    "marginBottom": "20"
+  },
+  "panel": {
+    "width": "300",
+    "backgroundColor": "#ffffff",
+    "borderWidth": "2",
+    "borderStyle": "solid",
+    "borderColor": "#ebecee",
+    "marginLeft": "20"
+  },
+  "item-photo": {
+    "width": "300",
+    "height": "300"
+  },
+  "item-title": {
+    "marginTop": "10",
+    "marginRight": "10",
+    "marginBottom": "10",
+    "marginLeft": "10",
+    "fontSize": 26,
+    "fontWeight": "500",
+    "lines": 2,
+    "textOverflow": "ellipsis"
+  },
+  "price": {
+    "flexDirection": "row",
+    "alignItems": "center"
+  },
+  "zk-price": {
+    "color": "#fa513a",
+    "fontSize": "32",
+    "marginTop": "5",
+    "marginRight": "5",
+    "marginBottom": "5",
+    "marginLeft": "5"
+  },
+  "reserve-price": {
+    "color": "#bbbbbb",
+    "fontSize": "24",
+    "marginTop": "5",
+    "marginRight": "5",
+    "marginBottom": "5",
+    "marginLeft": "5",
+    "textDecoration": "line-through"
+  }
+}
+
+/***/ }),
+/* 94 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+exports.default = {
+  data: function data() {
+    return {
+      list: [{
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=529348904068",
+        nick: "洋森之家",
+        num_iid: 529348904068,
+        pict_url: "https://img.alicdn.com/tfscom/i1/2736782442/TB2AWfralHH8KJjy0FbXXcqlpXa_!!2736782442.jpg",
+        provcity: "河北 石家庄",
+        reserve_price: "39.80",
+        seller_id: 2736782442,
+        shop_title: "柳润母婴生活馆",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i2/2736782442/TB2YtRTkk.HL1JjSZFuXXX8dXXa_!!2736782442.jpg", "https://img.alicdn.com/tfscom/i1/2736782442/TB2kUNdaesAV1JjSZFsXXadZXXa_!!2736782442.jpg", "https://img.alicdn.com/tfscom/i2/2736782442/TB2jlfhX.RIWKJjSZFgXXboxXXa_!!2736782442.jpg", "https://img.alicdn.com/tfscom/i1/2736782442/TB2tfmpmGmWQ1JjSZPhXXXCJFXa_!!2736782442.jpg"]
+        },
+        status: 1,
+        title: "超大老人防水纯棉防漏透气隔尿垫成人老年人护理垫床垫可洗尿不湿",
+        tk_rate: "1.50",
+        type: 1,
+        user_type: 0,
+        volume: 71,
+        zk_final_price: "19.90",
+        zk_final_price_wap: "19.90"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=582963602222",
+        nick: "松阳振晖",
+        num_iid: 582963602222,
+        pict_url: "https://img.alicdn.com/tfscom/i1/17197599/O1CN018etsq1260OBTKCA6w_!!0-item_pic.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "1680.00",
+        seller_id: 17197599,
+        shop_title: "唯你原创女装",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i1/17197599/O1CN01fgKCyT260OBT9N0pJ_!!17197599.jpg", "https://img.alicdn.com/tfscom/i3/17197599/O1CN01ugVuDd260OBRTOsgw_!!17197599.jpg", "https://img.alicdn.com/tfscom/i2/17197599/O1CN01qdpNox260OBROTLf0_!!17197599.jpg", "https://img.alicdn.com/tfscom/i1/17197599/O1CN0115dFAt260OBaQBCRt_!!17197599.jpg"]
+        },
+        status: 1,
+        title: "2018冬季新款女装中长款欧货时尚宽松显瘦加厚面包亮面羽绒服外套",
+        tk_rate: "4.50",
+        type: 1,
+        user_type: 0,
+        volume: 4268,
+        zk_final_price: "398.00",
+        zk_final_price_wap: "398.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=584205077923",
+        nick: "雯雯的便便hz",
+        num_iid: 584205077923,
+        pict_url: "https://img.alicdn.com/tfscom/i2/78403414/O1CN01uRfSOM1b5eejyHgle_!!78403414.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "312.00",
+        seller_id: 78403414,
+        shop_title: "小蚊子 女装",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i4/78403414/O1CN01AzNw881b5eege3Afh_!!78403414.jpg", "https://img.alicdn.com/tfscom/i1/78403414/O1CN013U4igi1b5eege0UD9_!!78403414.jpg", "https://img.alicdn.com/tfscom/i4/78403414/O1CN01EpsCLO1b5eehH2E8R_!!78403414.jpg", "https://img.alicdn.com/tfscom/i3/78403414/O1CN0165l4NN1b5eeZSgFlg_!!78403414.jpg"]
+        },
+        status: 1,
+        title: "亮面棉衣女装冬季2018新款假两件棉袄中长款加厚连帽羽绒棉服外套",
+        tk_rate: "1.80",
+        type: 1,
+        user_type: 0,
+        volume: 1628,
+        zk_final_price: "249.90",
+        zk_final_price_wap: "249.90"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=583259454597",
+        nick: "晓得111",
+        num_iid: 583259454597,
+        pict_url: "https://img.alicdn.com/tfscom/i1/1016012691/O1CN01CpD3uj1VkWIRPFfOI_!!1016012691.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "899.00",
+        seller_id: 1016012691,
+        shop_title: "MC韩国时尚女装",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i1/1016012691/O1CN01Meatpm1VkWIRVkbps_!!1016012691.jpg", "https://img.alicdn.com/tfscom/i2/1016012691/O1CN01cBEGNn1VkWINvycjb_!!1016012691.jpg", "https://img.alicdn.com/tfscom/i2/1016012691/O1CN01uwtdEi1VkWIQZqf0q_!!1016012691.jpg", "https://img.alicdn.com/tfscom/i2/1016012691/O1CN01I6F53s1VkWIJmROe4_!!1016012691.jpg"]
+        },
+        status: 1,
+        title: "2018新款女装冬中长款仿羊羔毛羊剪绒外套女格子拼接撞色毛毛大衣",
+        tk_rate: "9.00",
+        type: 1,
+        user_type: 0,
+        volume: 9358,
+        zk_final_price: "388.00",
+        zk_final_price_wap: "388.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=582277199763",
+        nick: "周末与白天",
+        num_iid: 582277199763,
+        pict_url: "https://img.alicdn.com/tfscom/i2/772616220/TB2r9b.ggnH8KJjSspcXXb3QFXa_!!772616220.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "1288.00",
+        seller_id: 772616220,
+        shop_title: "赵DD STUDIO",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i3/772616220/TB2p8x0ktbJ8KJjy1zjXXaqapXa_!!772616220.jpg", "https://img.alicdn.com/tfscom/i3/772616220/O1CN01oNgmNW1voo0xqiQ2r_!!772616220.png", "https://img.alicdn.com/tfscom/i4/772616220/TB2VylqjY_I8KJjy1XaXXbsxpXa_!!772616220.png", "https://img.alicdn.com/tfscom/i1/772616220/O1CN01P5PJy11voo0qo5FQX_!!772616220.jpg"]
+        },
+        status: 1,
+        title: "白鸭绒长款过膝白色羽绒服女2018冬季新款韩版大毛领气质加厚女装",
+        tk_rate: "2.40",
+        type: 4,
+        user_type: 0,
+        volume: 1383,
+        zk_final_price: "653.50",
+        zk_final_price_wap: "653.50"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=581105112160",
+        nick: "yxphy123001",
+        num_iid: 581105112160,
+        pict_url: "https://img.alicdn.com/tfscom/i1/131950134/O1CN011CrPXuUaGe14ZWW_!!131950134.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "998.00",
+        seller_id: 131950134,
+        shop_title: "ds313领袖丽人",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i4/131950134/O1CN011CrPXrRhdldT3Ut_!!131950134.jpg", "https://img.alicdn.com/tfscom/i3/131950134/O1CN01oMaiiR1CrPYJ2W2q4_!!131950134.jpg", "https://img.alicdn.com/tfscom/i4/131950134/O1CN01bIwbtU1CrPYoN1SYL_!!131950134.jpg", "https://img.alicdn.com/tfscom/i3/131950134/O1CN01R5iCol1CrPXnCCovH_!!131950134.jpg"]
+        },
+        status: 1,
+        title: "毛呢外套女中长款2018秋冬季新款流行女装韩版茧型显瘦呢子大衣潮",
+        tk_rate: "3.00",
+        type: 1,
+        user_type: 0,
+        volume: 3679,
+        zk_final_price: "198.00",
+        zk_final_price_wap: "198.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=575570459742",
+        nick: "云思木想旗舰店",
+        num_iid: 575570459742,
+        pict_url: "https://img.alicdn.com/tfscom/i2/1765328414/O1CN01mFeWvM2C1eycaNGgp_!!0-item_pic.jpg",
+        provcity: "广东 广州",
+        reserve_price: "494.00",
+        seller_id: 1765328414,
+        shop_title: "云思木想旗舰店",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i2/1765328414/TB2BdYGoVooBKNjSZPhXXc2CXXa_!!1765328414.jpg", "https://img.alicdn.com/tfscom/i3/1765328414/TB2JwKzpnqWBKNjSZFxXXcpLpXa_!!1765328414.jpg", "https://img.alicdn.com/tfscom/i2/1765328414/TB2p0N_pXkoBKNjSZFkXXb4tFXa_!!1765328414.jpg", "https://img.alicdn.com/tfscom/i3/1765328414/TB2_t.lo0cnBKNjSZR0XXcFqFXa_!!1765328414.jpg"]
+        },
+        status: 1,
+        title: "云思木想2018秋装新款女装凤凰印花荷叶袖套头立领卫衣女75815",
+        tk_rate: "4.50",
+        type: 1,
+        user_type: 1,
+        volume: 742,
+        zk_final_price: "241.00",
+        zk_final_price_wap: "241.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=583573811796",
+        nick: "点名时间到了",
+        num_iid: 583573811796,
+        pict_url: "https://img.alicdn.com/tfscom/i3/2107328912/O1CN01lWFdSx2FhkDjzQnVk_!!2107328912.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "888.00",
+        seller_id: 2107328912,
+        shop_title: "DmTime DM家潮流女装",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i4/2107328912/O1CN01z4nVl72FhkEYruQYL_!!2107328912.jpg", "https://img.alicdn.com/tfscom/i4/2107328912/O1CN01nQxmfG2FhkEa46l7T_!!2107328912.jpg", "https://img.alicdn.com/tfscom/i3/2107328912/O1CN016s0AiK2FhkDlGPRfy_!!2107328912.jpg", "https://img.alicdn.com/tfscom/i2/2107328912/O1CN01VVHKDx2FhkDkG19lA_!!2107328912.jpg"]
+        },
+        status: 1,
+        title: "2018秋冬新款女装韩版毛衣连衣裙针织毛衫长裙包臀裙内搭裙子冬季",
+        tk_rate: "9.00",
+        type: 1,
+        user_type: 0,
+        volume: 4407,
+        zk_final_price: "178.00",
+        zk_final_price_wap: "178.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=582956610447",
+        nick: "小六子女装",
+        num_iid: 582956610447,
+        pict_url: "https://img.alicdn.com/tfscom/i2/2274485118/O1CN01LyEGll1ng5XmfQOqW_!!2274485118.jpg",
+        provcity: "广东 广州",
+        reserve_price: "198.00",
+        seller_id: 2274485118,
+        shop_title: "小太阳大码衣舍",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i4/2274485118/O1CN01NjyEfm1ng5XpygqOX_!!2274485118.jpg", "https://img.alicdn.com/tfscom/i1/2274485118/O1CN01AbP22B1ng5Xnefvtp_!!2274485118.jpg", "https://img.alicdn.com/tfscom/i1/2274485118/O1CN01YlFucX1ng5XoDyFe9_!!2274485118.jpg", "https://img.alicdn.com/tfscom/i4/2274485118/O1CN01Sy8fy21ng5Xn467qK_!!2274485118.jpg"]
+        },
+        status: 1,
+        title: "胖女人秋冬装洋气胖mm200斤大码女装 2018新款微胖妹妹针织连衣裙",
+        tk_rate: "4.50",
+        type: 1,
+        user_type: 0,
+        volume: 1560,
+        zk_final_price: "198.00",
+        zk_final_price_wap: "198.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=582145521987",
+        nick: "美眉炫酷女装",
+        num_iid: 582145521987,
+        pict_url: "https://img.alicdn.com/tfscom/i4/1692945001/O1CN01xb9qmG1moVCSe0aaE_!!1692945001.jpg",
+        provcity: "北京",
+        reserve_price: "288.00",
+        seller_id: 1692945001,
+        shop_title: "这家大码店",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i4/1692945001/O1CN01K9cwTB1moVCXWdeJS_!!1692945001.jpg", "https://img.alicdn.com/tfscom/i1/1692945001/O1CN010026Ek1moVCbLokUZ_!!1692945001.jpg", "https://img.alicdn.com/tfscom/i4/1692945001/O1CN01ifcEjg1moVCZHop20_!!1692945001.jpg", "https://img.alicdn.com/tfscom/i3/1692945001/O1CN010ZBEp81moVCYrV3YG_!!1692945001.jpg"]
+        },
+        status: 1,
+        title: "特大码女装棉服中长款2018新款冬装加厚棉衣胖妹妹过膝230斤棉袄",
+        tk_rate: "2.49",
+        type: 4,
+        user_type: 0,
+        volume: 1712,
+        zk_final_price: "199.00",
+        zk_final_price_wap: "199.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=579657145491",
+        nick: "小衣橱管家",
+        num_iid: 579657145491,
+        pict_url: "https://img.alicdn.com/tfscom/i1/854951489/O1CN011Ms0CyrieXQFJaQ_!!854951489.jpg",
+        provcity: "广东 广州",
+        reserve_price: "188.00",
+        seller_id: 854951489,
+        shop_title: "小衣橱管家",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i1/854951489/O1CN011Ms0D0BlFpi1W81_!!854951489.jpg", "https://img.alicdn.com/tfscom/i4/854951489/O1CN011Ms0CzMarazTRpy_!!854951489.jpg", "https://img.alicdn.com/tfscom/i1/854951489/O1CN011Ms0Czxg5hYo3Jf_!!854951489.jpg", "https://img.alicdn.com/tfscom/i3/854951489/O1CN011Ms0CzednSnuxye_!!854951489.jpg"]
+        },
+        status: 1,
+        title: "waitmore高冷气质冷系女装大衣外套港味格子西装毛呢外套赫本风女",
+        tk_rate: "3.00",
+        type: 1,
+        user_type: 0,
+        volume: 3165,
+        zk_final_price: "188.00",
+        zk_final_price_wap: "188.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=583007088959",
+        nick: "自然依人19889",
+        num_iid: 583007088959,
+        pict_url: "https://img.alicdn.com/tfscom/i4/815547271/O1CN01YwHZel23aAHDmaMPm_!!815547271.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "580.00",
+        seller_id: 815547271,
+        shop_title: "索菲欧原创女装",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i1/815547271/O1CN01n2AUUv23aAHC2zN0I_!!815547271.jpg", "https://img.alicdn.com/tfscom/i4/815547271/O1CN01JteMXR23aAHAp03hu_!!815547271.jpg", "https://img.alicdn.com/tfscom/i4/815547271/O1CN01pWhHCj23aAH9Wos7x_!!815547271.jpg", "https://img.alicdn.com/tfscom/i3/815547271/O1CN01wJgQed23aAHL5CA3r_!!815547271.jpg"]
+        },
+        status: 1,
+        title: "棉衣女中长款2018冬装新款女装chic黑色大毛领小个子羽绒棉服外套",
+        tk_rate: "4.50",
+        type: 1,
+        user_type: 0,
+        volume: 1545,
+        zk_final_price: "258.00",
+        zk_final_price_wap: "258.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=582161127636",
+        nick: "chaoming528",
+        num_iid: 582161127636,
+        pict_url: "https://img.alicdn.com/tfscom/i4/2507973110/O1CN01GAJU4C1YqQExHFbSi_!!2507973110.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "1088.00",
+        seller_id: 2507973110,
+        shop_title: "西西原创女装",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i1/2507973110/O1CN01aw2fjX1YqQFFMwvtR_!!2507973110.jpg", "https://img.alicdn.com/tfscom/i2/2507973110/O1CN01kasgYx1YqQExRkaM5_!!2507973110.jpg", "https://img.alicdn.com/tfscom/i4/2507973110/O1CN01B5KLTq1YqQEwdQ3HU_!!2507973110.jpg", "https://img.alicdn.com/tfscom/i3/2507973110/O1CN01cZBIam1YqQFNhSQJo_!!2507973110.jpg"]
+        },
+        status: 1,
+        title: "2018新款女装冬中长款仿羊羔毛羊剪绒外套女宽松大码毛领毛毛大衣",
+        tk_rate: "3.00",
+        type: 4,
+        user_type: 0,
+        volume: 1482,
+        zk_final_price: "328.00",
+        zk_final_price_wap: "328.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=578935268077",
+        nick: "皮改艳4699",
+        num_iid: 578935268077,
+        pict_url: "https://img.alicdn.com/tfscom/i1/585373984/O1CN011fIiOKtOeSE2PmQ_!!585373984.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "599.00",
+        seller_id: 585373984,
+        shop_title: "CC美丽公主",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i4/585373984/O1CN011fIiOKhCFGdlxT7_!!585373984.jpg", "https://img.alicdn.com/tfscom/i3/585373984/O1CN01dHNgKJ1fIiOo5gW67_!!585373984.jpg", "https://img.alicdn.com/tfscom/i2/585373984/O1CN01oDC4pz1fIiOqrwpBw_!!585373984.jpg", "https://img.alicdn.com/tfscom/i4/585373984/O1CN011fIiOD3cZ1lUVyv_!!585373984.jpg"]
+        },
+        status: 1,
+        title: "毛呢外套女2018秋冬新款复古休闲系带加厚呢子小西装短款外套女装",
+        tk_rate: "4.50",
+        type: 1,
+        user_type: 0,
+        volume: 3650,
+        zk_final_price: "168.00",
+        zk_final_price_wap: "168.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=584788965989",
+        nick: "vipwangting",
+        num_iid: 584788965989,
+        pict_url: "https://img.alicdn.com/tfscom/i3/112638574/O1CN01zCPEKF2DCwMAL0VE0_!!112638574.jpg",
+        provcity: "浙江 嘉兴",
+        reserve_price: "198.00",
+        seller_id: 112638574,
+        shop_title: "羊毛家",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i3/112638574/O1CN01MmHL722DCwMEBliIP_!!112638574.jpg", "https://img.alicdn.com/tfscom/i3/112638574/O1CN01VgMk8Q2DCwMCyzrqF_!!112638574.jpg", "https://img.alicdn.com/tfscom/i2/112638574/O1CN01pMILuU2DCwMELVAmb_!!112638574.jpg", "https://img.alicdn.com/tfscom/i3/112638574/O1CN01BuCRNv2DCwMAjxRmC_!!112638574.jpg"]
+        },
+        status: 1,
+        title: "2019新款女装很仙的法国小众雪纺连衣裙女中长款仙女裙蕾丝裙春装",
+        tk_rate: "1.50",
+        type: 4,
+        user_type: 0,
+        volume: 3294,
+        zk_final_price: "99.00",
+        zk_final_price_wap: "99.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=582749105088",
+        nick: "果果一女人",
+        num_iid: 582749105088,
+        pict_url: "https://img.alicdn.com/tfscom/i2/595412874/O1CN01OMrO3v1X6KlzXrnfc_!!595412874.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "249.90",
+        seller_id: 595412874,
+        shop_title: "果果家 GGWOMEN定制 韩范精品女装",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i4/595412874/O1CN01f07Klw1X6KlzZukCh_!!595412874.jpg", "https://img.alicdn.com/tfscom/i3/595412874/O1CN01ZHKfkM1X6Klx2s4pA_!!595412874.jpg", "https://img.alicdn.com/tfscom/i2/595412874/O1CN01m03R1U1X6KlzZwgnv_!!595412874.jpg", "https://img.alicdn.com/tfscom/i1/595412874/O1CN01btyNGq1X6Km09RNYP_!!595412874.jpg"]
+        },
+        status: 1,
+        title: "女装冬装2018新款韩版小个子闺蜜装格子毛呢外套短款大衣女冬加厚",
+        tk_rate: "1.56",
+        type: 4,
+        user_type: 0,
+        volume: 6586,
+        zk_final_price: "249.90",
+        zk_final_price_wap: "249.90"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=558489402187",
+        nick: "百里挑衣_198",
+        num_iid: 558489402187,
+        pict_url: "https://img.alicdn.com/tfscom/i2/2111084029/TB2HcQqa0qUQKJjSZFIXXcOkFXa_!!2111084029.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "389.00",
+        seller_id: 2111084029,
+        shop_title: "红都衣舍时装",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i2/2111084029/O1CN011fdKDLnPMj1bYtM_!!2111084029.jpg", "https://img.alicdn.com/tfscom/i4/2111084029/O1CN011fdKDLnNxSj9Ya5_!!2111084029.jpg", "https://img.alicdn.com/tfscom/i4/2111084029/O1CN011fdKDMyx0n23yuD_!!2111084029.jpg", "https://img.alicdn.com/tfscom/i1/2111084029/TB2YPX5e.F7MKJjSZFLXXcMBVXa_!!2111084029.jpg"]
+        },
+        status: 1,
+        title: "2019春秋新款女装遮肚子冬季连衣裙女加厚小香风针织秋冬款打底裙",
+        tk_rate: "1.50",
+        type: 1,
+        user_type: 0,
+        volume: 2701,
+        zk_final_price: "89.00",
+        zk_final_price_wap: "89.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=581297838159",
+        nick: "我是阿武",
+        num_iid: 581297838159,
+        pict_url: "https://img.alicdn.com/tfscom/i3/37082293/O1CN01A7Nivd1SoEedKMnvy_!!37082293.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "772.40",
+        seller_id: 37082293,
+        shop_title: "我是阿式设计定制女装",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i2/37082293/O1CN01BFrkVS1SoEePZva8M_!!37082293.jpg", "https://img.alicdn.com/tfscom/i1/37082293/O1CN017wfPEn1SoEeRMgUcB_!!37082293.jpg", "https://img.alicdn.com/tfscom/i4/37082293/O1CN01GTgFDM1SoEeSgBbX6_!!37082293.jpg", "https://img.alicdn.com/tfscom/i2/37082293/O1CN01P1uguU1SoEeQXGl1L_!!37082293.jpg"]
+        },
+        status: 1,
+        title: "原创设计 2018冬季新款女装加厚仿貂绒中长款A字毛呢大衣呢子外套",
+        tk_rate: "1.50",
+        type: 1,
+        user_type: 0,
+        volume: 2214,
+        zk_final_price: "386.20",
+        zk_final_price_wap: "386.20"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=582826822377",
+        nick: "银猴小小崽崽",
+        num_iid: 582826822377,
+        pict_url: "https://img.alicdn.com/tfscom/i1/1593146983/O1CN01AVWniB21SGD03MY3D_!!1593146983.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "1299.00",
+        seller_id: 1593146983,
+        shop_title: "云端锦绣",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i3/1593146983/O1CN01SYuqPe21SGDRtk1PW_!!1593146983.jpg", "https://img.alicdn.com/tfscom/i4/1593146983/O1CN01sNe6aZ21SGDBxbCgK_!!1593146983.jpg", "https://img.alicdn.com/tfscom/i3/1593146983/O1CN01zYPsiX21SGCyTC6jq_!!1593146983.jpg", "https://img.alicdn.com/tfscom/i4/1593146983/O1CN016cGe3m21SGD5MqQRf_!!1593146983.jpg"]
+        },
+        status: 1,
+        title: "短款羽绒服女2018新款冬季女装韩版宽松加厚大毛领时尚收腰外套女",
+        tk_rate: "3.00",
+        type: 4,
+        user_type: 0,
+        volume: 2939,
+        zk_final_price: "388.00",
+        zk_final_price_wap: "388.00"
+      }, {
+        event_end_time: "1970-01-01 00:00:00",
+        event_start_time: "1970-01-01 00:00:00",
+        item_url: "http://item.taobao.com/item.htm?id=582208280598",
+        nick: "果果一女人",
+        num_iid: 582208280598,
+        pict_url: "https://img.alicdn.com/tfscom/i2/595412874/O1CN01GuZGQb1X6KlroYsiD_!!595412874.jpg",
+        provcity: "浙江 杭州",
+        reserve_price: "129.90",
+        seller_id: 595412874,
+        shop_title: "果果家 GGWOMEN定制 韩范精品女装",
+        small_images: {
+          string: ["https://img.alicdn.com/tfscom/i1/595412874/O1CN011VoJRl1X6KlsBkqKV_!!595412874.jpg", "https://img.alicdn.com/tfscom/i1/595412874/O1CN01ihqZxU1X6Klu2fh7g_!!595412874.jpg", "https://img.alicdn.com/tfscom/i2/595412874/O1CN01JPmqCe1X6KlpyMBOr_!!595412874.jpg", "https://img.alicdn.com/tfscom/i1/595412874/O1CN01GYkY9C1X6Kltwldhs_!!595412874.jpg"]
+        },
+        status: 1,
+        title: "2018秋冬新款网红女装裙子黑色网纱仙女裙小个子收腰吊带裙连衣裙",
+        tk_rate: "1.56",
+        type: 4,
+        user_type: 0,
+        volume: 3384,
+        zk_final_price: "123.41",
+        zk_final_price_wap: "123.41"
+      }]
+    };
+  }
+};
+
+/***/ }),
+/* 95 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["scoller-row"]
+  }, [_c('scroller', {
+    staticClass: ["scroller"],
+    attrs: {
+      "scrollDirection": "horizontal"
+    }
+  }, _vm._l((_vm.list), function(item) {
+    return _c('div', {
+      key: item.num_iid,
+      staticClass: ["panel"]
+    }, [_c('image', {
+      staticClass: ["item-photo"],
+      attrs: {
+        "src": item.pict_url,
+        "resize": "cover"
+      }
+    }), _c('text', {
+      staticClass: ["item-title"]
+    }, [_vm._v(_vm._s(item.title))]), _c('div', {
+      staticClass: ["price"]
+    }, [_c('text', {
+      staticClass: ["zk-price"]
+    }, [_vm._v("￥" + _vm._s(item.zk_final_price))]), _c('text', {
+      staticClass: ["reserve-price"]
+    }, [_vm._v("￥" + _vm._s(item.reserve_price))])])])
+  }))])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
 
 /***/ }),
 /* 96 */
@@ -23697,11 +23757,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     style: {
       opacity: _vm.headOpacity
     }
-  }, [(_vm.scrollFlag ? true : false) ? _c('search-bar', {
-    attrs: {
-      "searchDisable": "false"
-    }
-  }) : _vm._e()], 1)]), _c('header', {
+  }, [(_vm.scrollFlag ? true : false) ? _c('search-bar-dis') : _vm._e()], 1)]), _c('header', {
     ref: "header",
     staticClass: ["header"],
     appendAsTree: true,
@@ -23843,7 +23899,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _weexUi = __webpack_require__(28);
+var _weexUi = __webpack_require__(29);
 
 exports.default = {
   components: { WxcSearchbar: _weexUi.WxcSearchbar },
@@ -25112,7 +25168,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(20);
+var _index = __webpack_require__(21);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -25148,7 +25204,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _wxcCell = __webpack_require__(13);
+var _wxcCell = __webpack_require__(15);
 
 var _wxcCell2 = _interopRequireDefault(_wxcCell);
 
@@ -25406,7 +25462,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(20);
+var _index = __webpack_require__(21);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -25628,15 +25684,15 @@ var _tab = __webpack_require__(128);
 
 var _tab2 = _interopRequireDefault(_tab);
 
-var _wxcSearchbar = __webpack_require__(21);
+var _wxcSearchbar = __webpack_require__(22);
 
 var _wxcSearchbar2 = _interopRequireDefault(_wxcSearchbar);
 
-var _wxcResult = __webpack_require__(22);
+var _wxcResult = __webpack_require__(23);
 
 var _wxcResult2 = _interopRequireDefault(_wxcResult);
 
-var _wxcIndexlist = __webpack_require__(23);
+var _wxcIndexlist = __webpack_require__(24);
 
 var _wxcIndexlist2 = _interopRequireDefault(_wxcIndexlist);
 
@@ -30722,7 +30778,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 
-var _wxcMask = __webpack_require__(24);
+var _wxcMask = __webpack_require__(25);
 
 var _wxcMask2 = _interopRequireDefault(_wxcMask);
 
@@ -31331,7 +31387,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _type = __webpack_require__(25);
+var _type = __webpack_require__(26);
 
 var _utils = __webpack_require__(1);
 
@@ -33010,7 +33066,7 @@ var _utils = __webpack_require__(1);
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _wxcMinibar = __webpack_require__(26);
+var _wxcMinibar = __webpack_require__(27);
 
 var _wxcMinibar2 = _interopRequireDefault(_wxcMinibar);
 
@@ -33972,7 +34028,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _type = __webpack_require__(25);
+var _type = __webpack_require__(26);
 
 exports.default = {
   props: {
@@ -35335,7 +35391,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _wxcCell = __webpack_require__(13);
+var _wxcCell = __webpack_require__(15);
 
 var _wxcCell2 = _interopRequireDefault(_wxcCell);
 
@@ -36049,10 +36105,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = {
   components: {
-    WxcRichTextText: __webpack_require__(14),
+    WxcRichTextText: __webpack_require__(16),
     WxcRichTextLink: __webpack_require__(275),
     WxcRichTextIcon: __webpack_require__(278),
-    WxcRichTextTag: __webpack_require__(27)
+    WxcRichTextTag: __webpack_require__(28)
   },
   props: {
     configList: {
@@ -36319,7 +36375,7 @@ var _utils = __webpack_require__(1);
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _wxcRichTextText = __webpack_require__(14);
+var _wxcRichTextText = __webpack_require__(16);
 
 var _wxcRichTextText2 = _interopRequireDefault(_wxcRichTextText);
 
@@ -38531,11 +38587,11 @@ var _utils = __webpack_require__(1);
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _wxcRichTextText = __webpack_require__(14);
+var _wxcRichTextText = __webpack_require__(16);
 
 var _wxcRichTextText2 = _interopRequireDefault(_wxcRichTextText);
 
-var _wxcRichTextTag = __webpack_require__(27);
+var _wxcRichTextTag = __webpack_require__(28);
 
 var _wxcRichTextTag2 = _interopRequireDefault(_wxcRichTextTag);
 
@@ -40578,13 +40634,325 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 module.exports.render._withStripped = true
 
 /***/ }),
-/* 327 */,
-/* 328 */,
-/* 329 */,
-/* 330 */,
+/* 327 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(328)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(329)
+
+/* template */
+var __vue_template__ = __webpack_require__(330)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "e:\\vscodeproject\\taozhe3\\src\\pages\\category.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-aef2b3c8"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 328 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "iconfont": {
+    "color": "#ff6000",
+    "fontSize": "40",
+    "fontFamily": "iconfont"
+  },
+  "bgc-white": {
+    "backgroundColor": "#ffffff"
+  },
+  "bgc-gray": {
+    "backgroundColor": "#f9f9f9"
+  },
+  "header": {
+    "position": "sticky"
+  },
+  "header-wrapper": {
+    "height": "130",
+    "marginTop": 0,
+    "marginRight": "20",
+    "marginBottom": 0,
+    "marginLeft": "20",
+    "paddingBottom": "10",
+    "borderBottomStyle": "solid",
+    "borderBottomWidth": "2",
+    "borderBottomColor": "#ebecee",
+    "alignItems": "center",
+    "justifyContent": "flex-end",
+    "flex": 1,
+    "backgroundColor": "#ffffff"
+  },
+  "title": {
+    "color": "#fa513a",
+    "fontSize": "36"
+  },
+  "input-wrapper": {
+    "width": "750",
+    "height": "80",
+    "alignItems": "center",
+    "justifyContent": "center",
+    "backgroundColor": "#EDF2F6"
+  },
+  "chunk-wrapper": {
+    "flexDirection": "row",
+    "marginTop": 0,
+    "marginRight": "20",
+    "marginBottom": 0,
+    "marginLeft": "20"
+  },
+  "chunk": {
+    "flex": 1,
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  "chunk-title": {
+    "color": "#666666",
+    "fontSize": "28",
+    "marginTop": "20"
+  },
+  "chunk-img": {
+    "marginTop": "25",
+    "marginRight": 0,
+    "marginBottom": "25",
+    "marginLeft": 0
+  },
+  "footer": {
+    "paddingTop": "55",
+    "paddingRight": 0,
+    "paddingBottom": "55",
+    "paddingLeft": 0
+  }
+}
+
+/***/ }),
+/* 329 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _SearchBarDis = __webpack_require__(14);
+
+var _SearchBarDis2 = _interopRequireDefault(_SearchBarDis);
+
+var _getJumpBaseUrl = __webpack_require__(11);
+
+var _store = __webpack_require__(6);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var navigator = weex.requireModule("navigator-pri"); //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+  data: function data() {
+    return {
+      items: [{
+        title: '女装',
+        img_url: ''
+      }, {
+        title: '男装',
+        img_url: ''
+      }, {
+        title: '食品',
+        img_url: ''
+      }, {
+        title: '手机',
+        img_url: ''
+      }, {
+        title: '男鞋',
+        img_url: ''
+      }, {
+        title: '女鞋',
+        img_url: ''
+      }, {
+        title: '汽车用品',
+        img_url: ''
+      }, {
+        title: '家居家装',
+        img_url: ''
+      }, {
+        title: '家电',
+        img_url: ''
+      }, {
+        title: '配饰',
+        img_url: ''
+      }, {
+        title: '美妆个护',
+        img_url: ''
+      }, {
+        title: '内衣',
+        img_url: ''
+      }, {
+        title: '母婴',
+        img_url: ''
+      }, {
+        title: '运动鞋',
+        img_url: ''
+      }, {
+        title: '运动衣',
+        img_url: ''
+      }, {
+        title: '图书',
+        img_url: ''
+      }, {
+        title: '家纺',
+        img_url: ''
+      }, {
+        title: '数码',
+        img_url: ''
+      }],
+      cols: 3,
+      console: ''
+    };
+  },
+
+  computed: {
+    itemsInit: function itemsInit() {
+      this.items.forEach(function (el, i) {
+        i % 2 ? el._bgc = 'bgc-white' : el._bgc = 'bgc-gray';
+        el.img_url = "file:///android_asset/images/category/" + el.title + ".png";
+      });
+
+      return this.items;
+    },
+    list: function list() {
+      var list = [];
+
+      for (var i = 0; i < this.itemsInit.length; i + this.cols) {
+        list.push(this.itemsInit.slice(i, i += this.cols));
+      }
+
+      return list;
+    }
+  },
+  components: {
+    SearchBarDis: _SearchBarDis2.default
+  },
+  methods: {
+    onItemClick: function onItemClick(e) {
+
+      navigator.push({
+        url: (0, _getJumpBaseUrl.getJumpBaseUrl)("searchPage", e.currentTarget.children[0].attr.value),
+        animated: "false"
+      });
+      // this.console = store.state
+    }
+  }
+};
+
+/***/ }),
+/* 330 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('scroller', [_c('text', [_vm._v(_vm._s(_vm.console))]), _c('header', {
+    ref: "header",
+    staticClass: ["header"],
+    appendAsTree: true,
+    attrs: {
+      "append": "tree"
+    }
+  }, [_vm._m(0), _c('div', {
+    staticClass: ["input-wrapper"]
+  }, [_c('search-bar-dis')], 1)]), _vm._l((_vm.list), function(item, i) {
+    return _c('div', {
+      key: i,
+      staticClass: ["chunk-wrapper"]
+    }, _vm._l((item), function(chunk, j) {
+      return _c('div', {
+        key: 'chunk' + j,
+        staticClass: ["chunk"],
+        class: [chunk._bgc],
+        on: {
+          "click": _vm.onItemClick
+        }
+      }, [_c('text', {
+        staticClass: ["chunk-title"]
+      }, [_vm._v(_vm._s(chunk.title))]), _c('image', {
+        staticClass: ["chunk-img"],
+        staticStyle: {
+          width: "200px",
+          height: "200px"
+        },
+        attrs: {
+          "src": chunk.img_url
+        }
+      })])
+    }))
+  }), _c('div', {
+    staticClass: ["footer"]
+  })], 2)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["header-wrapper"]
+  }, [_c('text', {
+    staticClass: ["title"]
+  }, [_vm._v("分类")])])
+}]}
+module.exports.render._withStripped = true
+
+/***/ }),
 /* 331 */,
 /* 332 */,
-/* 333 */
+/* 333 */,
+/* 334 */,
+/* 335 */,
+/* 336 */,
+/* 337 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40596,28 +40964,28 @@ module.exports.render._withStripped = true
 var _require = __webpack_require__(31),
     router = _require.router;
 
-var App = __webpack_require__(334);
+var App = __webpack_require__(338);
 // import TopClient from 'node-taobao-topclient';
 /* eslint-disable no-new */
 new Vue(Vue.util.extend({ el: '#root', router: router }, App));
 router.push('/home');
 
 /***/ }),
-/* 334 */
+/* 338 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(335)
+__vue_styles__.push(__webpack_require__(339)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(336)
+__vue_exports__ = __webpack_require__(340)
 
 /* template */
-var __vue_template__ = __webpack_require__(342)
+var __vue_template__ = __webpack_require__(346)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -40647,7 +41015,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 335 */
+/* 339 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -40971,7 +41339,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 336 */
+/* 340 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41186,17 +41554,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 // import searchResult from "../components/SearchResult.vue";
 
 
-var _formatURL = __webpack_require__(30);
+var _formatURL = __webpack_require__(17);
 
-var _cityData = __webpack_require__(337);
+var _cityData = __webpack_require__(341);
 
-var _weexUi = __webpack_require__(28);
+var _weexUi = __webpack_require__(29);
 
-var _SingleItemList = __webpack_require__(338);
+var _SingleItemList = __webpack_require__(342);
 
 var _SingleItemList2 = _interopRequireDefault(_SingleItemList);
 
-var _store = __webpack_require__(8);
+var _store = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -41324,7 +41692,17 @@ exports.default = {
       }
     });
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    // 处理分类传来的数据
+    var bundleUrl = weex.config.bundleUrl;
+    bundleUrl = new String(bundleUrl);
+    if (bundleUrl.indexOf('?webUrl=') >= 0) {
+      var word = bundleUrl.slice(bundleUrl.search(/\=/) + 1);
+      // this.console = this.searchRecord
+      this.toSearch(word, true);
+    }
+  },
+
 
   components: {
     itemList: _SingleItemList2.default,
@@ -41429,7 +41807,6 @@ exports.default = {
     },
     onreturn: function onreturn() {
       if (this.value) {
-        this.showRecommend = false;
         this.toSearch(this.value, true);
       }
     },
@@ -41444,7 +41821,6 @@ exports.default = {
 
       this.$refs['input'].blur();
       this.showRecommend = false;
-      var self = this;
       this.toSearchFlag = true;
       if (value) {
         this.searchResultList = [];
@@ -41845,7 +42221,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 337 */
+/* 341 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41860,21 +42236,21 @@ var cityData = exports.cityData = {
 };
 
 /***/ }),
-/* 338 */
+/* 342 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(339)
+__vue_styles__.push(__webpack_require__(343)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(340)
+__vue_exports__ = __webpack_require__(344)
 
 /* template */
-var __vue_template__ = __webpack_require__(341)
+var __vue_template__ = __webpack_require__(345)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -41904,7 +42280,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 339 */
+/* 343 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -42047,7 +42423,7 @@ module.exports = {
     "right": "20",
     "width": "80",
     "height": "80",
-    "backgroundColor": "#ffffff",
+    "backgroundColor": "rgba(255,255,255,0.8)",
     "borderWidth": "2",
     "borderColor": "#ebecee",
     "borderRadius": "80",
@@ -42057,7 +42433,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 340 */
+/* 344 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42067,9 +42443,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _store = __webpack_require__(8);
+var _store = __webpack_require__(6);
 
-var _getJumpBaseUrl = __webpack_require__(15);
+var _getJumpBaseUrl = __webpack_require__(11);
 
 // const stream = weex.requireModule("stream");
 //
@@ -42209,7 +42585,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 341 */
+/* 345 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -42328,7 +42704,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 module.exports.render._withStripped = true
 
 /***/ }),
-/* 342 */
+/* 346 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -42399,7 +42775,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "click": _vm.onrecordSearch
       }
     }, [_vm._v(_vm._s(item))])
-  })], 2)]) : _vm._e(), (_vm.showResult && !_vm.showRecommend) ? _c('div', {
+  })], 2)]) : _vm._e(), _c('text', [_vm._v(_vm._s(_vm.console))]), (_vm.showResult && !_vm.showRecommend) ? _c('div', {
     ref: "searchResult",
     staticClass: ["search-result"],
     style: {

@@ -16,7 +16,8 @@ export const store = new Vuex.Store({
     currentPage: 'home',
     scrollFlag: false,
     couponUrl: '',
-    deviceHeight: WXEnvironment.deviceHeight
+    deviceHeight: WXEnvironment.deviceHeight,
+    categotySearchWord: ''
   },
   mutations: {
     to (state,_pageName) {
@@ -30,6 +31,9 @@ export const store = new Vuex.Store({
     },
     setDeviceHeight(state,height) {
       state.deviceHeight = height
+    },
+    setCategotySearchWord(state,word) {
+      state.categotySearchWord = word
     }
   }
 })

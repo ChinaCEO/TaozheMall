@@ -14,11 +14,11 @@
         <text class="title">猜你喜欢</text>
       </div>      
     </header>
-    <header>
+    <!-- <header>
       <text>{{console}}</text>
-    </header>
+    </header> -->
     <cell class="cell" v-for="(item) in items" :key="item.num_iid" :ref="'item'+item.num_iid">
-      <div class="item" @click="itemOnClick" :couponUrl="item.coupon_click_url">
+      <div class="item" @click="itemOnClick" :couponUrl="item.coupon_share_url">
         <image class="item-photo" :src="item.white_image ? item.white_image : item.pict_url" resize="cover"></image>
         <text class="item-title">{{item.title}}</text>
         <div class="item-price-box">
@@ -40,18 +40,21 @@
     </header>
     <header class="footer" ref="footer" @appear="onloadmore">
       <image style="width:70px;height:70px" src="file:///android_asset/images/loading.gif" v-if="loadingFlag"></image>
-      <text class="indicator-text" v-else>没有更多了...</text>
+      <text class="indicator-text" v-else>~没有更多了~</text>
     </header>
   </waterfall>
 </template>
 
 <script>
   import { formatURL } from "../util/formatURL.js";
+  import { store } from "../store.js";
+  import { getJumpBaseUrl } from "../util/getJumpBaseUrl.js";
 
   const getImei = weex.requireModule('getImei');
   const stream = weex.requireModule("stream");
   const modal = weex.requireModule('modal');
   const dom = weex.requireModule("dom");
+  const navigator = weex.requireModule("navigator-pri");
 
   export default {
     data() {
@@ -168,6 +171,16 @@
         },err => {
           this.loadingFlag = false
         })
+      },
+      itemOnClick(e) { 
+          
+        let couponUrl = 'https://' + e.currentTarget.attr.couponUrl;
+        store.commit("setCouponUrl", couponUrl);
+        
+        navigator.push({
+          url: getJumpBaseUrl("coupon", couponUrl),
+          animated: "true"
+        });
       }    
     }
   }
@@ -293,5 +306,10 @@
     padding-top: 10px;
     padding-bottom: 10px;
     align-items: center;  
+  }
+
+  .indicator-text {
+    color: #666;
+    font-size: 28px;
   }
 </style>
