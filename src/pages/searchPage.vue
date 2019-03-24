@@ -46,7 +46,7 @@
         </div>
 
         <!-- 搜索页 -->
-        <text>{{console}}</text>
+        <!-- <text>{{console}}</text> -->
         <div class="search-result" v-if="showResult && !showRecommend" ref="searchResult" :style="{height: searchResultHeight + 'px'}">
           
           <div class="rank-box">
@@ -61,9 +61,15 @@
             </div>           
             <text class="iconfont rank-txt" @click="onfiltrate" :class="[isFiltrate ?  'select-color' : '']">筛选&#xe612;</text>
           </div>
-          <item-list :list="searchResultList" v-if="hasResultFlag" @onloadmore="onloadmore"></item-list>
+          <!-- 结果页 -->
+          <item-list 
+            :list="searchResultList" 
+            :loadingFlag="loadingFlag" 
+            v-if="hasResultFlag" 
+            @onloadmore="onloadmore"></item-list>
           <div class="no-result-box" v-else>
-            <text class="no-result">没有搜索到相关产品~</text>
+            <image style="width:70px;height:70px" src="file:///android_asset/images/loading.gif" v-if="searchLoadingFlag"></image>
+            <text class="no-result" v-else>没有搜索到相关产品~</text>
           </div>
           
           <WxcPopup :show="isPopupShow"
@@ -257,7 +263,7 @@
         recommend: [], // 搜索输入的推荐
         showRecommend: false,
         showResult: false,
-        hasResultFlag: true, // 是否搜索到相关产品
+        hasResultFlag: false, // 是否搜索到相关产品
         toSearchFlag: false,
         isPopupShow: false, // 筛选弹层       
         cityData: cityData, // 城市数据
@@ -288,7 +294,9 @@
           isPriceDown: false // 价格降序
         },
         isFiltrate: false, // 筛选
-        onSearchInputFlag: false
+        onSearchInputFlag: false,
+        searchLoadingFlag: true,
+        loadingFlag: true // loadmore flag
       }
     },
     computed: {
@@ -368,19 +376,19 @@
         list.forEach((el,i) => {
           
           // 是否来自天猫
-          let tmallUrl = el.item_url.indexOf('tmall.com');
-          if (tmallUrl >= 0) {
-            list[i]._istmall = 'true'
-          }else {
-            list[i]._istmall = 'false'
-          }
+          // let tmallUrl = el.item_url.indexOf('tmall.com');
+          // if (tmallUrl >= 0) {
+          //   list[i]._istmall = 'true'
+          // }else {
+          //   list[i]._istmall = 'false'
+          // }
           // 描述处理
           list[i]._item_description_arr = el.item_description.split(' ')
         });
         return list;
       },
       fetch(resCallback,errCallback) {
-
+        
         let url = formatURL(this.requestOptions.method,this.requestOptions.apiOptions)
         
         try {
@@ -403,10 +411,13 @@
         }      
       },
       getSearchResult() {
-        // this.searchResultList = []
-        
+        this.searchResultList = []
+        this.hasResultFlag = false
+        this.searchLoadingFlag = true
         this.fetch(res => {
-          if(res.data.tbk_dg_material_optional_response.result_list.map_data.length) {                            
+          this.console =  this.searchResultList 
+          if(res.data.tbk_dg_material_optional_response) {  
+                                    
             let _searchResultList = res.data.tbk_dg_material_optional_response.result_list.map_data
             
             this.searchResultList = this.searchResultListDealed(_searchResultList)
@@ -417,6 +428,11 @@
         },err => {
           this.hasResultFlag = false
         })
+        setTimeout(() => {
+          if(!this.hasResultFlag) {
+            this.searchLoadingFlag = false
+          }         
+        },5000)
       },
       // 公共方法结束
 
@@ -477,24 +493,9 @@
         this.showRecommend = false    
         this.toSearchFlag = true
         if(value) {
-          this.searchResultList = []
           this.showResult = true
-          this.hasResultFlag = true
           this.requestOptions.apiOptions.q = value //查询词
-          
-          this.fetch(res => {
-           if(res.data.tbk_dg_material_optional_response.result_list.map_data.length) {                            
-              let _searchResultList = res.data.tbk_dg_material_optional_response.result_list.map_data
-
-              this.searchResultList = this.searchResultListDealed(_searchResultList)
-              this.hasResultFlag = true  
-        
-            }else {
-              this.hasResultFlag = false
-            } 
-          },(err) => {
-            this.hasResultFlag = false
-          })
+          this.getSearchResult()
     
           if(addRecord === true) {
            
@@ -541,21 +542,23 @@
         //   duration: 0.1
         // })
         this.requestOptions.apiOptions.page_no++
-        
+        this.loadingFlag = true
         this.fetch(res => {
-          if(res.data.tbk_dg_material_optional_response.result_list.map_data.length) {
+          if(res.data.tbk_dg_material_optional_response) {
             let _searchResultList = res.data.tbk_dg_material_optional_response.result_list.map_data
             _searchResultList = this.searchResultListDealed(_searchResultList)
             _searchResultList.forEach(el => {
               this.searchResultList.push(el)
             })
           }else {
+            this.loadingFlag = false
             modal.toast({
               message: '没有更多了',
               duration: 0.3
             })
           }
         },err => {
+          this.loadingFlag = false
           modal.toast({
             message: '没有更多了',
             duration: 0.3

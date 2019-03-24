@@ -24,7 +24,7 @@ export default {
       var domModule = weex.requireModule('dom');
       domModule.addRule('fontFace', {
         'fontFamily': "iconfont",
-        'src': "url('http://at.alicdn.com/t/font_1035245_35bmaltzza2.ttf')"
+        'src': "url('http://at.alicdn.com/t/font_1035245_ho111l8f11g.ttf')"
       }); 
       
     },

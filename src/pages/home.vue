@@ -363,8 +363,8 @@
 .item-photo {
   width: auto;
   height: 360px;
-  margin: 1px;
-  margin-bottom: 0;
+  margin: 2px;
+  margin-bottom: 10px;
 }
 
 .item-title {

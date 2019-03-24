@@ -12,7 +12,8 @@ const isWin = /^win/.test(process.platform);
 const weexEntry = {
   'index': helper.root('entry.js'),
   'coupon': helper.root('coupon.js'),
-  'searchPage': helper.root('searchPage.js')
+  'searchPage': helper.root('searchPage.js'),
+  'findMore': helper.root('findMore.js'),
 }
 
 const getEntryFileContent = (source, routerpath) => {
@@ -57,10 +58,15 @@ const getEntryFile = () => {
   const searchPagePath = 'searchPage.js'
   const searchPage = path.join(vueWebTemp, searchPagePath)
   fs.outputFileSync(searchPage, getEntryFileContent(helper.root(searchPagePath), routerFile));
+
+  const findMorePath = 'findMore.js'
+  const findMore = path.join(vueWebTemp, findMorePath)
+  fs.outputFileSync(findMore, getEntryFileContent(helper.root(findMorePath), routerFile));
   return {
     index: entryFile,
     coupon: couponFile,
-    searchPage: searchPage
+    searchPage: searchPage,
+    womenClothingPageL: findMore
   }
 }
 

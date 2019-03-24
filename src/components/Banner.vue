@@ -1,6 +1,5 @@
 <template>
 	<div class="banner">
-    <!-- <slot></slot> -->
     
 		<slider class="slider size" auto-play="true">
 
@@ -10,7 +9,7 @@
 			<indicator class="indicator"></indicator>
 		</slider>
     <div class="footer-mask">
-      <image src="file:///android_asset/images/slider-mask.png" class="footer-mask-img" resize="cover"></image>
+      <image src="file:///android_asset/images/slider-mask.png" class="footer-mask-img" resize="stretch"></image>
     </div>
     <sticky-header></sticky-header>
 	</div>
@@ -92,6 +91,6 @@ export default {
 
   .footer-mask-img {
     width: 800px;
-    height: 20px;
+    height: 40px;
   }
 </style>

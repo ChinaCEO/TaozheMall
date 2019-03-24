@@ -23,7 +23,7 @@
             src="file:///android_asset/images/tmall-logo.jpg" 
             class="title-icon" 
             style="width:28px;height:28px"
-            v-if="item._istmall == 'true'"></image>
+            v-if="item.user_type"></image>
           <text class="item-title">{{item.title}}</text>
         </div>
         <!-- 描述标签 -->
@@ -66,7 +66,8 @@
       </div>
     </div>
     <div class="footer">
-      <image style="width:70px;height:70px" src="file:///android_asset/images/loading.gif"></image>
+      <image style="width:70px;height:70px" src="file:///android_asset/images/loading.gif" v-if="loadingFlag"></image>
+      <text class="indicator-text" v-else>没有更多了...</text>
     </div>
     <div class="tohead" @click="onToHead" v-if="toHeaderBtnFlag">
       <text class="iconfont">&#xe666;</text>
@@ -85,10 +86,18 @@
   const dom = weex.requireModule("dom");
   const modal = weex.requireModule('modal');
   export default {
-    props: ['list'],
+    props: {
+      list: {
+        type: Array,
+        default: []
+      },
+      loadingFlag: {
+        type: Boolean,
+        default: true
+      },
+    },
     data() {
       return {
-        isTmall: false,
         toHeaderBtnFlag: false,
         console: ''
       }
@@ -101,7 +110,8 @@
     },
     watch: {
       list() {
-        if(!this.list.length) {
+        
+        if(!this.list.length) {         
           dom.scrollToElement(this.$refs.header, { offset: 0, animated: 'false' });
         }
       }
@@ -155,8 +165,8 @@
     width: 750px;
     flex-direction: row;
     /* justify-content: space-between; */
-    padding: 10px 15px 30px 15px;
-    
+    padding: 30px 15px 10px 15px;
+    background-color: #fff;
   }
 
   .item-pic {
@@ -301,13 +311,17 @@
 
   .footer {
     width: 750px;
-    height: 200px;
+    height: 160px;
     align-items: center;
     justify-content: flex-start;
-    padding-bottom: 20px;
+    background-color: #fff;
+    margin-bottom: 20px;
   }
 
-
+  .indicator-text {
+    color: #666;
+    font-size: 28px;
+  }
 
   .iconfont {
     color: #ff6000;

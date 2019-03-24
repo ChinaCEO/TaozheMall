@@ -14,24 +14,18 @@
         <text class="title">猜你喜欢</text>
       </div>      
     </header>
+    <header class="banner">
+      <banner-sm></banner-sm>      
+    </header>
     <!-- <header>
       <text>{{console}}</text>
     </header> -->
     <cell class="cell" v-for="(item) in items" :key="item.num_iid" :ref="'item'+item.num_iid">
-      <div class="item" @click="itemOnClick" :couponUrl="item.coupon_share_url">
-        <image class="item-photo" :src="item.white_image ? item.white_image : item.pict_url" resize="cover"></image>
-        <text class="item-title">{{item.title}}</text>
-        <div class="item-price-box">
-          <div class="coupon">
-            <text class="iconfont coupon-icon">&#xe617;</text>
-            <text class="coupon-text">{{item.coupon_amount}}元</text>
-          </div>
-          <div class="price">
-            <text class="zk-price-txt">折后价</text>
-            <text class="zk-price-num">￥{{couponFinalPrice(item.zk_final_price,item.coupon_amount)}}</text>
-          </div>
-        </div>
-      </div>
+      <item :coupon-url='item.coupon_share_url' 
+            :img-src='item.white_image ? item.white_image : item.pict_url'
+            :title='item.title'
+            :coupon-amount='item.coupon_amount'
+            :zk-final-price='item.zk_final_price' ></item>
     </cell>
     <header v-if="toHeaderBtnFlag">
       <div class="toHeader" @click="onToHeader">
@@ -47,8 +41,9 @@
 
 <script>
   import { formatURL } from "../util/formatURL.js";
-  import { store } from "../store.js";
   import { getJumpBaseUrl } from "../util/getJumpBaseUrl.js";
+  import BannerSm from '../components/BannerSm.vue';
+  import Item from '../components/waterSingleItem.vue';
 
   const getImei = weex.requireModule('getImei');
   const stream = weex.requireModule("stream");
@@ -83,7 +78,8 @@
       }
     },
     components: {
-      
+      BannerSm,
+      Item
     },
     beforeMount() {
       getImei.getIMEI(res => {
@@ -142,11 +138,7 @@
           }
         }      
       }, 
-      couponFinalPrice(zk_final_price,coupon_amount) {
-
-        let _couponFinalPrice = Math.round(zk_final_price * 100 - coupon_amount*100) / 100
-        return _couponFinalPrice
-      },
+  
       onScroll(e) {
         
         e.contentOffset.y < -1000
@@ -161,9 +153,7 @@
         this.fetch(res => {
           if(res.data.tbk_dg_optimus_material_response) {
             let data = res.data.tbk_dg_optimus_material_response.result_list.map_data
-            data.forEach(el => {
-              this.items.push(el)
-            });
+            this.items.push.apply(this.items, data)
 
           }else {
             this.loadingFlag = false  
@@ -171,17 +161,7 @@
         },err => {
           this.loadingFlag = false
         })
-      },
-      itemOnClick(e) { 
-          
-        let couponUrl = 'https://' + e.currentTarget.attr.couponUrl;
-        store.commit("setCouponUrl", couponUrl);
-        
-        navigator.push({
-          url: getJumpBaseUrl("coupon", couponUrl),
-          animated: "true"
-        });
-      }    
+      }
     }
   }
 </script>
@@ -199,12 +179,13 @@
 
   .header {
     position: sticky;
-      
   }
 
   .header-wrapper {
     height: 130px;
-    margin:0 20px 20px 20px;
+    /* margin:0 20px 20px 20px; */
+    margin-bottom: 20px;
+    padding: 0 20px;
     padding-bottom: 10px; 
 
     border-bottom-style: solid;
@@ -225,66 +206,7 @@
   .cell {
     padding-top: 6px;
     padding-bottom: 6px;
-  }
-
-  .item {
-    /*height: 450px;*/
-    background-color: #ffffff;
-    border-width: 2px;
-    border-color: #ebecee;
-  }
-
-  .item-photo {
-    width: auto;
-    height: 360px;
-    margin: 1px;
-    margin-bottom: 0;
-  }
-
-  .item-title {
-    margin: 10px;
-    font-size: 26;
-    font-weight: 500;
-    lines: 2;
-    text-overflow: ellipsis;
-  }
-
-  .item-price-box {
-    flex-direction: row;
-    padding-bottom: 10px;
-    margin-right: 10px;
-    margin-left: 10px;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .coupon {
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .coupon-icon {
-    margin-right: 2px;
-  }
-
-  .coupon-text {
-    color: #fe9f92;
-    font-size: 24px;
-  }
-
-  .price {
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .zk-price-txt {
-    color: #666;
-    font-size: 24px;
-  }
-
-  .zk-price-num {
-    color: #fa513a;
-    font-size: 32px;
+    
   }
 
   .toHeader {

@@ -2,7 +2,10 @@ package com.weex.app;
 
 import android.app.Application;
 
-import com.weex.app.extend.ImageAdapter;
+//import com.weex.app.extend.ImageAdapter;
+import com.alibaba.android.bindingx.plugin.weex.BindingX;
+import com.alibaba.android.bindingx.plugin.weex.WXBindingXModule;
+import com.alibaba.android.bindingx.plugin.weex.WXExpressionBindingModule;
 import com.weex.app.extend.WXEventModule;
 import com.alibaba.weex.plugin.loader.WeexPluginContainer;
 import com.weex.app.extend.adapter.CommentSDKWeeXImageAdapter;
@@ -20,6 +23,7 @@ public class WXApplication extends Application {
 
   @Override
   public void onCreate() {
+
     super.onCreate();
     WXSDKEngine.addCustomOptions("appName", "WXSample");
     WXSDKEngine.addCustomOptions("appGroup", "WXApp");
@@ -65,7 +69,16 @@ public class WXApplication extends Application {
     } catch (WXException e) {
       e.printStackTrace();
     }
+    try {
+      WXSDKEngine.registerModule("expressionBinding", WXExpressionBindingModule.class);
+      WXSDKEngine.registerModule("binding", WXBindingXModule.class);
+      WXSDKEngine.registerModule("bindingx", WXBindingXModule.class);
+    } catch (WXException e) {
+      e.printStackTrace();
+    }
+    
     AppConfig.init(this);
     WeexPluginContainer.loadAll(this);
+
   }
 }

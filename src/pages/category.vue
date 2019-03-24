@@ -98,7 +98,7 @@
             img_url: ''
           },
           {
-            title: '数码',
+            title: '电脑配件',
             img_url: ''
           }          
         ],
