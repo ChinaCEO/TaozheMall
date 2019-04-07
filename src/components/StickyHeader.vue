@@ -25,10 +25,10 @@
 
   .stickyHeader {
     position: absolute;
-    top: 25px;
+    top: 35px;
     flex-direction: row;
     width: 750px;
-  	height: 110px; 
+  	height: 120px; 
     align-items: center;
   	justify-content: center;
   	/*background-image: linear-gradient(to top,#F51F23,#D41E21);*/
@@ -44,7 +44,7 @@
     border-radius: 70px;
     position: absolute;
     left: 10px;
-    top: 20px;
+    top: 25px;
   }
 
   .logo-letter {

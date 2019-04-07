@@ -21,11 +21,11 @@
       <text>{{console}}</text>
     </header> -->
     <cell class="cell" v-for="(item) in items" :key="item.num_iid" :ref="'item'+item.num_iid">
-      <item :coupon-url='item.coupon_share_url' 
+      <item :coupon-url='`https://${item.coupon_share_url}`' 
             :img-src='item.white_image ? item.white_image : item.pict_url'
             :title='item.title'
             :coupon-amount='item.coupon_amount'
-            :zk-final-price='item.zk_final_price' ></item>
+            :coupon-final-price="couponFinalPrice(item)" ></item>
     </cell>
     <header v-if="toHeaderBtnFlag">
       <div class="toHeader" @click="onToHeader">
@@ -42,6 +42,7 @@
 <script>
   import { formatURL } from "../util/formatURL.js";
   import { getJumpBaseUrl } from "../util/getJumpBaseUrl.js";
+  import config from '../util/mall.config.js';
   import BannerSm from '../components/BannerSm.vue';
   import Item from '../components/waterSingleItem.vue';
 
@@ -57,10 +58,10 @@
         requestOptions: {
           method: "taobao.tbk.dg.optimus.material",
           apiOptions: {
-            adzone_id: "91627500240",
+            adzone_id: config.adzoneId,
             page_size: "20",
             page_no: 1,
-            material_id: "6708",
+            material_id: "3756",
             device_value: '',
             device_encrypt: '	MD5',
             device_type: 'IMEI'
@@ -99,10 +100,6 @@
           this.items = data  
         }else {
           this.loadingFlag = false
-          modal.toast({
-            message: '网络异常',
-            duration: 0.3
-          })
         }    
       },err => {
         this.loadingFlag = false
@@ -161,7 +158,11 @@
         },err => {
           this.loadingFlag = false
         })
-      }
+      },
+      couponFinalPrice(item) {       
+        let _final = Math.round(item.zk_final_price * 100 - item.coupon_amount*100) / 100
+        return _final.toFixed(2)
+      },
     }
   }
 </script>

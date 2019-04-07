@@ -36,7 +36,7 @@
           <text class="sales-price-txt" v-else>原价</text>    
           <text class="sales-price-num" v-if="item.reserve_price && !item.coupon_amount">&yen;{{item.reserve_price}}</text>
           <text class="sales-price-num" v-else>&yen;{{item.zk_final_price}}</text>
-          <text class="sales-volume">已售{{item.volume}}件</text>
+          <text class="sales-volume">已售{{item.volume >= 10000 ? `${(item.volume/10000).toFixed(1)}万` : item.volume}}件</text>
         </div>        
         <!-- 券后价/现价 -->
         <div class="zk-price-box">

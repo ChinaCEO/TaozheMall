@@ -1,20 +1,25 @@
 <template>
   <div class="coupon-web">
+    <!-- <text>{{console}}</text> -->
     <header class="header"> 
       <div class="header-box">
         <text class="back-btn iconfont" @click="onback">&#xe625;</text>
+        <text class="back-btn close-btn iconfont" @click="onclose" v-if="withBack">&#xe626;</text>
         <text class="title">领券中心</text> 
       </div>              
     </header>
-    <webpri class="web" :src="couponUrl" :style="{height: couponWebHeight + 'px'}"></webpri>
-    <!-- <text>{{console}}</text> -->
+    <webpri ref="webview" 
+            class="web" 
+            :src="couponUrl" 
+            :style="{height: couponWebHeight + 'px'}"
+            @pagefinish="onpagefinish" ></webpri>   
   </div>
 </template>
 
 <script>
   const domModule = weex.requireModule('dom');
   const navigator = weex.requireModule('navigator')
-  // const webview = weex.requireModule('webview');
+  const webview = weex.requireModule('webview-pri');
 
   import { store } from '../store.js'
   import { Utils } from 'weex-ui';
@@ -22,8 +27,10 @@
   export default {
     data () {
       return {
-        couponUrl: '',        
-        console: ''
+        console: '',
+        couponUrl: '',
+        withBack: false,        
+        canGoBack: false
       }
     },
     computed: {
@@ -34,25 +41,49 @@
    
     mounted() {
       let bundleUrl = weex.config.bundleUrl
-          bundleUrl = new String(bundleUrl);
-      let couponUrl = bundleUrl.slice(bundleUrl.search(/\=/)+1) 
-      couponUrl = decodeURIComponent(couponUrl)
-      this.couponUrl = couponUrl
-      // if (WXEnvironment.platform === 'android') {  
-         
-      //     this.couponUrl = couponUrl
-          
-      // } else if (WXEnvironment.platform === 'iOS') {  
-          
-      //     this.couponUrl = couponUrl
-      // } else {  
-          
-      //     this.couponUrl = couponUrl
-      // }  
-         
+     
+      bundleUrl = new String(bundleUrl);
+
+      let urlString = bundleUrl.slice(bundleUrl.indexOf('?')+1) 
+      
+      let optionArr = urlString.split('&')
+      
+      let couponUrl = ''
+      if(optionArr[0].split('=')[0] === 'webUrl') {
+        couponUrl = decodeURIComponent(optionArr[0].split('=')[1])
+        this.couponUrl = couponUrl
+
+        if(optionArr[1].split('=')[1] == 'true') {
+          this.withBack = true
+        }else {
+          this.withBack = false
+        }
+      }else {
+        couponUrl = decodeURIComponent(optionArr[1].split('=')[1])
+        this.couponUrl = couponUrl
+
+        if(optionArr[0].split('=')[1] == 'true') {
+          this.withBack = true
+        }else {
+          this.withBack = false
+        }
+      }
+     
+
     },
     methods: {
-      onback() {
+      onpagefinish(e){
+        this.canGoBack = e.canGoBack
+      },
+      onback(){
+        if(!this.withBack || !this.canGoBack) {
+          this.onclose()
+          return;
+        }
+         
+        webview.goBack(this.$refs.webview)
+      },
+      onclose() {
         navigator.pop({
           animated: "true"
         })
@@ -86,6 +117,11 @@
     color: #FF6000;
     font-size: 40px;
     line-height: 100px;
+  }
+
+  .close-btn {
+    font-size: 36px;
+    left: 100px;
   }
 
   .title {

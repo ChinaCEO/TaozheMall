@@ -17,8 +17,11 @@ export const formatURL = (method,_apiOptions) => {
       v: '2.0',           
       sign_method: 'md5'
   }
-
-  let apiOptions = _apiOptions
+  let apiOptions = {}
+  if(_apiOptions) {
+    apiOptions = _apiOptions
+  }
+  
 
   //合并排序
   let _optionsArr = []

@@ -3,12 +3,23 @@ export const getJumpBaseUrl = (toUrl, webUrl) => {
     bundleUrl = new String(bundleUrl);
     let nativeBase;
     let native;
-    let toWebUrl; 
+    let toWebUrl = '?'; 
+   
     if(webUrl) {
-      toWebUrl = "?webUrl=" + webUrl
+      if(typeof webUrl === 'object') {        
+        for (var key in webUrl) {
+          toWebUrl += `${key}=${webUrl[key]}&`
+        }
+        toWebUrl = toWebUrl.slice(0,-1)
+
+      }else {
+        toWebUrl += ("webUrl=" + webUrl)
+      }
     }else {
       toWebUrl = ''
     }
+    
+    
     
     if (WXEnvironment.platform === "android") {
       // nativeBase = 'file://assets/dist/';

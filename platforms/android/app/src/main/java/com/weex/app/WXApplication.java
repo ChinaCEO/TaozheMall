@@ -14,6 +14,7 @@ import com.weex.app.extend.component.WxEditText;
 import com.weex.app.extend.module.GetIMEIMoudule;
 import com.weex.app.extend.module.NavigatorModulePri;
 import com.weex.app.extend.module.WXPositionModule;
+import com.weex.app.extend.module.WXWebViewModulePri;
 import com.weex.app.util.AppConfig;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;
@@ -66,9 +67,12 @@ public class WXApplication extends Application {
 
     try {
       WXSDKEngine.registerModule("navigator-pri", NavigatorModulePri.class);
+      WXSDKEngine.registerModule("webview-pri", WXWebViewModulePri.class);
     } catch (WXException e) {
       e.printStackTrace();
     }
+
+
     try {
       WXSDKEngine.registerModule("expressionBinding", WXExpressionBindingModule.class);
       WXSDKEngine.registerModule("binding", WXBindingXModule.class);

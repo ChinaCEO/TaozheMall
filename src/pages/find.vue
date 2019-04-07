@@ -9,20 +9,47 @@
     :left-gap='leftGap' 
     :right-gap='rightGap'
     @scroll="onScroll" >
-    <header :style="{position: scrollFlag ?'sticky' : 'relative'}">      
-      <div class="header-wrapper" :style="{height: headerHeight + 'px'}">
-        <image src="file:///android_asset/images/find-header.jpg" class="size header-bgi" resize="cover" v-if="!scrollFlag"></image>        
-        <text class="title" :style="{color: scrollFlag ? '#fa513a' : '#ffffff', marginBottom: scrollFlag ? 0 : '20px'}">发现·精彩</text>
-        <div class="slider-wrapper" v-if="!scrollFlag">
+    <header class="sticky-header" ref="header" :style="{height: headerHeight + 'px'}">
+      <div class="sticky-header-wrapper" :style="{opacity:headOpacity}">
+        <text class="sticky-header-title">发现·精彩</text>
+      </div>      
+    </header>
+    <header>   
+      <div class="header-wrapper size">
+        <image src="file:///android_asset/images/header/find-header.jpg" class="size header-bgi" resize="cover"></image>        
+        <text class="title">发现·精彩</text>
+        
+        <div class="slider-wrapper">
           <wxc-ep-slider :slider-id="autoSliderId"
                           :card-length='cardLength'
                           ref="wxc-ep-slider"
                           :card-s="cardSize"
                           :auto-play="true"
-                          :select-index="2"
-                          :interval="3000" >
+                          :interval="1000" >
+            <wxc-pan-item v-for="(item,index) in sliderItems[0]"
+                          :key="index"
+                          :ext-id="index"
+                          class="slider slider-size"                     
+                          @wxcPanItemPan="wxcPanItemPan"
+                          @wxcPanItemClicked="wxcPanItemClicked"
+                          :slot="`card${index}_${autoSliderId}`"
+                          :accessible="true" 
+                          :aria-label="item.item_url" >
+              <image :src="item.pic_url" class="slider-size" resize="cover"></image>
+            
+              <div class="slider-item-inner">
+                <div class="slider-saler-logo">
+                  <div class="slider-saler-logo-wrapper">
+                    <image :src="item.saler_logo" class="slider-saler-logo-size" resize="cover"></image>
+                  </div>              
+                </div>
+                <div class="slider-item-title">
+                  <text class="slider-item-title-txt">{{item.title}}</text>
+                </div>
+              </div>
+            </wxc-pan-item>
           
-            <wxc-pan-item v-for="(item,index) in sliderItems"
+            <wxc-pan-item v-for="(item,index) in sliderItemsDealed"
                           :key="index"
                           :ext-id="index"
                           class="slider slider-size"                     
@@ -49,49 +76,21 @@
         
       </div>      
     </header>
-    <!-- <header class="slider-wrapper">
-      <div class="slider-title">
-        <image src="file:///android_asset/images/find-slider-title.png" class="slider-title-size" resize="cover"></image>
-      </div>
     
-      <wxc-ep-slider :slider-id="autoSliderId"
-                      :card-length='cardLength'
-                      ref="wxc-ep-slider"
-                      :card-s="cardSize"
-                      :auto-play="true"
-                      :select-index="2"
-                      :interval="3000" >
-       
-        <wxc-pan-item v-for="(item,index) in sliderItems"
-                      :key="index"
-                      :ext-id="index"
-                      class="slider slider-size"                     
-                      @wxcPanItemPan="wxcPanItemPan"
-                      @wxcPanItemClicked="wxcPanItemClicked"
-                      :slot="`card${index}_${autoSliderId}`"
-                      :accessible="true" 
-                      :aria-label="item.item_url" >
-          <image :src="item.pic_url" class="slider-size" resize="cover"></image>
-         
-          <div class="slider-item-inner">
-            <div class="slider-saler-logo">
-              <div class="slider-saler-logo-wrapper">
-                <image :src="item.saler_logo" class="slider-saler-logo-size" resize="cover"></image>
-              </div>              
-            </div>
-            <div class="slider-item-title">
-              <text class="slider-item-title-txt">{{item.title}}</text>
-            </div>
-          </div>
-          <div class="slider-label">
-            <text class="slider-label-txt">{{item.label}}</text>
-          </div>
-        </wxc-pan-item>
-      </wxc-ep-slider> -->
+    <header>
+      <div class="hot-title">
+        <image src="file:///android_asset/images/find-slider-title.png" class="slider-title-size" resize="cover"></image>
+      </div>      
     </header>
     <header v-for="(el,j) in bannerItems" :key="j" :itemUrl="el.item_url" class="chunk-banner-wrapper">
+
       <!-- 块banner -->
-      <chunk-banner :img-src="el.img_src" :item-list="chunkBannerItemList(j)"></chunk-banner>
+      <chunk-banner 
+        :img-src="el.img_src" 
+        :item-list="chunkBannerItemList(j)"
+        :request-items-id="getMoreItemsId(j)"
+        :request-type="getMoreItemsType(j)"
+        :header-img-url="getHeaderImgUrl(j)" ></chunk-banner>
     </header>
     
     <header>
@@ -101,11 +100,11 @@
     </header>
     <!-- 结果页 -->
     <cell class="cell" v-for="item in hotResultList" :key="item.num_iid" :ref="'item'+item.num_iid">
-      <item :coupon-url='item.coupon_share_url' 
+      <item :coupon-url='`https://${item.coupon_share_url}`' 
             :img-src='item.white_image ? item.white_image : item.pict_url'
             :title='item.title'
             :coupon-amount='item.coupon_amount'
-            :zk-final-price='item.zk_final_price' ></item>
+            :coupon-final-price="couponFinalPrice(item)" ></item>
     </cell>
     <header v-if="toHeaderBtnFlag">
       <div class="toHeader" @click="onToHeader">
@@ -124,14 +123,15 @@
 <script>
   import { WxcEpSlider, WxcPanItem, BindEnv } from 'weex-ui';
   import ChunkBanner from '../components/ChunkBanner.vue';
-  import Item from '../components/waterSingleItem.vue';
+  import Item from '../components/WaterSingleItem.vue';
   import { formatURL } from "../util/formatURL.js";
+  import config from '../util/mall.config.js';
 
   const stream = weex.requireModule("stream");
   const modal = weex.requireModule('modal');
   const dom = weex.requireModule("dom");
   const navigator = weex.requireModule("navigator-pri");
-
+  const animation = weex.requireModule("animation");
   export default {
     data() {
       return {
@@ -140,8 +140,8 @@
         cardSize: {
           width: 440,
           height: 220,
-          spacing: 0,
-          scale: 0.8
+          spacing: 20,
+          scale: 1
         },
         columnWidth: "auto",
         columnCount: "2",
@@ -236,7 +236,7 @@
         materialRequestOptions: { // 通用物料api
           method: 'taobao.tbk.dg.optimus.material',
           apiOptions: {
-            adzone_id: 91627500240,
+            adzone_id: config.adzoneId,
             page_size: 20,
             page_no: 1,
             material_id: ''      
@@ -245,7 +245,7 @@
         uatmRequestOptions: { // 选品库api
           method: 'taobao.tbk.uatm.favorites.item.get',
           apiOptions: {
-            adzone_id: 91627500240,
+            adzone_id: config.adzoneId,
             platform: 2,
             page_size: 3,
             page_no: 1,
@@ -254,7 +254,10 @@
           }
         },
         materialId: {
-          hotRecommend: 4094
+          hotRecommend: 4094,
+          infant: 4041,
+          goodStuffs: 4092,
+          fashionGoods: 4093
         },
         uatmFavoritesId: {
           woman: 19278990,
@@ -269,12 +272,21 @@
         fashionGoodsItems: [],
         toHeaderBtnFlag: false,
         scrollFlag: false,
-        headerHeight: '400'
+        headOpacity: 0,
+        headerHeight: 0
       }
     },
     computed: {
+      sliderItemsDealed() {
+        let itemArr = this.sliderItems
+        
+        itemArr.push(this.sliderItems[0],this.sliderItems[1])
+        
+        itemArr.unshift(this.sliderItems[this.sliderItems.length-4],this.sliderItems[this.sliderItems.length-3])
+        return this.sliderItems
+      },
       cardLength() {
-        return this.sliderItems.length
+        return this.sliderItems.length 
       }
     },
     components: {
@@ -284,15 +296,16 @@
       Item
     },
     beforeMount() {
+      
       this.uatmRequestOptions.apiOptions.favorites_id = this.uatmFavoritesId.woman
       this.getUatmRequest('womanItems')
 
       this.uatmRequestOptions.apiOptions.favorites_id = this.uatmFavoritesId.infant
       this.getUatmRequest('infantItems')
-
+      
       this.uatmRequestOptions.apiOptions.favorites_id = this.uatmFavoritesId.goodStuffs
       this.getUatmRequest('goodStuffsItems')
-
+      
       this.uatmRequestOptions.apiOptions.favorites_id = this.uatmFavoritesId.fashionGoods
       this.getUatmRequest('fashionGoodsItems')
            
@@ -310,6 +323,91 @@
       wxcPanItemClicked (e) {
        
       },
+     
+      onScroll(e) {
+
+        if(e.contentOffset.y < -130) {
+          // this.scrollFlag = true
+
+          this.headerHeight = 130
+          if(this.headOpacity <= 1) {
+            this.headOpacity = (Math.abs(e.contentOffset.y) - 130) / 150;
+          }else {
+            this.headOpacity = 1
+          }
+        }else {
+          this.headerHeight = 0
+          // this.scrollFlag = false
+          this.headOpacity = 0
+        }
+       
+        e.contentOffset.y < -3000
+          ? (this.toHeaderBtnFlag = true)
+          : (this.toHeaderBtnFlag = false);
+      },
+      onToHeader(e) {
+        dom.scrollToElement(this.$refs.header, { offset: 0, animated: 'true' });
+      },
+      onloadmore() {
+        if(!this.hotResultList.length) {
+          return false 
+        } 
+        this.materialRequestOptions.apiOptions.page_no ++
+        this.materialRequestOptions.apiOptions.page_size = 20
+        this.materialFetch(res => {
+          if(res.data.tbk_dg_optimus_material_response) {
+            let data = res.data.tbk_dg_optimus_material_response.result_list.map_data
+           
+            this.hotResultList.push.apply(this.hotResultList, data)
+
+          }else {
+            this.loadingFlag = false  
+          }
+        },err => {
+          this.loadingFlag = false
+        })
+      },
+   
+      chunkBannerItemList(index){
+        switch(index) {
+          case 0: return this.womanItems; break;
+          case 1: return this.infantItems; break;
+          case 2: return this.goodStuffsItems; break;
+          case 3: return this.fashionGoodsItems; break;
+        }
+      },
+      getMoreItemsId(index) {
+        switch(index) {
+          case 0: return this.uatmFavoritesId.woman; break;
+          case 1: return this.materialId.infant; break;
+          case 2: return this.materialId.goodStuffs; break;
+          case 3: return this.materialId.fashionGoods; break;
+        }
+      },
+      getMoreItemsType(index) {
+        // uatm为选品库 material为通用物料
+        switch(index) {
+          case 0: return 'uatm'; break;
+          case 1: return 'material'; break;
+          case 2: return 'material'; break;
+          case 3: return 'material'; break;
+        }
+      },
+      getHeaderImgUrl(index) { // 获取头部图片
+        switch(index) {
+          case 0: return 'http://img.alicdn.com/tps/i4/TB1tyZqLVXXXXXKXFXXx6Mp7VXX-1440-380.png'; break;
+          case 1: return 'http://img.alicdn.com/tps/i4/TB1sIJTMXXXXXbFXVXXx6Mp7VXX-1440-380.png'; break;
+          case 2: return 'http://img.alicdn.com/tps/i2/TB1v9XRMXXXXXcgXVXXx6Mp7VXX-1440-380.png'; break;
+          case 3: return 'file:///android_asset/images/header/fashion.jpg'; break;
+        }
+      },
+      
+      couponFinalPrice(item) {       
+        let _final = Math.round(item.zk_final_price * 100 - item.coupon_amount*100) / 100
+        return _final.toFixed(2)
+      },
+      
+
       // 公共方法
       uatmFetch(resCallback,errCallback) {
 
@@ -343,10 +441,6 @@
             this[itemArrName] = _items           
           }else {
             this.loadingFlag = false
-            modal.toast({
-              message: '网络异常',
-              duration: 0.3
-            })
           }
         },err => {
           this.loadingFlag = false
@@ -390,10 +484,6 @@
             this[itemArrName] = data 
           }else {
             this.loadingFlag = false
-            modal.toast({
-              message: '网络异常',
-              duration: 0.3
-            })
           }
         },err => {
           this.loadingFlag = false
@@ -402,49 +492,8 @@
             duration: 0.3
           })
         },pageSize)
-      },
-      chunkBannerItemList(index){
-        switch(index) {
-          case 0: return this.womanItems; break;
-          case 1: return this.infantItems; break;
-          case 2: return this.goodStuffsItems; break;
-          case 3: return this.fashionGoodsItems; break;
-        }
-      },
-      // 公共方法结束
-     
-      onScroll(e) {
-
-        if(e.contentOffset.y < -(this.headerHeight - 130)) {
-          this.scrollFlag = true
-          this.headerHeight = 130
-        }else {
-          this.scrollFlag = false
-          this.headerHeight = 400
-        }
-        e.contentOffset.y < -3000
-          ? (this.toHeaderBtnFlag = true)
-          : (this.toHeaderBtnFlag = false);
-      },
-      onToHeader(e) {
-        dom.scrollToElement(this.$refs.header, { offset: 0, animated: 'true' });
-      },
-      onloadmore() {
-        this.materialRequestOptions.apiOptions.page_no ++
-        this.materialRequestOptions.apiOptions.page_size = 20
-        this.materialFetch(res => {
-          if(res.data.tbk_dg_optimus_material_response) {
-            let data = res.data.tbk_dg_optimus_material_response.result_list.map_data
-           
-            this.hotResultList.push.apply(this.hotResultList, data)
-
-          }else {
-            this.loadingFlag = false  
-          }
-        },err => {
-          this.loadingFlag = false
-        })
       }
+      // 公共方法结束
     }
   }
 </script>
@@ -458,8 +507,29 @@
     background-color: #ebecee;
   }
 
-  .header {
+  .sticky-header {
     position: sticky;
+  }
+
+  .sticky-header-wrapper {
+    
+    padding-bottom: 10px; 
+    /* border-bottom-style: solid;
+    border-bottom-width: 2px;
+    border-bottom-color: #ebecee; */
+    align-items: center;
+    justify-content: flex-end;
+    flex:1;
+    background-color: rgb(255, 255, 255);
+  }
+
+  .sticky-header-title {
+    color: #fa513a;
+    font-size: 36px;
+  }
+
+  .header {
+    position: relative;
   }
 
   .size {
@@ -468,7 +538,6 @@
   }
 
   .header-wrapper {
-    /* padding: 0 20px; */
     padding-bottom: 20px; 
     border-bottom-style: solid;
     border-bottom-width: 2px;
@@ -491,10 +560,7 @@
   }
 
   .slider-wrapper {   
-    /* position: absolute;
-    bottom: -80px; */
     height: 220px;
-
   }
  
   .slider-title {
@@ -582,7 +648,7 @@
 
   .hot-title {
     width: 750px;
-    margin-top: 20px;
+    /* margin-top: 20px; */
     background-color: #fff;
     align-items: center;
     justify-content: center;

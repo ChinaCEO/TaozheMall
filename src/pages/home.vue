@@ -22,6 +22,7 @@
             <banner></banner>
             <chunks></chunks>
             <onsale></onsale>
+            <onsale-four></onsale-four>
             <div class="main-title-box">
                 <text class="main-title">热销专区</text>
             </div>
@@ -46,9 +47,6 @@
                 </div>
             </div>
         </cell>
-        <!-- <header class="water-footer" v-if="footerFlag" ref="footer">
-      <text class="water-footer-text">~没有更多了,我是有底线的~</text>                
-    </header> -->
         <header v-if="toHeaderBtnFlag">
           <div class="toHeader" @click="onToHeader">
             <text class="iconfont">&#xe666;</text>
@@ -71,12 +69,13 @@
   import Banner from "../components/Banner.vue";
   import Chunks from "../components/Chunks.vue";
   import Onsale from "../components/Onsale.vue";
+  import OnsaleFour from "../components/OnsaleForFour.vue";
   import ScollerRow from "../components/ScollerRow.vue";
   import SearchBarDis from "../components/SearchBarDis.vue";
-  // import { store } from "../store.js";
   import { formatURL } from "../util/formatURL.js";
   import { getJumpBaseUrl } from "../util/getJumpBaseUrl.js";
   import CryptoJS from "crypto-js";
+  import config from '../util/mall.config.js';
 
   const dom = weex.requireModule("dom");
   const stream = weex.requireModule("stream");
@@ -89,10 +88,10 @@
         requestOptions: {
           method: "taobao.tbk.dg.item.coupon.get",
           apiOptions: {
-            adzone_id: "91627500240",
             platform: "2",
             page_size: "40",
-            page_no: 1
+            page_no: 1,
+            adzone_id: config.adzoneId
           }
         },
         items: [],
@@ -116,17 +115,17 @@
       Banner,
       Chunks,
       Onsale,
+      OnsaleFour,
       ScollerRow,
       SearchBarDis
     },
     created() {
-      
       let self = this;
       let url = formatURL(
         this.requestOptions.method,
         this.requestOptions.apiOptions
       );
-      this.footerFlag = false;
+      this.loadingFlag = true;
       stream.fetch(
         {
           method: "GET",
@@ -135,11 +134,12 @@
         },
         res => {
           try {
-            if (res.data) {
+            
+            if (res.data.tbk_dg_item_coupon_get_response) {              
               let items = res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon;
               self.items = self.couponInfoDeal(items);
             } else {
-              self.footerFlag = true;
+              self.loadingFlag = false;
             }
           } catch (err) {
             console.log(err);
@@ -169,14 +169,14 @@
       onScroll(e) {
         // console.log(e)
         // this.console = this.$refs.waterfall
-        e.contentOffset.y < -1000
+        e.contentOffset.y < -3000
           ? (this.toHeaderBtnFlag = true)
           : (this.toHeaderBtnFlag = false);
         if (e.contentOffset.y < -110) {
           this.scrollFlag = true;
           // store.commit("changeScrollFlag", true);
           if (this.headOpacity <= 1) {
-            this.headOpacity = (Math.abs(e.contentOffset.y) - 110) / 250;
+            this.headOpacity = (Math.abs(e.contentOffset.y) - 110) / 150;
           } else {
             this.headOpacity = 1;
           }
@@ -290,23 +290,18 @@
 
 .water-fall {
   margin-bottom: 90px;
+  background-color: #f8f8f8;
 }
 
 .sticky-header {
   position: sticky;
-  /*top:-100px;*/
-  /* align-items: center;
-    justify-content: center;*/
-  /*background-image: linear-gradient(to top,#F51F23,#D41E21);*/
-  /*position: relative;  */
-  /*align-items: center;*/
 }
 
 .sticky-header-box {  
   flex-direction: row;
   align-items: flex-end;
   justify-content: center;
-  height: 130px;
+  height: 150px;
   padding-bottom: 20px;
   background-color: rgba(250,81,58, 0.9);
 }
@@ -317,20 +312,6 @@
   top: 0;
 }
 
-.logo {
-  font-size: 24px;
-  background-color: rgba(51, 51, 51, 0.5);
-  width: 70px;
-  height: 70px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 70px;
-}
-
-.logo-letter {
-  font-size: 20px;
-  color: #fff;
-}
 
 .main-title-box {
   padding: 15px;

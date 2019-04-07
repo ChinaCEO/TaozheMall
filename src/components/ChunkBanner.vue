@@ -1,5 +1,6 @@
 <template>
   <div class="chunk">
+    <!-- <text>{{console}}</text> -->
     <image class="banner-img" :src="imgSrc" resize="cover"></image>
     <div class="item-wrapper">
       <div class="item" 
@@ -34,26 +35,23 @@
       itemList: {
         type: Array
       },
-      moreUrl: {
+      requestItemsId: {
+        type: Number
+      },
+      requestType: {
+        type: String
+      },
+      headerImgUrl: {
         type: String
       }
     },
     data() {
       return {
-        console: ''
+        console: '',
+        moreParams: ''
       }
     },
     methods: {
-      couponInfoDeal(items) {
-        items.forEach((item, i) => {
-          let _coupon_info = "";
-          // 记录"减的位置"
-          let jianPos = item.coupon_info.search("减");
-          _coupon_info = item.coupon_info.slice(jianPos + 1);
-          items[i].coupon_info = _coupon_info;
-        });
-        return items;
-      },
       couponFinalPrice(item) {
         let _couponaAmount = "";
         let jianPos = item.coupon_info.search("减")
@@ -64,16 +62,20 @@
       },
       onitemClick(e) {
         let couponUrl = e.currentTarget.attr.couponUrl;
-        
+        this.console = typeof couponUrl
         navigator.push({
           url: getJumpBaseUrl("coupon", couponUrl),
           animated: "true"
         });
       },
       onMoreClick() {
-
+        this.moreParams = {
+          requestItemsId: this.requestItemsId,
+          requestType: this.requestType,
+          headerImgUrl: this.headerImgUrl
+        }
         navigator.push({
-          url: getJumpBaseUrl('findMore',this.moreUrl),
+          url: getJumpBaseUrl('findMore',this.moreParams),
           animated: "true"
         });
       }

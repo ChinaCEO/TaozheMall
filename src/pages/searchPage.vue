@@ -48,8 +48,8 @@
         <!-- 搜索页 -->
         <!-- <text>{{console}}</text> -->
         <div class="search-result" v-if="showResult && !showRecommend" ref="searchResult" :style="{height: searchResultHeight + 'px'}">
-          
-          <div class="rank-box">
+          <!-- 筛选栏 -->
+          <div class="rank-box" v-if="hasResultFlag">
             <text class="rank-txt" :class="[sortWords.isCommon ?  'select-color' : '']" @click="onCommon">综合</text>
             <text class="rank-txt" :class="[sortWords.isVolume ?  'select-color' : '']" @click="onVolume">销量</text>
             <div class="price-sort" @click="onPrice">
@@ -214,8 +214,7 @@
   import { Utils } from 'weex-ui';
   import itemList from "../components/SingleItemList.vue";
   import { store } from '../store.js'
-  
-
+  import config from '../util/mall.config.js';
 
   const domModule = weex.requireModule('dom');
   const navigator = weex.requireModule('navigator');
@@ -231,7 +230,7 @@
         requestOptions: {
           method: 'taobao.tbk.dg.material.optional',
           apiOptions: {
-            adzone_id: '91627500240',
+            adzone_id: config.adzoneId,
             platform: '2',
             page_size: "20",
             page_no: 1,
@@ -491,9 +490,9 @@
       toSearch(value,addRecord) {
         this.$refs['input'].blur(); 
         this.showRecommend = false    
-        this.toSearchFlag = true
+        // this.toSearchFlag = true
         if(value) {
-          this.showResult = true
+          // this.showResult = true
           this.requestOptions.apiOptions.q = value //查询词
           this.getSearchResult()
     

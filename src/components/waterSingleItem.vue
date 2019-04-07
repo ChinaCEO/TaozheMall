@@ -23,27 +23,22 @@
 
   export default {
     props: [
+      'requestType',
       'couponUrl', 
       'imgSrc', 
       'title',
       'couponAmount',
-      'zkFinalPrice'
+      'couponFinalPrice'
     ],
     data() {
       return {
         console: ''
       }
     },
-    computed: {
-      couponFinalPrice() {
-        let _final = Math.round(this.zkFinalPrice * 100 - this.couponAmount*100) / 100
-        return _final.toFixed(2)
-      }
-    },
     methods: {
       itemOnClick(e) { 
           
-        let couponUrl = 'https://' + e.currentTarget.attr.couponUrl;
+        let couponUrl =  e.currentTarget.attr.couponUrl;
         
         navigator.push({
           url: getJumpBaseUrl("coupon", couponUrl),

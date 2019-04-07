@@ -14,6 +14,9 @@ const weexEntry = {
   'coupon': helper.root('coupon.js'),
   'searchPage': helper.root('searchPage.js'),
   'findMore': helper.root('findMore.js'),
+  'goodsShow': helper.root('goodsShow.js'),
+  'snapUp': helper.root('snapUp.js'),
+  'jdd': helper.root('jdd.js') //拼团
 }
 
 const getEntryFileContent = (source, routerpath) => {
@@ -62,11 +65,25 @@ const getEntryFile = () => {
   const findMorePath = 'findMore.js'
   const findMore = path.join(vueWebTemp, findMorePath)
   fs.outputFileSync(findMore, getEntryFileContent(helper.root(findMorePath), routerFile));
+
+  const goodsShowPath = 'goodsShow.js'
+  const goodsShow = path.join(vueWebTemp, goodsShowPath)
+  fs.outputFileSync(goodsShow, getEntryFileContent(helper.root(goodsShowPath), routerFile));
+
+  const snapUpPath = 'snapUp.js'
+  const snapUp = path.join(vueWebTemp, snapUpPath)
+  fs.outputFileSync(snapUp, getEntryFileContent(helper.root(snapUpPath), routerFile));
+
+  const jddPath = 'jdd.js'
+  const jdd = path.join(vueWebTemp, jddPath)
+  fs.outputFileSync(jdd, getEntryFileContent(helper.root(jddPath), routerFile));
   return {
     index: entryFile,
     coupon: couponFile,
     searchPage: searchPage,
-    womenClothingPageL: findMore
+    goodsShow: goodsShow,
+    snapUp: snapUp,
+    jdd: jdd
   }
 }
 
