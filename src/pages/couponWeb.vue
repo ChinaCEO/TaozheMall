@@ -5,7 +5,7 @@
       <div class="header-box">
         <text class="back-btn iconfont" @click="onback">&#xe625;</text>
         <text class="back-btn close-btn iconfont" @click="onclose" v-if="withBack">&#xe626;</text>
-        <text class="title">领券中心</text> 
+        <text class="title">商品详情</text> 
       </div>              
     </header>
     <webpri ref="webview" 
@@ -103,17 +103,20 @@
   }
 
   .header-box {
-    height: 100px;
+    /* height: 150px; */
     flex-direction: row;
     align-items: center;
     justify-content: center;
     background-color: #f8f8f8;
     position: relative;
+    padding-top: 80px;
+    padding-bottom: 20px;
   }
 
   .back-btn {
     position: absolute;
     left: 30px;
+    top: 50px;
     color: #FF6000;
     font-size: 40px;
     line-height: 100px;

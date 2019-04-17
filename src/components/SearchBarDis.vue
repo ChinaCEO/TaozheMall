@@ -32,7 +32,7 @@
       onSearch(e) {
         e.stopPropagation()
         navigator.push({
-          url: getJumpBaseUrl("searchPage"),
+          url: getJumpBaseUrl("searchPage",''),
           animated: "false"
         });
       }

@@ -1,68 +1,63 @@
 <template>
-    <waterfall 
-      class="water-fall" 
-      ref="waterfall" 
-      show-scrollbar="true"
-      :column-width="columnWidth" 
-      :column-count="columnCount" 
-      :column-gap="columnGap" 
-      :left-gap='leftGap' 
-      :right-gap='rightGap' 
-      @scroll="onScroll" >
-        <!-- <header style="position: sticky;"><text style="color: green;">{{console}}</text></header> -->
-        <header class="sticky-header">
-          <div class="sticky-header-box" :class="[!scrollFlag ? 'sticky-header-scroll' : '']" :style="{opacity:headOpacity}">            
-            <search-bar-dis v-if="scrollFlag ? true : false"></search-bar-dis>
-          </div>
-        </header>
-        <!-- <refresh class="refresh" @pullingdown="onpullingdown">
-          <loading-indicator class="indicator"></loading-indicator>     
-        </refresh> -->
-        <header class="header" ref="header">
-            <banner></banner>
-            <chunks></chunks>
-            <onsale></onsale>
-            <onsale-four></onsale-four>
-            <div class="main-title-box">
-                <text class="main-title">热销专区</text>
-            </div>
-            <scoller-row></scoller-row>
-            <div class="main-title-box">
-                <text class="main-title">精品推荐</text>
-            </div>
-        </header>
-        <cell class="cell" v-for="(item) in items" :key="item.num_iid" :ref="'item'+item.num_iid">
-            <div class="item" @click="itemOnClick" :couponUrl="item.coupon_click_url">
-                <image class="item-photo" :src="item.pict_url" resize="cover"></image>
-                <text class="item-title">{{item.title}}</text>
-                <div class="item-price-box">
-                    <div class="coupon">
-                        <text class="iconfont coupon-icon">&#xe617;</text>
-                        <text class="coupon-text">{{item.coupon_info}}</text>
-                    </div>
-                    <div class="price">
-                        <text class="zk-price-txt">折后价</text>
-                        <text class="zk-price-num">￥{{item.zk_final_price}}</text>
-                    </div>
-                </div>
-            </div>
-        </cell>
-        <header v-if="toHeaderBtnFlag">
-          <div class="toHeader" @click="onToHeader">
-            <text class="iconfont">&#xe666;</text>
-          </div>           
-        </header>
-        <!-- <loading :display="loadingFlag ? 'show' : 'hide'" class="loading" @loading="onloading" ref="loading">
-            <text class="indicator-text" v-if="!loadingFlag">加载更多...</text>
-            <loading-indicator class="loading-indicator" v-if="loadingFlag"></loading-indicator>
-            <text class="indicator-text" v-if="loadingFlag">玩命加载中...</text>
-            <text class="indicator-text" v-if="footerFlag">没有更多了...</text>
-        </loading> -->
-        <header class="footer" ref="footer" @appear="onloadmore">
-          <image style="width:70px;height:70px" src="file:///android_asset/images/loading.gif" v-if="loadingFlag"></image>
-          <text class="indicator-text" v-else>没有更多了...</text>
-        </header>
-    </waterfall>
+  <waterfall 
+    class="water-fall" 
+    ref="waterfall" 
+    show-scrollbar="true"
+    :column-width="columnWidth" 
+    :column-count="columnCount" 
+    :column-gap="columnGap" 
+    :left-gap='leftGap' 
+    :right-gap='rightGap' 
+    @scroll="onScroll" >
+      <refresh class="refresh" @pullingdown="onpullingdown" @refresh="onrefresh">
+        <text class="iconfont refresh-pre-icon">&#xe665;</text>
+        <!-- <image style="width:100px;height:100px" :src="imgSrc.pullLoading"></image> -->
+      </refresh>
+      <!-- <header style="position: sticky;"><text style="color: green;">{{console}}</text></header> -->
+      <header class="sticky-header">
+        <div class="sticky-header-box" :class="[!scrollFlag ? 'sticky-header-scroll' : '']" :style="{opacity:headOpacity}">            
+          <search-bar-dis v-if="scrollFlag ? true : false"></search-bar-dis>
+        </div>
+      </header>
+      
+      <header class="header" ref="header">
+        <banner></banner>
+        <chunks></chunks>
+        <onsale></onsale>
+        <onsale-four></onsale-four>
+        <div class="main-title-box">
+          <image style="width:500px;height:80px" :src="imgSrc.title.nanZhuangRec" v-if="loadingFlag"></image>            
+        </div>
+        <scoller-row :list="lists.man20"></scoller-row>   
+        <div class="main-title-box">
+          <image style="width:500px;height:80px" :src="imgSrc.title.nvZhuangRec" v-if="loadingFlag"></image>
+        </div> 
+        <scoller-row :list="lists.woman20"></scoller-row>        
+      </header>
+      <header>
+        <div class="main-title-box">
+          <image style="width:500px;height:80px" :src="imgSrc.title.haoQuanTuiJian" v-if="loadingFlag"></image>
+        </div>
+      </header>
+      <cell class="cell" v-for="(item) in items" :key="item.num_iid" :ref="'item'+item.num_iid">
+        <item :item="item"></item>
+      </cell>
+      <header v-if="toHeaderBtnFlag">
+        <div class="toHeader" @click="onToHeader">
+          <text class="iconfont">&#xe666;</text>
+        </div>           
+      </header>
+      <!-- <loading :display="loadingFlag ? 'show' : 'hide'" class="loading" @loading="onloading" ref="loading">
+          <text class="indicator-text" v-if="!loadingFlag">加载更多...</text>
+          <loading-indicator class="loading-indicator" v-if="loadingFlag"></loading-indicator>
+          <text class="indicator-text" v-if="loadingFlag">玩命加载中...</text>
+          <text class="indicator-text" v-if="footerFlag">没有更多了...</text>
+      </loading> -->
+      <header class="footer" ref="footer" @appear="onloadmore">
+        <image style="width:70px;height:70px" :src="imgSrc.loading" v-if="loadingFlag"></image>
+        <text class="indicator-text" v-else>没有更多了...</text>
+      </header>
+  </waterfall>
 </template>
 
 <script>
@@ -72,10 +67,12 @@
   import OnsaleFour from "../components/OnsaleForFour.vue";
   import ScollerRow from "../components/ScollerRow.vue";
   import SearchBarDis from "../components/SearchBarDis.vue";
+  import Item from '../components/waterSingleItem.vue';
   import { formatURL } from "../util/formatURL.js";
   import { getJumpBaseUrl } from "../util/getJumpBaseUrl.js";
   import CryptoJS from "crypto-js";
   import config from '../util/mall.config.js';
+  import imgLocationSrc from '../util/imgLocationSrc.js';
 
   const dom = weex.requireModule("dom");
   const stream = weex.requireModule("stream");
@@ -85,14 +82,43 @@
   export default {
     data() {
       return {
+        console: "",
+        imgSrc: {
+          title: {
+            nanZhuangRec: imgLocationSrc.title.nanZhuangRec,
+            nvZhuangRec: imgLocationSrc.title.nvZhuangRec,
+            haoQuanTuiJian: imgLocationSrc.title.haoQuanTuiJian
+          },
+          loading: imgLocationSrc.gif.loading,
+          pullLoading: imgLocationSrc.gif.pullLoading
+        },
         requestOptions: {
           method: "taobao.tbk.dg.item.coupon.get",
           apiOptions: {
             platform: "2",
-            page_size: "40",
+            page_size: "20",
             page_no: 1,
             adzone_id: config.adzoneId
           }
+        },
+        uatmRequestOptions: { // 选品库api
+          method: 'taobao.tbk.uatm.favorites.item.get',
+          apiOptions: {
+            adzone_id: config.adzoneId,
+            platform: 2,
+            page_size: 10,
+            page_no: 1,
+            fields: 'num_iid,title,pict_url,zk_final_price,user_type,volume,coupon_click_url,coupon_info',
+            favorites_id: ''     
+          }
+        },
+        favoritesId: {
+          man20: '19344940',
+          woman20: '19344941'
+        },
+        lists: {
+          man20: [],
+          woman20:[]
         },
         items: [],
         columnWidth: "auto",
@@ -100,9 +126,7 @@
         columnGap: "10",
         leftGap: "20",
         rightGap: "20",
-        console: "",
         scrollFlag: false,
-        // headerShow: true,
         headOpacity: 0,
         loadingFlag: true,  // 控制底部加载状态
         toHeaderBtnFlag: false,
@@ -117,45 +141,105 @@
       Onsale,
       OnsaleFour,
       ScollerRow,
-      SearchBarDis
+      SearchBarDis,
+      Item
     },
     created() {
-      let self = this;
-      let url = formatURL(
-        this.requestOptions.method,
-        this.requestOptions.apiOptions
-      );
-      this.loadingFlag = true;
-      stream.fetch(
-        {
-          method: "GET",
-          url: url,
-          type: "json"
-        },
-        res => {
-          try {
-            
-            if (res.data.tbk_dg_item_coupon_get_response) {              
-              let items = res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon;
-              self.items = self.couponInfoDeal(items);
-            } else {
-              self.loadingFlag = false;
-            }
-          } catch (err) {
-            console.log(err);
-          }
+      this.uatmRequestOptions.apiOptions.favorites_id = this.favoritesId.man20
+      this.uatmFetch(res => {
+        
+        if(res.data.tbk_uatm_favorites_item_get_response) {
+          let _items = res.data.tbk_uatm_favorites_item_get_response.results.uatm_tbk_item
+          
+          this.lists.man20 = _items           
+        }else {
+          modal.toast({
+            message: '网络异常',
+            duration: 0.3
+          })
         }
-      );
-    },
-    mounted() {},
-    updated(e) {
-      if (this.upFlag) {
-        let el = this.$refs[this.upNumId][0];
-        dom.scrollToElement(el, { offset: -950, animated: false });
-        this.upFlag = false;
-      }
+      },err => {
+        modal.toast({
+          message: '网络异常',
+          duration: 0.3
+        })
+      })
+
+      this.uatmRequestOptions.apiOptions.favorites_id = this.favoritesId.woman20
+      this.uatmFetch(res => {
+        if(res.data.tbk_uatm_favorites_item_get_response) {
+          let _items = res.data.tbk_uatm_favorites_item_get_response.results.uatm_tbk_item
+          this.lists.woman20 = _items           
+        }else {
+          modal.toast({
+            message: '网络异常',
+            duration: 0.3
+          })
+        }
+      },err => {
+        modal.toast({
+          message: '网络异常',
+          duration: 0.3
+        })
+      })
+      
+      this.loadingFlag = true;
+      this.couponFetch(res => {
+        if (res.data.tbk_dg_item_coupon_get_response) {              
+          let items = res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon;
+          this.items = this.couponInfoDeal(items);
+        } else {
+          this.loadingFlag = false;
+        }
+      },err => {
+        this.loadingFlag = false;
+      })
     },
     methods: {
+      couponFetch(resCallback,errCallback) {
+        let url = formatURL(this.requestOptions.method,this.requestOptions.apiOptions)
+        
+        try {
+          stream.fetch(
+            {
+              method: "GET",
+              url: url,
+              type: "json"
+            },
+            res => {
+              if(typeof resCallback === "function") {
+                resCallback(res)
+              }              
+            }
+          );
+        } catch (err) {
+          if(typeof errCallback === "function") {
+            errCallback(err)
+          }
+        }
+      },
+      uatmFetch(resCallback,errCallback) {
+        let url = formatURL(this.uatmRequestOptions.method,this.uatmRequestOptions.apiOptions)
+        
+        try {
+          stream.fetch(
+            {
+              method: "GET",
+              url: url,
+              type: "json"
+            },
+            res => {
+              if(typeof resCallback === "function") {
+                resCallback(res)
+              }              
+            }
+          );
+        } catch (err) {
+          if(typeof errCallback === "function") {
+            errCallback(err)
+          }
+        }
+      },
       couponInfoDeal(items) {
         items.forEach((item, i) => {
           let _coupon_info = "";
@@ -166,9 +250,10 @@
         });
         return items;
       },
-      onScroll(e) {
-        // console.log(e)
-        // this.console = this.$refs.waterfall
+      onpullingdown(e) {
+        console.log(e)
+      },
+      onScroll(e) {       
         e.contentOffset.y < -3000
           ? (this.toHeaderBtnFlag = true)
           : (this.toHeaderBtnFlag = false);
@@ -182,56 +267,12 @@
           }
         } else {
           this.scrollFlag = false;
-          // store.commit("changeScrollFlag", false);
-          // dom.scrollToElement(this.$refs.header,{offset:0,animated:false})
         }
       },
-      // onloading(e) {
-      //   this.loadingFlag = true;
-      //   this.footerFlag = false;
-      //   this.requestOptions.apiOptions.page_no++;
-      //   let self = this;
-      //   let url = formatURL(
-      //     this.requestOptions.method,
-      //     this.requestOptions.apiOptions
-      //   );
-        
-      //   try {
-      //     stream.fetch(
-      //       {
-      //         method: "GET",
-      //         url: url,
-      //         type: "json"
-      //       },
-      //       res => {
-      //         if (res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon) {
-      //           let items =
-      //             res.data.tbk_dg_item_coupon_get_response.results.tbk_coupon;
-      //           items = self.couponInfoDeal(items);
-      //           items.forEach(item => {
-      //             self.items.push(item);
-      //           });
-      //           self.loadingFlag = false;
-      //           self.upNumId = "item" + items[0].num_iid;
-      //           self.upFlag = true;
-
-      //           // let p = getComponentRect('viewport')
-      //           // dom.scrollToElement(el,{offset:0,animated:true})
-      //         } else {
-      //           self.footerFlag = true;
-      //         }
-      //       }
-      //     );
-      //   } catch (err) {
-      //     console.log(err);
-      //   }
-
-      //   setTimeout(() => {
-      //     this.loadingFlag = false;
-      //     // this.footerFlag = true
-      //   }, 5000);
-      // },
       onloadmore() {
+        if(!this.items.length) {
+          return;
+        }
         this.footerFlag = true;
         this.requestOptions.apiOptions.page_no++
         
@@ -266,15 +307,6 @@
       },
       onToHeader(e) {
         dom.scrollToElement(this.$refs.header, { offset: 0, animated: 'true' });
-      },
-      itemOnClick(e) {      
-        let couponUrl = e.currentTarget.attr.couponUrl;
-        // store.commit("setCouponUrl", couponUrl);
-        
-        navigator.push({
-          url: getJumpBaseUrl("coupon", couponUrl),
-          animated: "true"
-        });
       }
     }
   };
@@ -293,6 +325,15 @@
   background-color: #f8f8f8;
 }
 
+.refresh {
+  align-items: center;
+  justify-content: center;
+}
+
+.refresh-pre-icon {
+  font-weight: 700;
+}
+
 .sticky-header {
   position: sticky;
 }
@@ -303,7 +344,8 @@
   justify-content: center;
   height: 150px;
   padding-bottom: 20px;
-  background-color: rgba(250,81,58, 0.9);
+  /* background-color: rgba(250,81,58, 0.9); */
+  background-color: rgba(235, 236, 238, 0.95);
 }
 
 /* 头部背景显示 */
@@ -314,18 +356,14 @@
 
 
 .main-title-box {
+  width: 710px;
   padding: 15px;
-  margin: 20px;
-  margin-top: 0;
+  margin: 0 20px;
   border-bottom-width: 3px;
   border-bottom-style: solid;
   border-bottom-color: #ebecee;
   align-items: center;
-}
-
-.main-title {
-  color: #333;
-  font-size: 36px;
+  background-color: #fff;
 }
 
 .cell {

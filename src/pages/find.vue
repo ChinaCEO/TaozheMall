@@ -16,7 +16,7 @@
     </header>
     <header>   
       <div class="header-wrapper size">
-        <image src="file:///android_asset/images/header/find-header.jpg" class="size header-bgi" resize="cover"></image>        
+        <image :src="imgSrc.headerBgc" class="size header-bgi" resize="cover"></image>        
         <text class="title">发现·精彩</text>
         
         <div class="slider-wrapper">
@@ -25,7 +25,7 @@
                           ref="wxc-ep-slider"
                           :card-s="cardSize"
                           :auto-play="true"
-                          :interval="1000" >
+                          :interval="3000" >
             <wxc-pan-item v-for="(item,index) in sliderItems[0]"
                           :key="index"
                           :ext-id="index"
@@ -36,7 +36,7 @@
                           :accessible="true" 
                           :aria-label="item.item_url" >
               <image :src="item.pic_url" class="slider-size" resize="cover"></image>
-            
+              
               <div class="slider-item-inner">
                 <div class="slider-saler-logo">
                   <div class="slider-saler-logo-wrapper">
@@ -78,12 +78,12 @@
     </header>
     
     <header>
-      <div class="hot-title">
-        <image src="file:///android_asset/images/find-slider-title.png" class="slider-title-size" resize="cover"></image>
+      <div class="hot-title title-pop">
+        <image :src="imgSrc.findSliderTitle" class="slider-title-size" resize="cover"></image>
       </div>      
     </header>
     <header v-for="(el,j) in bannerItems" :key="j" :itemUrl="el.item_url" class="chunk-banner-wrapper">
-
+      <!-- <text>{{chunkBannerItemList(j)}}</text> -->
       <!-- 块banner -->
       <chunk-banner 
         :img-src="el.img_src" 
@@ -95,16 +95,12 @@
     
     <header>
       <div class="hot-title">
-        <image src="file:///android_asset/images/find-hot-title.png" class="hot-title-size" resize="cover"></image>
+        <image :src="imgSrc.findHotTitle" class="hot-title-size" resize="cover"></image>
       </div>      
     </header>
     <!-- 结果页 -->
     <cell class="cell" v-for="item in hotResultList" :key="item.num_iid" :ref="'item'+item.num_iid">
-      <item :coupon-url='`https://${item.coupon_share_url}`' 
-            :img-src='item.white_image ? item.white_image : item.pict_url'
-            :title='item.title'
-            :coupon-amount='item.coupon_amount'
-            :coupon-final-price="couponFinalPrice(item)" ></item>
+      <item :item="item"></item>
     </cell>
     <header v-if="toHeaderBtnFlag">
       <div class="toHeader" @click="onToHeader">
@@ -113,7 +109,7 @@
     </header>
     <header ref="footer" @appear="onloadmore">
       <div class="footer">
-        <image style="width:70px;height:70px" src="file:///android_asset/images/loading.gif" v-if="loadingFlag"></image>
+        <image style="width:70px;height:70px" :src="imgSrc.loading" v-if="loadingFlag"></image>
         <text class="indicator-text" v-else>~没有更多了~</text>
       </div>     
     </header>
@@ -126,6 +122,7 @@
   import Item from '../components/WaterSingleItem.vue';
   import { formatURL } from "../util/formatURL.js";
   import config from '../util/mall.config.js';
+  import imgLocationSrc from '../util/imgLocationSrc.js';
 
   const stream = weex.requireModule("stream");
   const modal = weex.requireModule('modal');
@@ -135,7 +132,13 @@
   export default {
     data() {
       return {
-        console: '',        
+        console: '',
+        imgSrc: {
+          loading: imgLocationSrc.gif.loading,
+          headerBgc: imgLocationSrc.header.findHeader,
+          findSliderTitle: imgLocationSrc.title.findSliderTitle,
+          findHotTitle: imgLocationSrc.title.findHotTitle
+        },        
         autoSliderId: 1,
         cardSize: {
           width: 440,
@@ -146,8 +149,8 @@
         columnWidth: "auto",
         columnCount: "2",
         columnGap: "10",
-        leftGap: "0",
-        rightGap: "0",
+        leftGap: "20",
+        rightGap: "20",
         sliderItems: [
           {
             title: '佐丹奴跨界合作-折射有趣灵魂',
@@ -193,22 +196,22 @@
         bannerItems: [
           {
             title: '女装',
-            img_src: 'file:///android_asset/images/banners/woman.jpg',
+            img_src: imgLocationSrc.find.woman,
             item_url: ''
           },
           {
             title: '母婴',
-            img_src: 'file:///android_asset/images/banners/infant.jpg',
+            img_src: imgLocationSrc.find.infant,
             item_url: ''
           },
           {
             title: '大牌',
-            img_src: 'file:///android_asset/images/banners/famous.jpg',
+            img_src: imgLocationSrc.find.famous,
             item_url: ''
           },
           {
             title: '潮流',
-            img_src: 'file:///android_asset/images/banners/fashion.jpg',
+            img_src: imgLocationSrc.find.fashion,
             item_url: ''
           },
           // {
@@ -237,7 +240,7 @@
           method: 'taobao.tbk.dg.optimus.material',
           apiOptions: {
             adzone_id: config.adzoneId,
-            page_size: 20,
+            page_size: 3,
             page_no: 1,
             material_id: ''      
           }
@@ -254,6 +257,7 @@
           }
         },
         materialId: {
+          woman: 11061,
           hotRecommend: 4094,
           infant: 4041,
           goodStuffs: 4092,
@@ -263,7 +267,7 @@
           woman: 19278990,
           infant: 19279502,
           goodStuffs: 19279610,
-          fashionGoods: 19279629
+          fashionGoods: 19343628
         },
         hotResultList: [],
         womanItems: [],
@@ -295,20 +299,23 @@
       ChunkBanner,
       Item
     },
-    beforeMount() {
+    created() {
+      let pageNo = Math.floor(Math.random()*50) 
+      this.materialRequestOptions.apiOptions.page_no = pageNo
       
-      this.uatmRequestOptions.apiOptions.favorites_id = this.uatmFavoritesId.woman
-      this.getUatmRequest('womanItems')
+      this.materialRequestOptions.apiOptions.material_id = this.materialId.woman
+      this.getMaterialRequest('womanItems',3)
 
-      this.uatmRequestOptions.apiOptions.favorites_id = this.uatmFavoritesId.infant
-      this.getUatmRequest('infantItems')
+      this.materialRequestOptions.apiOptions.material_id = this.materialId.infant
+      this.getMaterialRequest('infantItems',3)
+
+      this.materialRequestOptions.apiOptions.material_id = this.materialId.goodStuffs
+      this.getMaterialRequest('goodStuffsItems',3)
       
-      this.uatmRequestOptions.apiOptions.favorites_id = this.uatmFavoritesId.goodStuffs
-      this.getUatmRequest('goodStuffsItems')
-      
-      this.uatmRequestOptions.apiOptions.favorites_id = this.uatmFavoritesId.fashionGoods
-      this.getUatmRequest('fashionGoodsItems')
-           
+      this.materialRequestOptions.apiOptions.material_id = this.materialId.fashionGoods
+      this.getMaterialRequest('fashionGoodsItems',3)
+
+      this.materialRequestOptions.apiOptions.page_no = 1           
       this.materialRequestOptions.apiOptions.material_id = this.materialId.hotRecommend
       this.getMaterialRequest('hotResultList',20)
             
@@ -369,6 +376,7 @@
       },
    
       chunkBannerItemList(index){
+        
         switch(index) {
           case 0: return this.womanItems; break;
           case 1: return this.infantItems; break;
@@ -378,7 +386,7 @@
       },
       getMoreItemsId(index) {
         switch(index) {
-          case 0: return this.uatmFavoritesId.woman; break;
+          case 0: return this.materialId.woman; break;
           case 1: return this.materialId.infant; break;
           case 2: return this.materialId.goodStuffs; break;
           case 3: return this.materialId.fashionGoods; break;
@@ -387,7 +395,7 @@
       getMoreItemsType(index) {
         // uatm为选品库 material为通用物料
         switch(index) {
-          case 0: return 'uatm'; break;
+          case 0: return 'material'; break;
           case 1: return 'material'; break;
           case 2: return 'material'; break;
           case 3: return 'material'; break;
@@ -465,6 +473,7 @@
               type: "json"
             },
             res => {
+              
               if(typeof resCallback === "function") {
                 resCallback(res)
               }              
@@ -479,9 +488,11 @@
       getMaterialRequest(itemArrName,pageSize) {
         this.loadingFlag = true
         this.materialFetch(res => {
+          
           if(res.data.tbk_dg_optimus_material_response) {
             let data = res.data.tbk_dg_optimus_material_response.result_list.map_data
-            this[itemArrName] = data 
+            this[itemArrName] = data
+            
           }else {
             this.loadingFlag = false
           }
@@ -647,11 +658,16 @@
   }
 
   .hot-title {
-    width: 750px;
-    /* margin-top: 20px; */
+    width: 710px;    
+    margin: 20px;
+    margin-bottom: 0;
     background-color: #fff;
     align-items: center;
     justify-content: center;
+  }
+
+  .title-pop {
+    margin-bottom: 10px;
   }
 
   .hot-title-size {

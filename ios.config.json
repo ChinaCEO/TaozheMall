@@ -1,8 +1,8 @@
 {
-   "AppName":"WeexApp",
+   "AppName":"taozhemall",
    "Version":"0.1",
    "BuildVersion":"0.1.0",
-   "AppId":"com.alibaba.weex",
+   "AppId":"com.taozhemall.weex",
    "CodeSign":"",
    "Profile":"",
    "WeexBundle":"index.js"

@@ -23,11 +23,12 @@
       <!-- <text>{{console}}</text> -->
     </header>
     <cell class="cell" v-for="item in items" :key="item.num_iid" :ref="'item'+item.num_iid">
-      <item :coupon-url="item.coupon_share_url ? `https://${item.coupon_share_url}` : item.coupon_click_url" 
-            :img-src="item.white_image ? item.white_image : item.pict_url"
+      <!-- <item :coupon-url="item.coupon_share_url ? `https://${item.coupon_share_url}` : item.coupon_click_url" 
+            :img-src="item.white_image ? item.white_image : 'https://'+ item.pict_url"
             :title="item.title"
             :coupon-amount="item.coupon_amount ? item.coupon_amount :getCoupnAmount(item)"
-            :coupon-final-price="couponFinalPrice(item)" ></item>
+            :coupon-final-price="couponFinalPrice(item)" ></item> -->
+      <item :item="item"></item>
     </cell>
     <header v-if="toHeaderBtnFlag">
       <div class="toHeader" @click="onToHeader">
@@ -90,21 +91,24 @@
         loadingFlag: true
       }
     },
-    mounted() {
+    created() {
       
       let bundleUrl = weex.config.bundleUrl
       bundleUrl = new String(bundleUrl);
+      
       let params = bundleUrl.slice(bundleUrl.indexOf('?')+1) 
       let paramsArr = params.split('&')
       
       paramsArr.forEach(el => {
         let singleParamArr = el.split('=')
+        
         switch(singleParamArr[0]) {
           case 'requestItemsId': this.requestItemsId = singleParamArr[1]; break;
           case 'requestType': this.requestType = singleParamArr[1]; break;
           case 'headerImgUrl': this.headerImgUrl = singleParamArr[1]; break;
         }      
       });
+
       if(this.requestType === 'uatm') {
         this.uatmRequestOptions.apiOptions.favorites_id = this.requestItemsId
         this.getUatmRequest()
@@ -145,7 +149,7 @@
             this.uatmFetch(res => {
               
               if(res.data.tbk_uatm_favorites_item_get_response) {
-                this.console = res
+                
                 _items = res.data.tbk_uatm_favorites_item_get_response.results.uatm_tbk_item               
                 this.items.push.apply(this.items, _items)
               }else {
@@ -186,8 +190,7 @@
               type: "json"            
             },
             res => {
-              // this.console = res.data
-              // let obj = JSON.parse(res.data)
+              
               
               if(typeof resCallback === "function") {
                 resCallback(res)
@@ -198,7 +201,7 @@
             }
           );
         } catch (err) {
-          this.console = 222
+          
           if(typeof errCallback === "function") {
             errCallback(err)
           }
@@ -264,26 +267,8 @@
             duration: 0.3
           })
         })
-      },
-      getCoupnAmount(item) {
-        let _couponaAmount = "";
-        let jianPos = item.coupon_info.search("减")
-        _couponaAmount = parseInt(item.coupon_info.slice(jianPos + 1, -1)) 
-
-        return _couponaAmount
-      },
-      couponFinalPrice(item) {
-        let _couponaAmount = "";
-        
-        if(this.requestType === 'uatm') {
-          _couponaAmount = this.getCoupnAmount(item)
-        }else if(this.requestType === 'material') {          
-          _couponaAmount = item.coupon_amount
-        }
-               
-        let _final = Math.round(item.zk_final_price * 100 - _couponaAmount*100) / 100
-        return _final.toFixed(2)
-      },
+      }
+      
       // 公共方法结束
     },
   }

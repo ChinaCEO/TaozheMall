@@ -10,7 +10,7 @@
                 title-type="text"
                 need-slider="true"
                 :tab-page-height="tabPageHeight"
-                @wxcTabPageCurrentTabSelected="wxcTabPageCurrentTabSelected">
+                @wxcTabPageCurrentTabSelected="wxcTabPageCurrentTabSelected" >
       <list v-for="(v,index) in items"
             :key="index"
             class="item-container"
@@ -53,7 +53,7 @@
 
   .size {
     width: 750px;
-    height: 200px;
+    height: 250px;
   }
 
   .back-btn {
@@ -143,7 +143,7 @@
         activeBgColor: '#FFFFFF',
         isActiveTitleBold: false,
         width: 160,       
-        height: 60,
+        height: 80,
         fontSize: 24,
         activeFontSize: 28,
         hasActiveBottom: true,
@@ -165,7 +165,7 @@
       currentPage: 0
     }),
     created () {
-      this.tabPageHeight = Utils.env.getPageHeight() - 120;
+      this.tabPageHeight = WXEnvironment.deviceHeight;
 
       let bundleUrl = weex.config.bundleUrl
       bundleUrl = new String(bundleUrl);

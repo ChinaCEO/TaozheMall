@@ -21,8 +21,7 @@
                 <div class="clear" @click="oninputClear" v-if="showInputClearBtn">
                   <text class="iconfont clear-icon">&#xe657;</text>
                 </div>
-            </div> 
-            
+            </div>            
         </header>
         
         <!-- 搜索记录 -->
@@ -38,10 +37,10 @@
           <div class="search-record-main" :class="[hasRecord ? '' : 'jc-center']">
             <text class="search-norecord-tip"  v-if="!hasRecord">还没有搜索记录噢~</text>            
             <text class="search-record-tip search-record-txt" 
-              v-for="(item,i) in searchRecord" 
+              v-for="(searchRecordItem,i) in searchRecord" 
               :key="i" 
               @click="onrecordSearch"
-              v-else>{{item}}</text>           
+              v-else>{{searchRecordItem}}</text>           
           </div>
         </div>
 
@@ -67,7 +66,7 @@
             :loadingFlag="loadingFlag" 
             v-if="hasResultFlag" 
             @onloadmore="onloadmore"></item-list>
-          <div class="no-result-box" v-else>
+          <div class="no-result-box">
             <image style="width:70px;height:70px" src="file:///android_asset/images/loading.gif" v-if="searchLoadingFlag"></image>
             <text class="no-result" v-else>没有搜索到相关产品~</text>
           </div>
@@ -294,7 +293,7 @@
         },
         isFiltrate: false, // 筛选
         onSearchInputFlag: false,
-        searchLoadingFlag: true,
+        searchLoadingFlag: false,
         loadingFlag: true // loadmore flag
       }
     },
@@ -357,6 +356,7 @@
         }
         if(bundleUrl.indexOf('?webUrl=') >= 0) {
           let word = bundleUrl.slice(bundleUrl.search(/\=/)+1)
+          this.value = word
           this.toSearch(word,true)         
         }              
       })
@@ -414,13 +414,14 @@
         this.hasResultFlag = false
         this.searchLoadingFlag = true
         this.fetch(res => {
-          this.console =  this.searchResultList 
+          
           if(res.data.tbk_dg_material_optional_response) {  
                                     
             let _searchResultList = res.data.tbk_dg_material_optional_response.result_list.map_data
             
             this.searchResultList = this.searchResultListDealed(_searchResultList)
-            this.hasResultFlag = true         
+            this.hasResultFlag = true
+            this.console = this.showResult                
           }else {
             this.hasResultFlag = false
           }
@@ -483,16 +484,23 @@
       },
       onfocus() {
         this.showResult = false
+        if(this.value) {
+          this.showInputClearBtn = true
+        }
       },
       onblur() {
-        this.showResult = true
+        if(this.toSearchFlag) {
+          this.showResult = true
+        }
+        this.showInputClearBtn = false
       },
-      toSearch(value,addRecord) {
-        this.$refs['input'].blur(); 
-        this.showRecommend = false    
-        // this.toSearchFlag = true
+      toSearch(value,addRecord) {     
+        this.showRecommend = false 
+        this.toSearchFlag = true
+        this.showResult = true
+        this.$refs['input'].blur();           
         if(value) {
-          // this.showResult = true
+          
           this.requestOptions.apiOptions.q = value //查询词
           this.getSearchResult()
     
@@ -882,12 +890,13 @@
   }
 
   .header-box {
-    height: 80px;
+    height: 170px;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     background-color: #fff;
     position: relative;
+    padding-top: 80px;
     border-bottom-style: solid;
     border-bottom-width: 2px;
     border-bottom-color: #ebecee; 
@@ -930,7 +939,6 @@
     justify-content: center;
     position: absolute;
     right: 60px;
-    top: 25px;
   }
 
   .clear-icon {
@@ -987,16 +995,20 @@
     justify-content: center;
     padding-left: 15px;
     padding-right: 15px;
-    background-color: #ebecee;
+    background-color: #fff;
     margin-right: 20px;
     margin-bottom: 20px;
     border-radius: 20px;
   }
 
   .search-record-txt {
-    font-size: 24px;
+    font-size: 28px;
     color: #333;
     line-height: 50px;
+  }
+
+  .recommend {
+    height: 600px;
   }
 
   .recommend-tip {

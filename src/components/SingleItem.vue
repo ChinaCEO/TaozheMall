@@ -1,20 +1,20 @@
 <template>
     
   <div  class="item" 
-        :url="item.coupon_share_url ? item.coupon_share_url : item.item_url" 
         @click="onitemClick" > 
     <image 
-      :src="item.pict_url" 
+      :src="picSrc(item)"
       class="item-pic" 
       style="width:200px;height:200px"></image>
     <div class="item-main">
       <div class="item-title-box">
         <image 
-          src="file:///android_asset/images/tmall-logo.jpg" 
+          :src="imgSrc.tmallLogo"
           class="title-icon" 
           style="width:28px;height:28px"
           v-if="item.user_type"></image>
         <text class="item-title">{{item.title}}</text>
+        <!-- <text>{{console}}</text> -->
       </div>
       <!-- 描述标签 -->
       <div class="item-description">
@@ -36,7 +36,6 @@
           <text class="zk-price-num">{{item.zk_final_price}}</text>
         </div>
         
-        <!-- <text>{{item.coupon_amount}}</text> -->
         <div class="zk-price-wrap" v-else>
           <text class="zk-price">券后价</text>
           <text class="zk-price-icon zk-price-coupon-icon">&yen;</text>
@@ -59,8 +58,8 @@
 
 <script>
   // import toHeader from "./ToHeader.vue";
-  import { store } from "../store.js";
   import { getJumpBaseUrl } from "../util/getJumpBaseUrl.js";
+  import imgLocationSrc from '../util/imgLocationSrc.js';
 
   // const stream = weex.requireModule("stream");
   const navigator = weex.requireModule("navigator-pri");
@@ -75,7 +74,10 @@
     },
     data() {
       return {
-        console: ''
+        console: '',
+        imgSrc: {
+          tmallLogo: imgLocationSrc.logo.tmallLogo
+        },
       }
     },
     computed: {
@@ -94,20 +96,50 @@
         let _couponFinalPrice = Math.round(zk_final_price * 100 - coupon_amount*100) / 100
         return _couponFinalPrice
       },
-      
-      onitemClick(e) {
-        let url = e.currentTarget.attr.url;
-        if(url.indexOf('https:') != 0) {
-          url = 'https:' + url 
+      picSrc(item) {
+        if(item.white_image) {
+          if(item.white_image.indexOf('http') >= 0) {
+            return item.white_image
+          }else {
+            return `https:${item.white_image}`
+          }
+        }else {
+          if(item.pict_url.indexOf('http') >= 0) {
+            return item.pict_url
+          }else {
+            return `https:${item.pict_url}`
+          }
         }
-        
-        store.commit("setCouponUrl", url);
-        
+      },
+      onitemClick(e) {
+        let url = this.getCouponUrl(this.item)
+    
         navigator.push({
-          url: getJumpBaseUrl("coupon", url),
+          url: "tblinkto://" + url,
           animated: "true"
         });
-      }      
+      }, 
+      getCouponUrl(item) {
+        if(item.coupon_share_url) {
+          if(item.coupon_share_url.indexOf('http') < 0){
+            return 'https:' + item.coupon_share_url
+          }else {
+            return item.coupon_share_url
+          }         
+        }else if(item.coupon_click_url) {
+          if(item.coupon_click_url.indexOf('http') < 0){
+            return 'https:' + item.coupon_click_url
+          }else {
+            return item.coupon_click_url
+          } 
+        }else {
+          if(item.item_url.indexOf('http') < 0){
+            return 'https:' + item.item_url
+          }else {
+            return item.item_url
+          } 
+        }
+      }       
     }
   }
 </script>

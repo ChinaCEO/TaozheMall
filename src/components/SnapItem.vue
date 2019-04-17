@@ -5,7 +5,7 @@
           class="item-pic" 
           style="width:200px;height:200px"></image>
     <div class="item-main">
-      <!-- <text>{{console}}</text> -->
+      <!-- <text>{{picSrc}}</text> -->
       <div class="item-title-box">
         <text class="item-title" :class="[countdownFlag ? 'title-underline' : '']">{{item.title}}</text>
         <div class="item-countdown" v-if="countdownFlag">
@@ -114,7 +114,7 @@
     methods: {
       onItemClick() {
         navigator.push({
-          url: getJumpBaseUrl("coupon", this.item.click_url),
+          url: "tblinkto://" + this.item.click_url,
           animated: "true"
         });
       }

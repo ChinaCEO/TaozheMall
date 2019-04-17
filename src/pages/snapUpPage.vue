@@ -2,7 +2,7 @@
   <div>
     <header class="header size">      
       <text class="back-btn iconfont" @click="onback">&#xe625;</text>
-      <image src="file:///android_asset/images/snap-logo.png" class="header-bgi" style="width:200px;height:80px;" resize="cover"></image>
+      <image :src="imgSrc.header" class="header-bgi" style="width:200px;height:80px;" resize="cover"></image>
     </header>
     
     <wxc-tab-page ref="wxc-tab-page"
@@ -46,7 +46,7 @@
           </div> 
         </cell>  -->
         <cell class="footer" @appear="loadingMore">          
-          <image style="width:70px;height:70px" src="file:///android_asset/images/loading.gif" v-if="loadingFlag"></image>
+          <image style="width:70px;height:70px" :src="imgSrc.loading" v-if="loadingFlag"></image>
           <text class="footer-text" v-else>~没有更多了~</text>        
         </cell>
       </list>
@@ -61,6 +61,7 @@
   import snapItem from '../components/SnapItem.vue';
   import { formatURL } from "../util/formatURL.js";
   import config from '../util/mall.config.js';
+  import imgLocationSrc from '../util/imgLocationSrc.js';
 
   const navigator = weex.requireModule("navigator-pri");
   const stream = weex.requireModule("stream");
@@ -71,6 +72,10 @@
     data() {
       return {
         console: '',
+        imgSrc: {
+          loading: imgLocationSrc.gif.loading,
+          header: imgLocationSrc.logo.snapLogo
+        },
         timeArr: [0,8,10,11,12,13,14,15,17,19,21,22,23],
         tabTitles: [],
         items:[],
@@ -80,7 +85,7 @@
           activeTitleColor: '#fff',
           activeBgColor: '#fff',
           isActiveTitleBold: false,
-          width: 150,       
+          width: 160,       
           height: 100,
           fontSize: 28,
           activeFontSize: 32,
@@ -196,7 +201,7 @@
     methods: {
       onback() {       
         navigator.pop({
-          animated: "false"
+          animated: "true"
         })
       },
       wxcTabPageCurrentTabSelected (e) {                    
@@ -292,7 +297,7 @@
 
   .size {
     width: 750px;
-    height: 130px;
+    height: 200px;
   }
 
   .back-btn {
@@ -307,7 +312,7 @@
     background-color: #fff;
     justify-content: center;
     align-items: center;
-    width: 130px;
+    width: 150px;
     
   }
 

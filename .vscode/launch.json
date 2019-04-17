@@ -10,7 +10,7 @@
       "name": "weex android",
       "jsBundleFolderPath": "./dist/",
       "jsBundleEntry": "index.js",
-      "applicationId": "com.weex.app",
+      "applicationId": "com.taozhemall.app",
       "deviceId": "${command:androidDeviceId}",
       "projectPath": "./platforms/android/",
       "preCommand": "npm run dev"

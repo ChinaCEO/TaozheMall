@@ -2,20 +2,24 @@
   <scoller class="scoller">
     <header class="header">
       <div class="header-warpper size">
-        <image src="file:///android_asset/images/loadin-bg.png" class="header-bgi size" resize="cover"></image>
-        <div class="loading">
-          <text class="iconfont loading-icon">&#xe629;</text>
-        </div>        
-        <text class="loading-txt">登&nbsp;陆</text>        
+        <image :src="imgSrc.headerBgi" class="header-bgi size" resize="cover"></image>
+        <div class="login" @click="onlogin">
+          <div class="login-icon-wrapper" :style="{padding: loginFlag ? '0':'5px'}">
+            <text class="iconfont login-icon" v-if="!loginFlag">&#xe629;</text>
+            <image :src="avatarUrl" style="width:130px;height:130px;" resize="cover" v-else></image>
+          </div>        
+          <text class="login-txt">{{loginFlag ? nickName : '登&nbsp;陆'}}</text>
+        </div>               
       </div>
+      <!-- <text>{{console}}</text> -->
       <div class="row">
-        <div class="row-item">
+        <div class="row-item" @click="onShowOrder">
           <text class="iconfont row-item-icon row-item-order-icon">&#xe652;</text>
           <text class="row-item-txt">我的订单</text> 
         </div>
-        <div class="row-item">
-          <text class="iconfont row-item-icon row-item-collect-icon">&#xe62e;</text>
-          <text class="row-item-txt">收藏</text> 
+        <div class="row-item" @click="onShowCart">
+          <text class="iconfont row-item-icon row-item-collect-icon">&#xe61b;</text>
+          <text class="row-item-txt">购物车</text> 
         </div>
         <div class="row-item">
           <text class="iconfont row-item-icon row-item-record-icon">&#xe64a;</text>
@@ -24,40 +28,104 @@
       </div>      
     </header>
     <div class="column">      
-      <div class="column-item">
-        <text class="iconfont column-item-icon">&#xe600;</text>
-        <div class="column-item-wrapper">
-          <text class="column-item-txt">设置</text>
-          <text class="iconfont column-item-arrow">&#xe631;</text>
-        </div>        
-      </div>
-      <div class="column-item">
-        <text class="iconfont column-item-icon">&#xe663;</text>
-        <div class="column-item-wrapper">
-          <text class="column-item-txt">分享给朋友</text>
-          <text class="iconfont column-item-arrow">&#xe631;</text>
-        </div>        
-      </div>
-      <div class="column-item">
-        <text class="iconfont column-item-icon">&#xe601;</text>
-        <div class="column-item-wrapper">
-          <text class="column-item-txt">关于我们</text>
-          <text class="iconfont column-item-arrow">&#xe631;</text>
-        </div>        
-      </div>
-      
+      <selectBar :icon="'\ue600'" title="设置" @onclick="onSettingClick"></selectBar>  
+      <selectBar :icon="'\ue663'" title="分享给朋友" @onclick="onAboutClick"></selectBar>  
+      <selectBar :icon="'\ue601'" title="关于我们" @onclick="onAboutClick"></selectBar>  
     </div>
-
   </scoller>
 </template>
 
 <script>
+  import { formatURL } from "../util/formatURL.js";
+  import { getJumpBaseUrl } from "../util/getJumpBaseUrl.js";
+  import imgLocationSrc from '../util/imgLocationSrc.js';
+  import selectBar from "../components/ListSelectBar.vue";
+
+  const navigator = weex.requireModule("navigator-pri");
+  const login = weex.requireModule("login");
+  const storage = weex.requireModule("storage");
+  const modal = weex.requireModule("modal");
+  const order = weex.requireModule("order");
+ 
   export default {
+    components: {
+      selectBar
+    },
     data() {
       return {
-       
+        console: '',
+        imgSrc: {
+          headerBgi: imgLocationSrc.header.loadinBg
+        },
+        loginFlag: false,
+        avatarUrl: '',       
+        nickName: '',      
       }
     },
+    created() {     
+      storage.getItem("loginData",e => {
+        if(e.result === "success") {
+          this.loginFlag = true
+
+          let dataArr = e.data.split("$$")
+          this.avatarUrl = dataArr[0]
+          this.nickName = dataArr[1]        
+        }else {
+          this.loginFlag = false
+        }
+      })
+      const login = new BroadcastChannel('login')
+      login.onmessage = e => {
+        this.loginFlag = e.data
+      }
+    },
+    updated() {
+      
+    },
+    methods: {
+      onlogin() {
+        if(!this.loginFlag) {
+          login.login(res => {
+            if(res) {
+              modal.toast({
+                message: '登录成功',
+                duration: 0.5
+              })
+              this.loginFlag = true
+              this.avatarUrl = res.avatarUrl
+              this.nickName = res.nick
+              storage.setItem("loginFlag",this.loginFlag)         
+              storage.setItem("loginData",`${this.avatarUrl}$$${this.nickName}`)            
+            }else {
+              modal.toast({
+                message: '登录失败',
+                duration: 0.5
+              })
+
+            }
+          })
+        }       
+      },
+      onShowOrder() {
+        order.showOrders()
+      },
+      onShowCart() {
+        order.showCart()
+      },
+      onSettingClick() {
+       navigator.push({
+          url: getJumpBaseUrl("setting", ''),
+          animated: "true"
+        });
+      },
+      onAboutClick() {
+        navigator.push({
+          url: getJumpBaseUrl("about", ''),
+          animated: "true"
+        });
+      }
+
+    }
   }
 </script>
 
@@ -91,24 +159,30 @@
     top: 0;
   }
 
-  .loading {
+  .login {
+    margin-top: 160px;
+    margin-bottom: 20px;
+    justify-content: center;
+    align-items: center; 
+  }
+
+  .login-icon-wrapper {
     border-width: 2px;
     border-color: #ebecee;
     border-style: solid;
     border-radius: 130px;
     justify-content: center;
     align-items: center;    
-    padding: 5px;
-    margin-top: 150px;
-    margin-bottom: 20px;
+    /* padding: 5px; */
+    margin-bottom: 20px;   
   }
 
-  .loading-icon {
+  .login-icon {
     font-size: 100px;
     color: #bbb;
   }
 
-  .loading-txt {
+  .login-txt {
     font-size: 32px;
     color: #fff;
   }
@@ -193,5 +267,19 @@
     font-size: 28px;
     color: #bbb; 
     margin-right: 30px;
+  }
+
+  .logout {
+    margin: 160px 80px 120px 80px;
+    background-color: #fb3519;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+  }
+
+  .logout-txt {
+    font-size: 36px;
+    color: #fff;
   }
 </style>

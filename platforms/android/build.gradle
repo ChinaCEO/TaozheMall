@@ -25,6 +25,9 @@ allprojects {
             url 'https://maven.google.com/'
             name 'Google'
         }
+        maven {
+            url "http://repo.baichuan-android.taobao.com/content/groups/BaichuanRepositories/"
+        }
     }
 }
 

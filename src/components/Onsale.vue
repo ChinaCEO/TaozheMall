@@ -64,6 +64,7 @@
   import { getJumpBaseUrl } from "../util/getJumpBaseUrl.js";
   import config from '../util/mall.config.js';
   import { formatURL } from "../util/formatURL.js";
+  import imgLocationSrc from '../util/imgLocationSrc.js';
 
   const storage = weex.requireModule('storage');
   const navigator = weex.requireModule("navigator-pri");
@@ -100,19 +101,14 @@
       }
     },
     created() {
-  
       let currentTime = new Date();
-      let currentTimeHour = currentTime.getHours();
-      let currentTimeMin = currentTime.getMinutes();
-      let currentTimesec = currentTime.getSeconds();
-      
-      let index = -1
-      let hour = currentTimeHour
-      
-      index = this.onCircle(hour)
-      this.onsaleCountDowmTime = this.timeArr[index + 1] * 3600 - (currentTimeHour * 3600 + currentTimeMin * 60 + currentTimesec)
+      this.getOnsaleCountDowmTime(currentTime)
       
       this.countdownTimer = setInterval(() => {
+        if(this.onsaleCountDowmTime <= 0) {
+          let currentTime = new Date();
+          this.getOnsaleCountDowmTime(currentTime)
+        }
         this.onsaleCountDowmTime --
         this.getCountdown()
       },1000)
@@ -152,12 +148,12 @@
                 }
               },3000)
             } else {
-              this.countdownPicUrl = 'file:///android_asset/images/sale1.png'
+              this.countdownPicUrl = imgLocationSrc.goodsPics.sale1
             }
           }
         );
       } catch (err) {
-        this.countdownPicUrl = 'file:///android_asset/images/sale1.png'
+        this.countdownPicUrl = imgLocationSrc.goodsPics.sale1
       }
     },
     beforeDestroy() {     
@@ -165,6 +161,21 @@
       clearInterval(this.countdownPicTimer)
     },
     methods: {
+      getOnsaleCountDowmTime(currentTime) {       
+        let currentTimeHour = currentTime.getHours();
+        let currentTimeMin = currentTime.getMinutes();
+        let currentTimesec = currentTime.getSeconds();
+        
+        let index = -1
+        let hour = currentTimeHour
+        
+        index = this.onCircle(hour)
+        if(!this.timeArr[index + 1]){
+          this.onsaleCountDowmTime = 24 * 3600 - (currentTimeHour * 3600 + currentTimeMin * 60 + currentTimesec)
+        }else {
+          this.onsaleCountDowmTime = this.timeArr[index + 1] * 3600 - (currentTimeHour * 3600 + currentTimeMin * 60 + currentTimesec)
+        }       
+      },
       getCountdown() {
         let hour = parseInt(this.onsaleCountDowmTime / 3600) 
         this.countdown.hour = hour< 10 ? '0' + hour : hour
@@ -188,10 +199,16 @@
         })
       },
       onRightBottomClick(){
-        let url = 'https://mos.m.taobao.com/union/supercoupon?pid=mm_321530087_327050487_91627500240'
+        let webUrl = `https://mos.m.taobao.com/union/supercoupon?pid=${config.pid}`
+        // let withBack = 'true'
+
+        // let option = { 
+        //   webUrl: webUrl, 
+        //   withBack: withBack 
+        // }
         
         navigator.push({
-          url: getJumpBaseUrl('coupon', url),
+          url: "tblinkto://" + webUrl,
           animated: "true"
         })
       },

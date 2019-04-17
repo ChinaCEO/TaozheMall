@@ -1,5 +1,5 @@
 {
-  "name": "taozhe",
+  "name": "taozhemall",
   "version": "1.0.0",
   "description": "taozhe mall",
   "author": "",
@@ -25,7 +25,7 @@
     "pack:web": "npm run clean:web && npm run build:prod:web"
   },
   "keywords": [
-    "weex"
+    "taozhemall"
   ],
   "license": "MIT",
   "dependencies": {

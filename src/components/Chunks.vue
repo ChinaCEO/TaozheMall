@@ -1,19 +1,15 @@
 <template>
 	<div class="chunks">
     
-		<list class="list">
-      <cell class="cell">
+		<div class="list">
+      <!-- <image class="size" src="file:///android_asset/images/icon/chunk-bg.png" resize="cover"></image> -->
+      <div class="cell">
         <div class="B-box"  v-for="(item,i) in row1" :key="i" :index="i" @click="onItemClick">
           <image class="B-icon" :src="item.icon"></image>
           <text class="B-title">{{item.title}}</text>        
         </div>
-      </cell>
-      <cell>
-        <div>
-          <text>{{console}}</text>
-        </div>
-      </cell>
-    </list>
+      </div>
+    </div>
 	</div>
 </template>
 
@@ -40,67 +36,135 @@
             icon: 'file:///android_asset/images/icon/199.png',
           }, 
           {
-            title: '特价好物',
-            icon: 'file:///android_asset/images/icon/sales.png',
+            title: '每日精选',
+            icon: 'file:///android_asset/images/icon/jingxuan.png',
           }, 
           {
-            title: '极有家',
-            icon: 'file:///android_asset/images/icon/jiyoujia.png',
+            title: '爆款好货',
+            icon: 'file:///android_asset/images/icon/baokuan.png',
           },
           {
-            title: '酷玩DIY',
-            icon: 'file:///android_asset/images/icon/diy.png',
+            title: '大牌上新',
+            icon: 'file:///android_asset/images/icon/pinpai.png',
           }
         ],
-        searchRequestOptions: {
-          method: 'taobao.tbk.dg.material.optional',
-          apiOptions: {
-            adzone_id: config.adzoneId,
-            platform: '2',
-            page_size: "20",
-            page_no: 1,
-            // material_id: 6707,
-            sort: 'total_sales_des', // 排序_des（降序），排序_asc（升序），销量（total_sales），淘客佣金比率（tk_rate）， 累计推广量（tk_total_sales），总支出佣金（tk_total_commi），价格（price）
-            q: '' // 查询词         
-          }
-        },
         searchFiltrate: {
           start_price: '',
           end_price: '',
-          is_tmall: true, // 是否商城商品，设置为true表示该商品是属于淘宝商城商品，设置为false或不设置表示不判断这个属性
+          is_tmall: false, // 是否商城商品，设置为true表示该商品是属于淘宝商城商品，设置为false或不设置表示不判断这个属性
           has_coupon: true, // 是否有优惠券，设置为true表示该商品有优惠券，设置为false或不设置表示不判断这个属性
           is_overseas: false, // 是否海外商品，设置为true表示该商品是属于海外商品，设置为false或不设置表示不判断这个属性
           need_free_shipment: true, // 是否包邮，true表示包邮，空或false表示不限
           need_prepay: false
-        },       
+        },
+        options: {   
+          headerPicUrl: '',
+          searchWordStr: '',
+          searchFiltrateStr: '',
+          q: null
+        },
+        queryWords: [
+          '女装',
+          '家居家装',
+          '数码家电',
+          '鞋包配饰',
+          '美妆个护',
+          '男装',
+          '内衣',
+          '母婴',
+          '食品',
+          '运动户外'
+        ]       
       }
     },
     methods: {
       onItemClick(e) {
         let index = e.target.attr.index
 
-        switch(index) {
-          
-        }
-        let url = this.getSearchUrl()
+        let searchWordStr = ''
+        let searchFiltrateStr = ''
+        let options = {}
 
-        navigator.push({
-          url: getJumpBaseUrl("goodsShow",url),
-          animated: "true"
-        });
-      },
-      getSearchUrl() {
-        let filtrate = this.searchFiltrate
-         
-        for(let key in filtrate) {
-          if(filtrate[key]){
-            Vue.set(this.searchRequestOptions.apiOptions, key, filtrate[key])
-          }else {
-            Vue.delete(this.searchRequestOptions.apiOptions, key)
-          }         
+        switch(index) {
+          case 0: this.searchFiltrate.start_price = 0;
+                  this.searchFiltrate.end_price = 10;
+                  searchWordStr = this.getSearchWords(this.queryWords);
+                  searchFiltrateStr = this.getSearchFiltrateStr(this.searchFiltrate)
+                  this.options.headerPicUrl = 'http://img.alicdn.com/tps/i3/TB1owX4MXXXXXcbXpXXx6Mp7VXX-1440-380.png';
+                  this.options.searchWordStr = this.getSearchWords(this.queryWords);
+                  this.options.searchFiltrateStr = this.getSearchFiltrateStr(this.searchFiltrate);
+                  navigator.push({
+                    url: getJumpBaseUrl("searchGoodsShowWithTab",this.options),
+                    animated: "true"
+                  });          
+                  break;
+          case 1: this.searchFiltrate.start_price = 10;
+                  this.searchFiltrate.end_price = 20;
+                  searchWordStr = this.getSearchWords(this.queryWords);
+                  searchFiltrateStr = this.getSearchFiltrateStr(this.searchFiltrate)
+                  this.options.headerPicUrl = 'http://img.alicdn.com/tps/i3/TB1owX4MXXXXXcbXpXXx6Mp7VXX-1440-380.png';
+                  this.options.searchWordStr = this.getSearchWords(this.queryWords);
+                  this.options.searchFiltrateStr = this.getSearchFiltrateStr(this.searchFiltrate);
+                  navigator.push({
+                    url: getJumpBaseUrl("searchGoodsShowWithTab",this.options),
+                    animated: "true"
+                  });          
+                  break;
+          case 2: let webUrl = `https://mos.m.taobao.com/union/chaojidanpin20181201?pid=${config.pid}`
+                  // let withBack = 'true'
+
+                  // let option = { 
+                  //   webUrl: webUrl, 
+                  //   withBack: withBack 
+                  // }
+                  let url = 
+                  navigator.push({
+                    url: "tblinkto://" + webUrl,
+                    animated: "true"
+                  });          
+                  break;
+          case 3:  let option_baokuan = { 
+                    headerPicUrl: 'https://gw.alicdn.com/tfs/TB18HP4yntYBeNjy1XdXXXXyVXa-750-275.jpg_q75.jpg',
+                    materialId: 3837
+                  }
+                  
+                  navigator.push({
+                    url: getJumpBaseUrl('goodsShowNoTab', option_baokuan),
+                    animated: "true"
+                  })        
+                  break;
+          case 4: let webUrl_dapai = `https://mos.m.taobao.com/union/superbrand_nhj_nvwangjieersantao?pid=${config.pid}`
+                  // let withBack_dapai = 'true'
+
+                  // let option_dapai = { 
+                  //   webUrl: webUrl_dapai, 
+                  //   withBack: withBack_dapai 
+                  // }
+                  
+                  navigator.push({
+                    url: "tblinkto://" + webUrl_dapai,
+                    animated: "true"
+                  });          
+                  break;
         }
-        let url = formatURL(this.searchRequestOptions.method,this.searchRequestOptions.apiOptions)
-        return url;
+
+        
+      },
+      getSearchWords(queryWords) {
+        let urlStr = ''
+        queryWords.forEach((item,i) => {
+          urlStr += `${item}##`
+        })
+        urlStr = urlStr.slice(0,-2)
+        return urlStr
+      },
+      getSearchFiltrateStr(searchFiltrate) {
+        let str = ''
+        for (let key in searchFiltrate) {
+          str += `${key}=${searchFiltrate[key]}##`
+        }
+        str = str.slice(0,-2)
+        return str
       }
     },
   }
@@ -108,13 +172,14 @@
 
 <style scoped>
 	.chunks {
-    /*width: 690px;*/
-    /* height: 160px; */
     background-color: #fff;
     margin: 20px;
-    border-radius: 30px;
-    /*box-shadow: 3px 5px 3px rgba(0, 0, 0, .3);*/
-    /*margin-top: -25px;*/
+    border-radius: 30px;   
+  }
+
+  .size {
+    width: 750px;
+    height: 160px;
   }
 
   .cell {
@@ -126,21 +191,17 @@
     width: 140px;
     justify-content: center;
     align-items: center;
-    /*padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 5px;
-    padding-right: 5px;*/
     padding-top: 10px;
   }
   .B-title {
     width: 140px;
-    font-size: 24px;
+    font-size: 20px;
     text-align: center;
     padding-top: 15px;
     color: #666;
   }
   .B-icon {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
   }
 </style>

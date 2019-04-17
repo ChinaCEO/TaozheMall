@@ -2,7 +2,7 @@
 	<div class="banner">   
 		<slider class="slider size" auto-play="true">
 			<div v-for="(src,i) in posters" :key="i">
-				<image class="size" resize="stretch" :src="'file:///android_asset/images/'+src"></image>
+				<image class="size" resize="stretch" :src="posters[i]"></image>
 			</div>
 			<indicator class="indicator"></indicator>
 		</slider>
@@ -10,17 +10,16 @@
 </template>
 
 <script>
-
+import imgLocationSrc from '../util/imgLocationSrc.js';
 
 export default {
     data() {
       return {
       	posters: [
-      		'111.jpg',
-          '444.jpg',
-          '333.jpg',
-      		'222.jpg'
-      	]
+          'https://img.alicdn.com/tfs/TB1bQGNQAvoK1RjSZPfXXXPKFXa-750-275.jpg',
+          'https://img.alicdn.com/tfs/TB1EEeXLY2pK1RjSZFsXXaNlXXa-440-180.jpg',
+          'https://img.alicdn.com/tfs/TB1Ry4rxrPpK1RjSZFFXXa5PpXa-440-180.jpg'
+        ]
       }
     },
     methods: {
@@ -44,7 +43,7 @@ export default {
 
   .size {
     width: 710px;
-  	height: 300px;
+  	height: 260px;
     margin-bottom: 20px;    
   }
 

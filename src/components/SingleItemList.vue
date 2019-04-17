@@ -10,17 +10,17 @@
       class="item" 
       v-for="(item,i) in list" 
       :key="i" 
-      :url="item.coupon_share_url ? item.coupon_share_url : item.item_url" 
+      :url="item.coupon_share_url? item.coupon_share_url : item.item_url" 
       @click="onitemClick" > 
 
       <image 
-        :src="item.pict_url" 
+        :src="picSrc(item)" 
         class="item-pic" 
         style="width:200px;height:200px"></image>
       <div class="item-main">
         <div class="item-title-box">
           <image 
-            src="file:///android_asset/images/tmall-logo.jpg" 
+            :src="imgSrc.tmallLogo" 
             class="title-icon" 
             style="width:28px;height:28px"
             v-if="item.user_type"></image>
@@ -66,7 +66,7 @@
       </div>
     </div>
     <div class="footer">
-      <image style="width:70px;height:70px" src="file:///android_asset/images/loading.gif" v-if="loadingFlag"></image>
+      <image style="width:70px;height:70px" :src="imgSrc.loading" v-if="loadingFlag"></image>
       <text class="indicator-text" v-else>没有更多了...</text>
     </div>
     <div class="tohead" @click="onToHead" v-if="toHeaderBtnFlag">
@@ -78,8 +78,8 @@
 
 <script>
   // import toHeader from "./ToHeader.vue";
-  import { store } from "../store.js";
   import { getJumpBaseUrl } from "../util/getJumpBaseUrl.js";
+  import imgLocationSrc from '../util/imgLocationSrc.js';
 
   // const stream = weex.requireModule("stream");
   const navigator = weex.requireModule("navigator-pri");
@@ -98,6 +98,10 @@
     },
     data() {
       return {
+        imgSrc: {
+          loading: imgLocationSrc.gif.loading,
+          tmallLogo: imgLocationSrc.logo.tmallLogo
+        },
         toHeaderBtnFlag: false,
         console: ''
       }
@@ -141,13 +145,26 @@
         if(url.indexOf('https:') != 0) {
           url = 'https:' + url 
         }
-        
-        store.commit("setCouponUrl", url);
-        
+    
         navigator.push({
-          url: getJumpBaseUrl("coupon", url),
+          url: "tblinkto://" + url,
           animated: "true"
         });
+      },
+      picSrc(item) {
+        if(item.white_image) {
+          if(item.white_image.indexOf('http') >= 0) {
+            return item.white_image
+          }else {
+            return `https:${item.white_image}`
+          }
+        }else {
+          if(item.pict_url.indexOf('http') >= 0) {
+            return item.pict_url
+          }else {
+            return `https:${item.pict_url}`
+          }
+        }
       }      
     }
   }

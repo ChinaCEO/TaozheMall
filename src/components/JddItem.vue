@@ -1,17 +1,21 @@
 <template>
   <div class="item" @click="onItemClick">
     <image 
-          :src="item.pict_url" 
+          :src="'https:'+item.pict_url" 
           class="item-pic" 
           style="width:200px;height:200px"></image>
     <div class="item-main">
-      <!-- <text>{{console}}</text> -->
+      
       <div class="item-title-box" >
-        <image  src="file:///android_asset/images/tmall-logo.jpg" 
+        <div class="title-icon-wrapper" style="width:40px;height:40px">
+          <image  :src="imgSrc.tmallLogo" 
                 class="title-icon" 
                 style="width:28px;height:28px"
                 v-if="item.user_type"></image>
+        </div>
+        
         <text class="item-title">{{item.title}}</text>
+        <!-- <text>{{console}}</text> -->
       </div>
       <!-- 描述 -->
       <div class="description">
@@ -40,23 +44,60 @@
 
 <script>
   import { getJumpBaseUrl } from "../util/getJumpBaseUrl.js";
+  import imgLocationSrc from '../util/imgLocationSrc.js';
 
   const navigator = weex.requireModule("navigator-pri");
 
   export default {
     props: {
       item: {
-        type: Object,
-        default: {}
+        type: Object
+      }
+    },
+    data() {
+      return {
+        imgSrc: {
+          tmallLogo: imgLocationSrc.logo.tmallLogo
+        },
+        console: ''
       }
     },
     methods: {
       onItemClick() {
+        let url = this.getCouponUrl(this.item)
+        
         navigator.push({
-          url: getJumpBaseUrl("coupon", `http://${this.item.click_url}`),
+          url: "tblinkto://" + url,
           animated: "true"
         });
-      }
+      },
+      getCouponUrl(item) {
+        if(item.coupon_share_url) {
+          if(item.coupon_share_url.indexOf('http') < 0){
+            return 'https:' + item.coupon_share_url
+          }else {
+            return item.coupon_share_url
+          }         
+        }else if(item.coupon_click_url) {
+          if(item.coupon_click_url.indexOf('http') < 0){
+            return 'https:' + item.coupon_click_url
+          }else {
+            return item.coupon_click_url
+          } 
+        }else if(item.click_url) {
+          if(item.click_url.indexOf('http') < 0){
+            return 'https:' + item.click_url
+          }else {
+            return item.click_url
+          } 
+        }else if(item.item_url){
+          if(item.item_url.indexOf('http') < 0){
+            return 'https:' + item.item_url
+          }else {
+            return item.item_url
+          } 
+        }
+      }   
     }
   }
 </script>

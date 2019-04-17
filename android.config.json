@@ -1,6 +1,6 @@
 {
-  "AppName":"WeexApp",
-  "AppId":"com.weex.app",
-  "SplashText":"Hello\nWeex",
+  "AppName":"taozhemall",
+  "AppId":"com.taozhemall.app",
+  "SplashText":"淘折",
   "WeexBundle":"index.js"
 }

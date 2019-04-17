@@ -31,3 +31,29 @@
 -keep class com.taobao.weex.module.**{*;}
 -keep public class * extends com.taobao.weex.common.WXModule{*;}
 -keep public class com.taobao.weex.WXDebugTool{*;}
+
+-keepattributes Signature
+    -keep class sun.misc.Unsafe { *; }
+    -keep class com.alibaba.** {*;}
+    -dontwarn com.alibaba.**
+    -keep class com.alipay.** {*;}
+    -dontwarn com.alipay.**
+    -keep class com.taobao.** {*;}
+    -dontwarn com.taobao.**
+    -keep class com.ut.** {*;}
+    -dontwarn com.ut.**
+    -keep class com.ta.** {*;}
+    -dontwarn com.ta.**
+    -keep class mtopsdk.** {*;}
+    -dontwarn mtopsdk.**
+    -keep class org.json.** {*;}
+    -keep class com.ali.auth.**  {*;}
+
+-dontwarn com.alimama.**
+-keep class com.alimama.** \{\*;}
+-eeppackagenames com.alimama.tunion.sdk.**
+-keeppackagenames com.alimama.tunion.sdk.**
+-keep class com.alimama.tunion.sdk.** {
+         public <fields>;
+         public <methods>;
+     }

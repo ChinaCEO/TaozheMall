@@ -21,11 +21,7 @@
       <text>{{console}}</text>
     </header> -->
     <cell class="cell" v-for="(item) in items" :key="item.num_iid" :ref="'item'+item.num_iid">
-      <item :coupon-url='`https://${item.coupon_share_url}`' 
-            :img-src='item.white_image ? item.white_image : item.pict_url'
-            :title='item.title'
-            :coupon-amount='item.coupon_amount'
-            :coupon-final-price="couponFinalPrice(item)" ></item>
+      <item :item="item"></item>
     </cell>
     <header v-if="toHeaderBtnFlag">
       <div class="toHeader" @click="onToHeader">
@@ -33,7 +29,7 @@
       </div>           
     </header>
     <header class="footer" ref="footer" @appear="onloadmore">
-      <image style="width:70px;height:70px" src="file:///android_asset/images/loading.gif" v-if="loadingFlag"></image>
+      <image style="width:70px;height:70px" :src="imgSrc.loading" v-if="loadingFlag"></image>
       <text class="indicator-text" v-else>~没有更多了~</text>
     </header>
   </waterfall>
@@ -45,6 +41,7 @@
   import config from '../util/mall.config.js';
   import BannerSm from '../components/BannerSm.vue';
   import Item from '../components/waterSingleItem.vue';
+  import imgLocationSrc from '../util/imgLocationSrc.js';
 
   const getImei = weex.requireModule('getImei');
   const stream = weex.requireModule("stream");
@@ -55,13 +52,17 @@
   export default {
     data() {
       return {
+        imgSrc: {
+          loading: imgLocationSrc.gif.loading,
+          
+        },
         requestOptions: {
           method: "taobao.tbk.dg.optimus.material",
           apiOptions: {
             adzone_id: config.adzoneId,
             page_size: "20",
             page_no: 1,
-            material_id: "3756",
+            material_id: "6708",
             device_value: '',
             device_encrypt: '	MD5',
             device_type: 'IMEI'
@@ -146,6 +147,9 @@
         dom.scrollToElement(this.$refs.header, { offset: 0, animated: 'true' });
       },
       onloadmore() {
+        if(!this.items.length) {
+          return;
+        }
         this.requestOptions.apiOptions.page_no ++
         this.fetch(res => {
           if(res.data.tbk_dg_optimus_material_response) {
@@ -159,10 +163,7 @@
           this.loadingFlag = false
         })
       },
-      couponFinalPrice(item) {       
-        let _final = Math.round(item.zk_final_price * 100 - item.coupon_amount*100) / 100
-        return _final.toFixed(2)
-      },
+      
     }
   }
 </script>

@@ -1,18 +1,18 @@
 <template>
   <div class="chunk">
-    <!-- <text>{{console}}</text> -->
+    <!-- <text>{{itemList}}</text> -->
     <image class="banner-img" :src="imgSrc" resize="cover"></image>
     <div class="item-wrapper">
       <div class="item" 
         v-for="(item, i) in itemList" 
         :key="i" 
         @click="onitemClick"
-        :couponUrl="item.coupon_click_url" >
-        <image :src="item.pict_url" style="width:210px;height:210px" resize="cover"></image>
+        :couponUrl="getCouponUrl(item)" >
+        <image :src="picSrc(item)" style="width:210px;height:210px" resize="cover"></image>
         <text class="item-title">{{item.title}}</text>
         <div class="item-price">
           <text class="item-price-final">￥{{couponFinalPrice(item)}}</text>
-          <text class="item-price-before">￥{{item.zk_final_price}}</text>
+          <text class="item-price-before">￥{{parseFloat(item.zk_final_price).toFixed(2)}}</text>
         </div>
       </div>
     </div>
@@ -51,20 +51,47 @@
         moreParams: ''
       }
     },
+    
     methods: {
+      picSrc(item) {
+        if(item.white_image) {
+          if(item.white_image.indexOf('http') >= 0) {
+            return item.white_image
+          }else {
+            return `https:${item.white_image}`
+          }
+        }else {
+          if(item.pict_url.indexOf('http') >= 0) {
+            return item.pict_url
+          }else {
+            return `https:${item.pict_url}`
+          }
+        }
+      },
       couponFinalPrice(item) {
         let _couponaAmount = "";
-        let jianPos = item.coupon_info.search("减")
-        _couponaAmount = parseInt(item.coupon_info.slice(jianPos + 1, -1)) 
         
+        if(this.requestType === 'uatm') {
+          _couponaAmount = this.getCoupnAmount(item)
+        }else if(this.requestType === 'material') {          
+          _couponaAmount = item.coupon_amount
+        }
+               
         let _final = Math.round(item.zk_final_price * 100 - _couponaAmount*100) / 100
         return _final.toFixed(2)
       },
+      getCoupnAmount(item) {
+        let _couponaAmount = "";
+        let jianPos = item.coupon_info.search("减")
+        _couponaAmount = parseInt(item.coupon_info.slice(jianPos + 1, -1)) 
+
+        return _couponaAmount
+      }, 
       onitemClick(e) {
         let couponUrl = e.currentTarget.attr.couponUrl;
-        this.console = typeof couponUrl
+        
         navigator.push({
-          url: getJumpBaseUrl("coupon", couponUrl),
+          url: "tblinkto://" + couponUrl,
           animated: "true"
         });
       },
@@ -78,6 +105,27 @@
           url: getJumpBaseUrl('findMore',this.moreParams),
           animated: "true"
         });
+      },
+      getCouponUrl(item) {
+        if(item.coupon_share_url) {
+          if(item.coupon_share_url.indexOf('http') < 0){
+            return 'https:' + item.coupon_share_url
+          }else {
+            return item.coupon_share_url
+          }         
+        }else if(item.coupon_click_url) {
+          if(item.coupon_click_url.indexOf('http') < 0){
+            return 'https:' + item.coupon_click_url
+          }else {
+            return item.coupon_click_url
+          } 
+        }else {
+          if(item.item_url.indexOf('http') < 0){
+            return 'https:' + item.item_url
+          }else {
+            return item.item_url
+          } 
+        }
       }
     },
   }
@@ -89,7 +137,7 @@
   }
 
   .chunk {
-    margin-top: 20px;
+    margin-bottom: 20px;
     /* background-color: #ffffff; */
     align-items: center;
   }

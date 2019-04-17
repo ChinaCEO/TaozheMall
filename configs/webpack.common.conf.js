@@ -16,7 +16,11 @@ const weexEntry = {
   'findMore': helper.root('findMore.js'),
   'goodsShow': helper.root('goodsShow.js'),
   'snapUp': helper.root('snapUp.js'),
-  'jdd': helper.root('jdd.js') //拼团
+  'jdd': helper.root('jdd.js'), //拼团
+  'about': helper.root('about.js'),
+  'searchGoodsShowWithTab': helper.root('searchGoodsShowWithTab.js'),
+  'goodsShowNoTab': helper.root('goodsShowNoTab.js'),
+  'setting': helper.root('setting.js'),
 }
 
 const getEntryFileContent = (source, routerpath) => {
@@ -77,13 +81,33 @@ const getEntryFile = () => {
   const jddPath = 'jdd.js'
   const jdd = path.join(vueWebTemp, jddPath)
   fs.outputFileSync(jdd, getEntryFileContent(helper.root(jddPath), routerFile));
+
+  const aboutPath = 'about.js'
+  const about = path.join(vueWebTemp, aboutPath)
+  fs.outputFileSync(about, getEntryFileContent(helper.root(aboutPath), routerFile));
+
+  const searchGoodsShowWithTabPath = 'searchGoodsShowWithTab.js'
+  const searchGoodsShowWithTab = path.join(vueWebTemp, searchGoodsShowWithTabPath)
+  fs.outputFileSync(searchGoodsShowWithTab, getEntryFileContent(helper.root(searchGoodsShowWithTabPath), routerFile));
+
+  const goodsShowNoTabPath = 'goodsShowNoTab.js'
+  const goodsShowNoTab = path.join(vueWebTemp, goodsShowNoTabPath)
+  fs.outputFileSync(goodsShowNoTab, getEntryFileContent(helper.root(goodsShowNoTabPath), routerFile));
+
+  const settingPath = 'setting.js'
+  const setting = path.join(vueWebTemp, settingPath)
+  fs.outputFileSync(setting, getEntryFileContent(helper.root(settingPath), routerFile));
   return {
     index: entryFile,
     coupon: couponFile,
     searchPage: searchPage,
     goodsShow: goodsShow,
     snapUp: snapUp,
-    jdd: jdd
+    jdd: jdd,
+    about: about,
+    searchGoodsShowWithTab: searchGoodsShowWithTab,
+    goodsShowNoTab: goodsShowNoTab,
+    setting: setting
   }
 }
 

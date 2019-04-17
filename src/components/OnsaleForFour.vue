@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="wrapper-flex right-wrapper">
-        <div class="wrapper-flex right-top-wrapper">
+        <div class="wrapper-flex right-top-wrapper" @click="onRightTop">
           <text class="title-size right-top-title">好券直播</text>
           <text class="description">大牌好货推荐</text>
           <image :src="imgUrl.haoQuan" resize="contain" class="img-size"></image>
@@ -50,8 +50,7 @@
         requestOptions: {
           method: "taobao.tbk.dg.optimus.material",
           apiOptions: {
-            fields: "pic_url",
-            page_size: 1,
+            page_size: 10,
             page_no: 1,
             adzone_id: config.adzoneId,
             material_id: 0
@@ -82,6 +81,19 @@
           '食品': 13375,
           '运动户外': 13375
         },
+        haoquanMaterialIds:{
+          '综合': 3756,
+          '女装': 3767,
+          '家居家装': 3758,
+          '数码家电': 3759,
+          '鞋包配饰': 3762,
+          '美妆个护': 3763,
+          '男装': 3764,
+          '内衣': 3765,
+          '母婴': 3760,
+          '食品': 3761,
+          '运动户外': 3766
+        },
         muyingMaterialIds: {
           '备孕': 4040,
           '0至6个月': 4041,
@@ -93,26 +105,39 @@
       }
     },
     created() {
-      this.requestOptions.apiOptions.page_no = Math.ceil(Math.random() * 50)
+      this.requestOptions.apiOptions.page_no = Math.ceil(Math.random() * 10)
+
+      
 
       new Promise((resolve,reject) => {
         this.requestOptions.apiOptions.material_id = this.materialId.pinPai 
+   
         this.fetch(res => {
           if(res.data.tbk_dg_optimus_material_response) {          
-            let item = res.data.tbk_dg_optimus_material_response.result_list.map_data[0]
-            resolve(item.white_image)
-            
+            let items = res.data.tbk_dg_optimus_material_response.result_list.map_data
+            items.forEach(item => {
+              if(item.white_image) {
+                resolve(item.white_image)
+                return;
+              }
+            });           
           }
         })
       })
       .then((val) => {
         this.imgUrl.pinPai = val
         return new Promise((resolve,reject) => {
-          this.requestOptions.apiOptions.material_id = this.materialId.haoQuan 
+          this.requestOptions.apiOptions.material_id = this.materialId.haoQuan
+        
           this.fetch(res => {
             if(res.data.tbk_dg_optimus_material_response) {
-              let item = res.data.tbk_dg_optimus_material_response.result_list.map_data[0]
-              resolve(item.white_image)
+              let items = res.data.tbk_dg_optimus_material_response.result_list.map_data
+              items.forEach(item => {
+                if(item.white_image) {
+                  resolve(item.white_image)
+                  return;
+                }
+              });
             }
           })
         })       
@@ -121,10 +146,16 @@
         this.imgUrl.haoQuan = val
         return new Promise((resolve,reject) => {
           this.requestOptions.apiOptions.material_id = this.materialId.gaoYong 
+         
           this.fetch(res => {            
             if(res.data.tbk_dg_optimus_material_response) {
-              let item = res.data.tbk_dg_optimus_material_response.result_list.map_data[0]
-              resolve(item.white_image)
+              let items = res.data.tbk_dg_optimus_material_response.result_list.map_data
+              items.forEach(item => {
+                if(item.white_image) {
+                  resolve(item.white_image)
+                  return;
+                }
+              });
             }
           })
         })       
@@ -133,10 +164,16 @@
         this.imgUrl.gaoYong = val
         return new Promise((resolve,reject) => {
           this.requestOptions.apiOptions.material_id = this.materialId.muYing 
+          
           this.fetch(res => {
             if(res.data.tbk_dg_optimus_material_response) {
-              let item = res.data.tbk_dg_optimus_material_response.result_list.map_data[0]
-              resolve(item.white_image)
+              let items = res.data.tbk_dg_optimus_material_response.result_list.map_data
+              items.forEach(item => {
+                if(item.white_image) {
+                  resolve(item.white_image)
+                  return;
+                }
+              });
             }
           })
         })       
@@ -174,15 +211,15 @@
       },
       onLeftTop() {
         let webUrl = `https://mos.m.taobao.com/taokeapp/20181111ysppcjbkg?pid=${config.pid}`
-        let withBack = 'true'
+        // let withBack = 'true'
 
-        let option = { 
-          webUrl: webUrl, 
-          withBack: withBack 
-        }
+        // let option = { 
+        //   webUrl: webUrl, 
+        //   withBack: withBack 
+        // }
         
         navigator.push({
-          url: getJumpBaseUrl('coupon', option),
+          url: "tblinkto://" + webUrl,
           animated: "true"
         })
       },
@@ -195,6 +232,22 @@
         let option = { 
           headerPicUrl: 'file:///android_asset/images/header/renqi.png',
           gaoYongMaterialIds: gaoYongMaterialIdsStr
+        }
+        
+        navigator.push({
+          url: getJumpBaseUrl('goodsShow', option),
+          animated: "true"
+        })
+      },
+      onRightTop() {
+        let haoquanMaterialIdsStr = ''
+        let haoquanMaterialIds = this.haoquanMaterialIds
+        for (let key in haoquanMaterialIds) {
+          haoquanMaterialIdsStr += `${key}=${haoquanMaterialIds[key]}##`
+        }
+        let option = { 
+          headerPicUrl: 'https://gw.alicdn.com/tfs/TB13dSio3HqK1RjSZFEXXcGMXXa-750-275.png_q75.jpg',
+          haoquanMaterialIds: haoquanMaterialIdsStr
         }
         
         navigator.push({

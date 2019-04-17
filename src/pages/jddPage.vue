@@ -16,7 +16,7 @@
       </div> 
     </cell> 
     <cell class="footer" @appear="loadingMore">          
-      <image style="width:70px;height:70px" src="file:///android_asset/images/loading.gif" v-if="loadingFlag"></image>
+      <image style="width:70px;height:70px" :src="imgSrc.loading" v-if="loadingFlag"></image>
       <text class="footer-text" v-else>~没有更多了~</text>        
     </cell>
   </list>
@@ -26,6 +26,7 @@
   import { formatURL } from "../util/formatURL.js";
   import config from '../util/mall.config.js';
   import jddItem from '../components/JddItem.vue';
+  import imgLocationSrc from '../util/imgLocationSrc.js';
 
   const stream = weex.requireModule("stream");
   const modal = weex.requireModule('modal');
@@ -37,6 +38,9 @@
     data() {
       return {
         console: '',
+        imgSrc: {
+          loading: imgLocationSrc.gif.loading
+        },
         materialRequestOptions: { // 通用物料api
           method: 'taobao.tbk.dg.optimus.material',
           apiOptions: {
@@ -138,7 +142,7 @@
 
   .size {
     width: 750px;
-    height: 160px;
+    height: 280px;
   }
 
   .back-btn {
