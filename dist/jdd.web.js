@@ -2702,9 +2702,24 @@ exports.default = imgLocationSrc;
 
 /***/ }),
 /* 9 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open 'e:\\vscodeproject\\taozhe3\\src\\util\\mall.config.js'");
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+/* 商城公用配置 */
+
+var config = {
+	appKey: '25635637',
+	AppSecret: '55f381f9747917b54a248a63bbd42f35',
+	adzoneId: "91627500240",
+	pid: 'mm_321530087_327050487_91627500240'
+};
+
+exports.default = config;
 
 /***/ }),
 /* 10 */
